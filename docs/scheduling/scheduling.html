@@ -1,0 +1,699 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Scheduling &#8212; Operations Research with Python</title>
+    
+  <link rel="stylesheet" href="../../_static/css/index.73d71520a4ca3b99cfee5594769eaaae.css">
+
+    
+  <link rel="stylesheet"
+    href="../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="../../_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="../../_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/sphinx-book-theme.40e2e510f6b7d1648584402491bb10fe.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="../../_static/js/index.3da636dd464baa7582d2.js">
+
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../../_static/sphinx-book-theme.d31b09fe5c1d09cb49b26a786de4a05d.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="prev" title="Inventory Theory" href="../inventory/inventory.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="../../index.html">
+  
+  
+  <h1 class="site-logo" id="site-title">Operations Research with Python</h1>
+  
+</a>
+</div><form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+    <ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../index.html">
+   or-tutorial
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Operations Research
+ </span>
+</p>
+<ul class="current nav sidenav_l1">
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../linear-programming/linear-programming.html">
+   Linear Programming
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../linear-programming/product-mix.html">
+     Product Mix Problem
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../linear-programming/production-planning.html">
+     Production Planning Problem
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../linear-programming/sensitivity-analysis.html">
+     Sensitivity Analysis
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../linear-programming/workforce-scheduling.html">
+     Workforce Scheduling
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../linear-programming/vehicle-routing.html">
+     Vehicle Routing Problem
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../linear-programming/unbalanced-transportation.html">
+     Unbalanced Transportation Problem
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../simplex-method.html">
+   Simplex Method
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../transportation/transportation.html">
+   Transportation and Assignment
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../network/network.html">
+   Network Optimization Model
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../dynamic-programming/dynamic-programming.html">
+   Dynamic Programming
+  </a>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../integer-programming/integer-programming.html">
+   Integer Programming
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../integer-programming/capital-budgeting.html">
+     Capital Budgeting Problem
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../integer-programming/set-covering.html">
+     Set Covering Problem
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../integer-programming/traveling-salesman.html">
+     Travelling Salesman Problem
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../integer-programming/knapsack.html">
+     Knapsack Problem
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../integer-programming/plant.html">
+     Plant Location Problem
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../nonlinear-programming.html">
+   Nonlinear-Programming
+  </a>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../metaheuristics/introduction-metaheuristics.html">
+   Metaheuristics
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../metaheuristics/introduction-simulated-annealing.html">
+     Simulated Annealing
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../metaheuristics/introduction-tabu-search.html">
+     Tabu Search
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../metaheuristics/evolution-strategy.html">
+     Evolution Strategy
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../metaheuristics/evolution-strategy.html#id3">
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../metaheuristics/introduction-genetic-algorithm.html">
+     Genetic Algorithm
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../metaheuristics/introduction-particle-swarm.html">
+     Particle Swarm Optimization
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../metaheuristics/introduction-ant-colony.html">
+     Ant Colony Optimization
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../decision-making/dea.html">
+   Data Envelopment Analysis
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../queueing/queueing.html">
+   Queueing Theory
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../inventory/inventory.html">
+   Inventory Theory
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Scheduling
+  </a>
+ </li>
+</ul>
+
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../../_sources/docs/scheduling/scheduling.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+        <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/unerue/unerue.github.io"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        <a class="issues-button"
+            href="https://github.com/unerue/unerue.github.io/issues/new?title=Issue%20on%20page%20%2Fdocs/scheduling/scheduling.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        
+    </div>
+</div>
+
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+                title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/unerue/unerue.github.io/master?urlpath=tree/docs/scheduling/scheduling.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+    </div>
+
+    <!-- Table of contents -->
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+        
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i> Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id1">
+   스케줄링 분류
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id2">
+   문제의 핵심으로 분류
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#one-machine-scheduling-with-release-dates-and-deadlines">
+   One machine scheduling with release dates and deadlines
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#single-machine-scheduling-with-weighted-completion-times">
+   Single Machine Scheduling with Weighted Completion Times
+  </a>
+ </li>
+</ul>
+
+        </nav>
+        
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="scheduling">
+<h1>Scheduling<a class="headerlink" href="#scheduling" title="Permalink to this headline">¶</a></h1>
+<p>일정계획(scheduling)은 제품생산에 필요한 각 작업을 수행하는 일정에 대해 최적 또는 실행가능한 상세계획을 결정하는 것입니다. 언제, 어느 기계를 이용하여, 누가, 어떤 작업을 하는가를 정하는 것이며 일정한 기간 동안에 생산해야 할 제품의 종류와 수량이 생산계획과 생산공정(production process)에 의해서 결정되고 난 후에 이루어지며, 생산품의 종류는 생산공정계획에 의해서 결정되기 때문입니다. 일정계획에서는 주어진 기계에서 어떤 순서로 가공작업을 처리할 것인지를 결정하는 것이 가장 중요한데, 이 기능을 작업순서계획(job sequencing)이라고 합니다. 최적의 작업순서는 일정계획의 조합(permutation schedules) 중에서 주어진 평가기준의 최적화에 의해서 결정되며, 시뮬레이션을 이용하여 배정규칙 혹은 우선규칙(dispatching or priority rules)이 합리적인 일정을 얻는 데 사용됩니다. Flow Shop에서는 작업물이 거치는 기계나 공정의 순서가 완전히 동일하므로 일정계획이 상대적으로 단순하지만, Job Shop에서는 작업의 유형에 따라 기술적 순서(technological order)가 다양하므로 최적의 일정을 결정하기 어렵습니다. 기계가 공라인처럼 개개의 요소작업이 독립성을 가지고 있는 경우의 생산 일정계획을 작업일정계획(operations scheduling)이라고 합니다.</p>
+<p>작업일정계획에는 다음과 같은 세 가지 유형이 있습니다.</p>
+<ul class="simple">
+<li><p>작업순서계획(job sequencing) - 한 대의 기계에서 가공되는 작업물의 공정순서를 결정하는 것으로, 최적의 작업순서는 일정계획의 조합들(permutation schedules) 중에서 결정되거나 일정계획 시뮬레이션에 의해 합리적으로 수립된 우선규칙에 의해 얻어집니다.</p></li>
+<li><p>flow-shop 일정계획 - 다단계 생산공정에서 기계의 배치가 부품가공의 순서와 완전히 일치하는 경우의 공장이 flow shop이고, 이에 대한 일정계획을 flow-shop 스케줄링이라고 합니다. 이와 같은 흐름생산의 형식은 대량생산이 전형적인 예입니다.</p></li>
+<li><p>job-shop 일정계획 - 대부분의 다품종 생산의 경우에는 부품의 가공순서가 작업에 따라 다르며, 이 같은 공장을 job-shop이라고 하고, 이 경우의 일정계획을 job-shop 일정계획이라고 합니다.</p></li>
+</ul>
+<p>작업일정계획의 기본적인 구조</p>
+<p>작업일정계획의 전형적인 예는 다음 그림과 같습니다. 한 공장에서 N대의 기계에 M개의 작업을 처리하는 문제로 이것은 (M!)^N개의 대안이 있는 조합 문제로 어떤 평가기준에 대한 최적해가 반드시 존재하며, 이것은 이론적으로 일정한 횟수의 반복계산으로 구할 수 있습니다. 그러나 최적의 일정계획을 찾아내려면, 많은 양의 계산이 필요한데, 특히 문제의 크기가 큰 경우 매우 어려우므로 NP-hard입니다.</p>
+<ul class="simple">
+<li><p>일정계획은 주어진 작업을 수행하는데 필요한 자원을 할당하는 활동</p></li>
+<li><p>일정계획은 어떤 목적을 지향</p>
+<ul>
+<li><p>납기를 만족시킬 수 있기를 원할 수도 있고,</p></li>
+<li><p>단위시간당 생산량을 최대로 하기를 원할 수도 있고,</p></li>
+<li><p>기계 가동율을 높이는 것을 목적일 수도 있고,</p></li>
+<li><p>문제가 매우 복잡하고 제약조건이 많고 까다롭기 때문에 가능해(feasible solution)을 찾는 것 자체가 목적이 되기도 함</p></li>
+</ul>
+</li>
+<li><p>따라서 최적해를 구하기 위해서 모든 공간을 다 탐색하는 것은 실용적이지 않으며, 모형에 근거한 이론적인 분석을 통해 개발된 효율적 이론(theorem), 규칙(rule), 알고리즘(algorithm) 등을 사용하는 것이 현명함(Conway et al., 1967; Baker, 1974; French, 1982).</p></li>
+<li><p>해석을 간단하게 하기 위해 대부분 정적(static)인 경우를 가정하는데, M개의 독립적인 작업이 시간 0에서 가공이 가능하다는 것이다. 만약 이러한 작업들이 임의로 작업장에 들어온다면 이것은 동적(dynamic)이한다.</p>
+<ul>
+<li><p>한 대의 기계는 지속적으로 사용가능하다.</p></li>
+<li><p>각 가공은 오직 한 대의 기계에서만 수행된다.</p></li>
+<li><p>각 기계는 한 번에 하나의 작업만 처리할 수 있다.</p></li>
+</ul>
+</li>
+<li><p>대량생산은 대개 assembly line system에서 이루어지고</p></li>
+<li><p>단품생산은 single-site production system(항공기 제작업체나 조선소)</p></li>
+<li><p>job shop(금형, 공작기계 생산업체)</p></li>
+<li><p>FMS 등에서 많이 이루어진다는 것이다.</p></li>
+<li><p>어떤 제조업체는 수주생산(make-to-order)과 계획생산(make-to-stock) 전략을 동시에 취할 수 있는 것처럼 제조설비의 layout이나 공정의 흐름은 여러 형태가 섞여 있을 수 있다는 것이다. 반도체나 금형 생산고정은 크게 흐름생산(flow production)을 따르고 있지만 부분적으로 job-shop형태의 설비배치나 작업흐름이 동시에 존재할수도 있음</p></li>
+</ul>
+<div class="section" id="id1">
+<h2>스케줄링 분류<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>스케줄링(이하 일정계획) 문제는 매우 다양하기 때문에 분류가 쉽지 않지만, 당면한 문제를 풀기 위해 최소한 우리가 접한 문제의 유형을 파악할 수 있어야 기존의 연구결과를 활용하거나 개량하는 등의 접근이 가능</p></li>
+<li><p>일정계획 문제를 구성하는 핵심은 자원, 작업, 목적으로 구분</p></li>
+<li><p>대부분 일정계획 교재에서는,</p>
+<ul>
+<li><p>단일기계 일정계획 문제(single machine scheduling problem)</p></li>
+<li><p>병렬기계 일정계획 문제(parallel machine scheduling problem)</p></li>
+<li><p>흐름공정 일정계획 문제(flow shop scheduling problem)</p></li>
+<li><p>개별공정 일정계획 문제(job-shop scheduling problem)</p></li>
+<li><p>프로젝트 일정계획 문제(project scheduling problem)</p></li>
+</ul>
+</li>
+<li><p>이러한 구분은 설비의 구성 및 배치, 작업의 흐름에 따른 것, 최근(학계) 이런 일반적인 구분보다 자세한 분류를 선호하는 경향이 발생</p></li>
+</ul>
+</div>
+<div class="section" id="id2">
+<h2>문제의 핵심으로 분류<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>작업(jobs)</p>
+<ul>
+<li><p>우선권(Preemption) 허용 여부:</p>
+<ul>
+<li><p>작업 <span class="math notranslate nohighlight">\(J_1\)</span>을 기계에서 가공 중인데, 그 작업 외에 긴급한 작업  <span class="math notranslate nohighlight">\(J_2\)</span>이 있을 경우, _𝐽_1_이 종료되기 전에 작업을 중지하고 긴급한 작업 _𝐽_2_을 먼저 처리할 것인지에 대한 여부
+준비비용(setup cost)가 큰 경우와 기술적인 문제가 있는 경우 우선권을 허용하는가?</p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>선행관계(precedence relation):
+라우팅(routing)은 공정의 진행 순서를 나타내는데 이런 순서를 선행관계라고 하며, 예를 들어 면삭을 한 후에 드릴링을 한다고 하면 면삭공정이 드릴링공정의 선행공정이며 반드시 면삭공정이 끝난 후 드릴링공정이 가능
+선행관계가 없다면 공정의 순서와 상관없이 작업이 가능</p>
+<p>시작시기(release data, <em>𝑟_𝑗</em>):
+작업이 시스템에 도착하는 것 즉, 작업을  시작할 수 있는 가장 빠른 시점
+시작시기를 조정함으로써 생산시스템의 운용효율을 조정 가능</p>
+</div>
+<div class="section" id="one-machine-scheduling-with-release-dates-and-deadlines">
+<h2>One machine scheduling with release dates and deadlines<a class="headerlink" href="#one-machine-scheduling-with-release-dates-and-deadlines" title="Permalink to this headline">¶</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pulp</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">prob</span> <span class="o">=</span> <span class="n">LpProblem</span><span class="p">(</span><span class="s1">&#39;Minimize makespan&#39;</span><span class="p">,</span> <span class="n">LpMinimize</span><span class="p">)</span>
+
+<span class="n">S1</span> <span class="o">=</span> <span class="n">LpVariable</span><span class="p">(</span><span class="s1">&#39;S1&#39;</span><span class="p">,</span> <span class="n">lowBound</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">cat</span><span class="o">=</span><span class="s1">&#39;Integer&#39;</span><span class="p">)</span>
+<span class="n">S2</span> <span class="o">=</span> <span class="n">LpVariable</span><span class="p">(</span><span class="s1">&#39;S2&#39;</span><span class="p">,</span> <span class="n">lowBound</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">cat</span><span class="o">=</span><span class="s1">&#39;Integer&#39;</span><span class="p">)</span>
+<span class="n">X12</span> <span class="o">=</span> <span class="n">LpVariable</span><span class="p">(</span><span class="s1">&#39;X11&#39;</span><span class="p">,</span> <span class="n">lowBound</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">upBound</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">cat</span><span class="o">=</span><span class="s1">&#39;Integer&#39;</span><span class="p">)</span>
+
+<span class="n">prob</span> <span class="o">+=</span> <span class="n">S1</span> <span class="o">+</span> <span class="n">S2</span> <span class="o">+</span> <span class="mi">3</span> <span class="o">+</span> <span class="mi">2</span>
+
+<span class="n">prob</span> <span class="o">+=</span> <span class="n">S1</span> <span class="o">&gt;=</span> <span class="mi">0</span>
+<span class="n">prob</span> <span class="o">+=</span> <span class="n">S2</span> <span class="o">&gt;=</span> <span class="mi">1</span>
+<span class="n">prob</span> <span class="o">+=</span> <span class="n">S1</span> <span class="o">+</span> <span class="mi">3</span> <span class="o">&lt;=</span> <span class="mi">9</span>
+<span class="n">prob</span> <span class="o">+=</span> <span class="n">S1</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">&lt;=</span> <span class="mi">7</span>
+<span class="n">prob</span> <span class="o">+=</span> <span class="n">S2</span> <span class="o">-</span> <span class="n">S1</span> <span class="o">&gt;=</span> <span class="mi">3</span> <span class="o">-</span> <span class="mi">100</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">X12</span><span class="p">)</span>
+<span class="n">prob</span> <span class="o">+=</span> <span class="n">S1</span> <span class="o">-</span> <span class="n">S2</span> <span class="o">&gt;=</span> <span class="mi">2</span> <span class="o">-</span> <span class="mi">100</span><span class="o">*</span><span class="n">X12</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">prob</span><span class="o">.</span><span class="n">solve</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Status: &#39;</span><span class="p">,</span> <span class="n">LpStatus</span><span class="p">[</span><span class="n">prob</span><span class="o">.</span><span class="n">status</span><span class="p">])</span>
+
+<span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">prob</span><span class="o">.</span><span class="n">variables</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">v</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="s1">&#39;=&#39;</span><span class="p">,</span> <span class="n">v</span><span class="o">.</span><span class="n">varValue</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Status:  Optimal
+S1 = 0.0
+S2 = 3.0
+X11 = 1.0
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="single-machine-scheduling-with-weighted-completion-times">
+<h2>Single Machine Scheduling with Weighted Completion Times<a class="headerlink" href="#single-machine-scheduling-with-weighted-completion-times" title="Permalink to this headline">¶</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pulp</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">prob</span> <span class="o">=</span> <span class="n">LpProblem</span><span class="p">(</span><span class="s1">&#39;Single Machine Scheduling with Weighted Completion Times&#39;</span><span class="p">,</span> <span class="n">LpMinimize</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">jobs</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="n">p</span> <span class="o">=</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">7</span><span class="p">]</span>
+<span class="n">w</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Define decision variables</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">LpVariable</span><span class="o">.</span><span class="n">dicts</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="p">[(</span><span class="n">j</span><span class="p">,</span> <span class="n">k</span><span class="p">)</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">jobs</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">jobs</span><span class="p">)],</span> 
+                     <span class="n">lowBound</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">upBound</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">cat</span><span class="o">=</span><span class="s1">&#39;Integer&#39;</span><span class="p">)</span>
+
+<span class="c1"># Define objective function</span>
+<span class="n">prob</span> <span class="o">+=</span> <span class="n">lpSum</span><span class="p">([</span><span class="n">w</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">*</span> <span class="n">p</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">*</span> <span class="n">x</span><span class="p">[(</span><span class="n">k</span><span class="p">,</span> <span class="n">j</span><span class="p">)]</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">jobs</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">jobs</span><span class="p">)])</span>
+
+<span class="c1"># Define constraints</span>
+<span class="c1"># Either job j precedes job k or the other way around</span>
+<span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">jobs</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">jobs</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">j</span> <span class="o">!=</span> <span class="n">k</span><span class="p">:</span>
+            <span class="n">prob</span> <span class="o">+=</span> <span class="n">x</span><span class="p">[(</span><span class="n">k</span><span class="p">,</span> <span class="n">j</span><span class="p">)]</span> <span class="o">+</span> <span class="n">x</span><span class="p">[(</span><span class="n">j</span><span class="p">,</span> <span class="n">k</span><span class="p">)]</span> <span class="o">==</span> <span class="mi">1</span>
+
+<span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">jobs</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">jobs</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">jobs</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">j</span> <span class="o">!=</span> <span class="n">k</span> <span class="ow">and</span> <span class="n">j</span> <span class="o">!=</span> <span class="n">l</span> <span class="ow">and</span> <span class="n">k</span> <span class="o">!=</span> <span class="n">l</span><span class="p">:</span>
+                <span class="n">prob</span> <span class="o">+=</span> <span class="n">x</span><span class="p">[(</span><span class="n">k</span><span class="p">,</span> <span class="n">j</span><span class="p">)]</span> <span class="o">+</span> <span class="n">x</span><span class="p">[</span><span class="n">l</span><span class="p">,</span> <span class="n">k</span><span class="p">]</span> <span class="o">+</span> <span class="n">x</span><span class="p">[(</span><span class="n">j</span><span class="p">,</span> <span class="n">l</span><span class="p">)]</span> <span class="o">&gt;=</span> <span class="mi">1</span>
+
+<span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">jobs</span><span class="p">):</span>
+    <span class="n">prob</span> <span class="o">+=</span> <span class="n">x</span><span class="p">[(</span><span class="n">j</span><span class="p">,</span> <span class="n">j</span><span class="p">)]</span> <span class="o">==</span> <span class="mi">0</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">prob</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="n">GUROBI</span><span class="p">())</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Status&#39;</span><span class="p">,</span> <span class="n">LpStatus</span><span class="p">[</span><span class="n">prob</span><span class="o">.</span><span class="n">status</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">value</span><span class="p">(</span><span class="n">prob</span><span class="o">.</span><span class="n">objective</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">prob</span><span class="o">.</span><span class="n">variables</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">v</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="s1">&#39;=&#39;</span><span class="p">,</span> <span class="n">v</span><span class="o">.</span><span class="n">varValue</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Optimize a model with 85 rows, 25 columns and 225 nonzeros
+Variable types: 0 continuous, 25 integer (0 binary)
+Coefficient statistics:
+  Matrix range     [1e+00, 1e+00]
+  Objective range  [5e+00, 1e+02]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [1e+00, 1e+00]
+Found heuristic solution: objective 363.0000000
+Presolve removed 65 rows and 15 columns
+Presolve time: 0.01s
+Presolved: 20 rows, 10 columns, 60 nonzeros
+Variable types: 0 continuous, 10 integer (10 binary)
+
+Root relaxation: objective 1.970000e+02, 0 iterations, 0.00 seconds
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+*    0     0               0     197.0000000  197.00000  0.00%     -    0s
+
+Explored 0 nodes (0 simplex iterations) in 0.03 seconds
+Thread count was 8 (of 8 available processors)
+
+Solution count 2: 197 363 
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 1.970000000000e+02, best bound 1.970000000000e+02, gap 0.0000%
+Gurobi status= 2
+Status Optimal
+197.0
+x_(0,_0) = 0.0
+x_(0,_1) = -0.0
+x_(0,_2) = 1.0
+x_(0,_3) = -0.0
+x_(0,_4) = -0.0
+x_(1,_0) = 1.0
+x_(1,_1) = 0.0
+x_(1,_2) = 1.0
+x_(1,_3) = -0.0
+x_(1,_4) = -0.0
+x_(2,_0) = 0.0
+x_(2,_1) = 0.0
+x_(2,_2) = 0.0
+x_(2,_3) = -0.0
+x_(2,_4) = -0.0
+x_(3,_0) = 1.0
+x_(3,_1) = 1.0
+x_(3,_2) = 1.0
+x_(3,_3) = 0.0
+x_(3,_4) = 1.0
+x_(4,_0) = 1.0
+x_(4,_1) = 1.0
+x_(4,_2) = 1.0
+x_(4,_3) = 0.0
+x_(4,_4) = 0.0
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./docs/scheduling"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+    <a class='left-prev' id="prev-link" href="../inventory/inventory.html" title="previous page">Inventory Theory</a>
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By Kyung-Su Kang<br/>
+        
+            &copy; Copyright 2020.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    
+  <script src="../../_static/js/index.3da636dd464baa7582d2.js"></script>
+
+
+    
+    <!-- Google Analytics -->
+    <script>
+      window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+      ga('create', 'UA-171260246-1', 'auto');
+      ga('set', 'anonymizeIp', true);
+      ga('send', 'pageview');
+    </script>
+    <script async src='https://www.google-analytics.com/analytics.js'></script>
+    <!-- End Google Analytics -->
+    
+  </body>
+</html>

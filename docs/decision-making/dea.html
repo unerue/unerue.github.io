@@ -1,0 +1,797 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Data Envelopment Analysis &#8212; Operations Research with Python</title>
+    
+  <link rel="stylesheet" href="../../_static/css/index.73d71520a4ca3b99cfee5594769eaaae.css">
+
+    
+  <link rel="stylesheet"
+    href="../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="../../_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="../../_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/sphinx-book-theme.40e2e510f6b7d1648584402491bb10fe.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="../../_static/js/index.3da636dd464baa7582d2.js">
+
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../../_static/sphinx-book-theme.d31b09fe5c1d09cb49b26a786de4a05d.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Queueing Theory" href="../queueing/queueing.html" />
+    <link rel="prev" title="Ant Colony Optimization" href="../metaheuristics/introduction-ant-colony.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="../../index.html">
+  
+  
+  <h1 class="site-logo" id="site-title">Operations Research with Python</h1>
+  
+</a>
+</div><form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+    <ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../index.html">
+   or-tutorial
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Operations Research
+ </span>
+</p>
+<ul class="current nav sidenav_l1">
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../linear-programming/linear-programming.html">
+   Linear Programming
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../linear-programming/product-mix.html">
+     Product Mix Problem
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../linear-programming/production-planning.html">
+     Production Planning Problem
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../linear-programming/sensitivity-analysis.html">
+     Sensitivity Analysis
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../linear-programming/workforce-scheduling.html">
+     Workforce Scheduling
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../linear-programming/vehicle-routing.html">
+     Vehicle Routing Problem
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../linear-programming/unbalanced-transportation.html">
+     Unbalanced Transportation Problem
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../simplex-method.html">
+   Simplex Method
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../transportation/transportation.html">
+   Transportation and Assignment
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../network/network.html">
+   Network Optimization Model
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../dynamic-programming/dynamic-programming.html">
+   Dynamic Programming
+  </a>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../integer-programming/integer-programming.html">
+   Integer Programming
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../integer-programming/capital-budgeting.html">
+     Capital Budgeting Problem
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../integer-programming/set-covering.html">
+     Set Covering Problem
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../integer-programming/traveling-salesman.html">
+     Travelling Salesman Problem
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../integer-programming/knapsack.html">
+     Knapsack Problem
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../integer-programming/plant.html">
+     Plant Location Problem
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../nonlinear-programming.html">
+   Nonlinear-Programming
+  </a>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../metaheuristics/introduction-metaheuristics.html">
+   Metaheuristics
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../metaheuristics/introduction-simulated-annealing.html">
+     Simulated Annealing
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../metaheuristics/introduction-tabu-search.html">
+     Tabu Search
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../metaheuristics/evolution-strategy.html">
+     Evolution Strategy
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../metaheuristics/evolution-strategy.html#id3">
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../metaheuristics/introduction-genetic-algorithm.html">
+     Genetic Algorithm
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../metaheuristics/introduction-particle-swarm.html">
+     Particle Swarm Optimization
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../metaheuristics/introduction-ant-colony.html">
+     Ant Colony Optimization
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Data Envelopment Analysis
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../queueing/queueing.html">
+   Queueing Theory
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../inventory/inventory.html">
+   Inventory Theory
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../scheduling/scheduling.html">
+   Scheduling
+  </a>
+ </li>
+</ul>
+
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../../_sources/docs/decision-making/dea.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+        <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/unerue/unerue.github.io"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        <a class="issues-button"
+            href="https://github.com/unerue/unerue.github.io/issues/new?title=Issue%20on%20page%20%2Fdocs/decision-making/dea.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        
+    </div>
+</div>
+
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+                title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/unerue/unerue.github.io/master?urlpath=tree/docs/decision-making/dea.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+    </div>
+
+    <!-- Table of contents -->
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+        
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i> Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#ccr-crs-model">
+   CCR(CRS) model
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#bcc-vrs-model">
+   BCC(VRS) model
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#dea-ar">
+   DEA-AR
+  </a>
+ </li>
+</ul>
+
+        </nav>
+        
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="data-envelopment-analysis">
+<h1>Data Envelopment Analysis<a class="headerlink" href="#data-envelopment-analysis" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="ccr-crs-model">
+<h2>CCR(CRS) model<a class="headerlink" href="#ccr-crs-model" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="bcc-vrs-model">
+<h2>BCC(VRS) model<a class="headerlink" href="#bcc-vrs-model" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="dea-ar">
+<h2>DEA-AR<a class="headerlink" href="#dea-ar" title="Permalink to this headline">¶</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">_create_problem</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dmu</span><span class="p">):</span>
+    <span class="n">prob</span> <span class="o">=</span> <span class="n">LpProblem</span><span class="p">(</span><span class="s1">&#39;DMU</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">dmu</span><span class="p">),</span> <span class="n">LpMaximize</span><span class="p">)</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">input_weights</span> <span class="o">=</span> <span class="n">LpVariable</span><span class="o">.</span><span class="n">dicts</span><span class="p">(</span><span class="s1">&#39;input_weight&#39;</span><span class="p">,</span> <span class="p">(),</span> <span class="n">lowBound</span><span class="o">=</span><span class="p">,</span> <span class="n">upBound</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">output_weights</span> <span class="o">=</span> <span class="n">LpVariable</span><span class="o">.</span><span class="n">dicts</span><span class="p">(</span><span class="s1">&#39;output_weight&#39;</span><span class="p">,</span> <span class="p">(),</span> <span class="n">lowBound</span><span class="o">=</span><span class="p">,</span> <span class="n">upBound</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">return_to_scale</span> <span class="o">==</span> <span class="s1">&#39;CCR&#39;</span><span class="p">:</span>
+        <span class="n">w</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">return_to_scale</span> <span class="o">==</span> <span class="s1">&#39;BCC&#39;</span><span class="p">:</span>
+        <span class="n">w</span> <span class="o">=</span> <span class="n">LpVariable</span><span class="o">.</span><span class="n">dicts</span><span class="p">(</span><span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="p">())</span>
+    <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">return_to_scale</span> <span class="o">==</span> <span class="s1">&#39;AR&#39;</span><span class="p">:</span>
+        <span class="k">pass</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Return to scale&#39;</span><span class="p">)</span>
+
+    <span class="c1"># Set up objective function</span>
+    <span class="n">prob</span> <span class="o">+=</span> <span class="n">LpAffineExpression</span><span class="p">([(</span><span class="bp">self</span><span class="o">.</span><span class="n">output_weights</span><span class="p">[</span><span class="n">j0</span><span class="p">][</span><span class="n">r1</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">outputs</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="n">j0</span><span class="p">][</span><span class="n">r1</span><span class="p">])</span> <span class="k">for</span> <span class="n">r1</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_r</span><span class="p">])</span> <span class="o">-</span> <span class="n">w</span>
+
+    <span class="c1"># Set up constraints</span>
+    <span class="n">prob</span> <span class="o">+=</span> <span class="n">LpAffineExpression</span><span class="p">([(</span><span class="bp">self</span><span class="o">.</span><span class="n">input_weights</span><span class="p">[</span><span class="n">j0</span><span class="p">][</span><span class="n">i1</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="n">j0</span><span class="p">][</span><span class="n">i1</span><span class="p">])</span> <span class="k">for</span> <span class="n">i1</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_i</span><span class="p">])</span> <span class="o">==</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;Norm_constraint&quot;</span>
+
+    <span class="k">for</span> <span class="n">j1</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_j</span><span class="p">:</span>
+        <span class="n">prob</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dmu_constraint</span><span class="p">(</span><span class="n">j0</span><span class="p">,</span> <span class="n">j1</span><span class="p">)</span> <span class="o">-</span> \
+            <span class="n">w</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s1">&#39;DMU_constraint_&#39;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">j1</span><span class="p">)])</span>
+    <span class="k">return</span> <span class="n">prob</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">pulp</span> <span class="kn">import</span> <span class="o">*</span>
+
+
+<span class="k">def</span> <span class="nf">_to_dataframe</span><span class="p">(</span><span class="n">indata</span><span class="p">):</span>
+    <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">indata</span><span class="p">)</span> <span class="o">==</span> <span class="n">pd</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">frame</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">indata</span>
+    <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">indata</span><span class="p">)</span> <span class="o">==</span> <span class="n">pd</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">series</span><span class="o">.</span><span class="n">Series</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">indata</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;input_data&#39;</span><span class="p">])</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;Input data is not a valid pandas DataFrame or Series.&#39;</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">DataEnvelopmentAnalysis</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;DataEnvelopmentAnalysis</span>
+<span class="sd">    </span>
+<span class="sd">    A container for the elements of a data envelopment analysis problem. Sets</span>
+<span class="sd">    up the linear programmes and solves them with pulp.</span>
+
+<span class="sd">    Requires</span>
+<span class="sd">    --------</span>
+
+<span class="sd">        inputs: a pandas dataframe of the inputs to the DMUs</span>
+<span class="sd">        outputs: a pandas dataframe of the outputs from the DMUs</span>
+<span class="sd">        kind: &#39;VRS&#39; or &#39;CRS&#39;</span>
+<span class="sd">        in_weights: the weight restriction to apply to all inputs to all DMUs</span>
+<span class="sd">                    (default is [0, inf])</span>
+<span class="sd">        out_weights: the weight restriction to apply to all outputs to all DMUs</span>
+<span class="sd">                     (default is [0, inf)</span>
+
+<span class="sd">    Weight restrictions must be specified as a list. To specify only one bound</span>
+<span class="sd">    leave the other as None, eg. in_weights=[1, None].</span>
+<span class="sd">    </span>
+<span class="sd">    </span>
+<span class="sd">    </span>
+<span class="sd">    </span>
+<span class="sd">    </span>
+<span class="sd">    </span>
+<span class="sd">    </span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inputs</span><span class="p">,</span> <span class="n">outputs</span><span class="p">,</span> <span class="n">return_to_scale</span><span class="o">=</span><span class="s1">&#39;CRS&#39;</span><span class="p">,</span> <span class="n">in_weights</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="kc">None</span><span class="p">],</span> <span class="n">out_weights</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="kc">None</span><span class="p">]):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set up the DMUs&#39; problems, ready to solve.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">inputs</span> <span class="o">=</span> <span class="n">_to_dataframe</span><span class="p">(</span><span class="n">inputs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">outputs</span> <span class="o">=</span> <span class="n">_to_dataframe</span><span class="p">(</span><span class="n">outputs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">return_to_scale</span> <span class="o">=</span> <span class="n">return_to_scale</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">num_dmu</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">num_inputs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">ndim</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">num_outputs</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">J</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">I</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">shape</span>  <span class="c1"># no of firms, inputs</span>
+        <span class="n">_</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">R</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">outputs</span><span class="o">.</span><span class="n">shape</span>  <span class="c1"># no of outputs</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">_i</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">I</span><span class="p">)</span>  <span class="c1"># inputs</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_r</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">R</span><span class="p">)</span>  <span class="c1"># outputs</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_j</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">J</span><span class="p">)</span>  <span class="c1"># DMUs</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_in_weights</span> <span class="o">=</span> <span class="n">in_weights</span>  <span class="c1"># input weight restrictions</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_out_weights</span> <span class="o">=</span> <span class="n">out_weights</span>  <span class="c1"># output weight restrictions</span>
+
+        <span class="c1"># creates dictionary of pulp.LpProblem objects for the DMUs</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dmus</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_problems</span><span class="p">()</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">num_dmu</span> <span class="c1"># Number of DMU</span>
+        
+    <span class="k">def</span> <span class="nf">_create_problem</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dmu</span><span class="p">):</span>
+        <span class="n">prob</span> <span class="o">=</span> <span class="n">LpProblem</span><span class="p">(</span><span class="s1">&#39;DMU</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">dmu</span><span class="p">),</span> <span class="n">LpMaximize</span><span class="p">)</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">input_weights</span> <span class="o">=</span> <span class="n">LpVariable</span><span class="o">.</span><span class="n">dicts</span><span class="p">(</span><span class="s1">&#39;input_weight&#39;</span><span class="p">,</span> <span class="p">(),</span> <span class="n">lowBound</span><span class="o">=</span><span class="p">,</span> <span class="n">upBound</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">output_weights</span> <span class="o">=</span> <span class="n">LpVariable</span><span class="o">.</span><span class="n">dicts</span><span class="p">(</span><span class="s1">&#39;output_weight&#39;</span><span class="p">,</span> <span class="p">(),</span> <span class="n">lowBound</span><span class="o">=</span><span class="p">,</span> <span class="n">upBound</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+        
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">return_to_scale</span> <span class="o">==</span> <span class="s1">&#39;CRS&#39;</span><span class="p">:</span>
+            <span class="n">w</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">return_to_scale</span> <span class="o">==</span> <span class="s1">&#39;VRS&#39;</span><span class="p">:</span>
+            <span class="n">w</span> <span class="o">=</span> <span class="n">LpVariable</span><span class="o">.</span><span class="n">dicts</span><span class="p">(</span><span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="p">())</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">return_to_scale</span> <span class="o">==</span> <span class="s1">&#39;AR&#39;</span><span class="p">:</span>
+            <span class="k">pass</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Return to scale&#39;</span><span class="p">)</span>
+        
+        <span class="c1"># Set up objective function</span>
+        
+        <span class="n">prob</span> <span class="o">+=</span> <span class="n">LpAffineExpression</span><span class="p">([(</span><span class="bp">self</span><span class="o">.</span><span class="n">outputWeights</span><span class="p">[</span><span class="n">j0</span><span class="p">][</span><span class="n">r1</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">outputs</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="n">j0</span><span class="p">][</span><span class="n">r1</span><span class="p">])</span> <span class="k">for</span> <span class="n">r1</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_r</span><span class="p">])</span> <span class="o">-</span> <span class="n">w</span>
+
+        <span class="c1"># Set up constraints</span>
+        <span class="n">prob</span> <span class="o">+=</span> <span class="n">LpAffineExpression</span><span class="p">([(</span><span class="bp">self</span><span class="o">.</span><span class="n">inputWeights</span><span class="p">[</span><span class="n">j0</span><span class="p">][</span><span class="n">i1</span><span class="p">],</span>
+                                          <span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="n">j0</span><span class="p">][</span><span class="n">i1</span><span class="p">])</span> <span class="k">for</span> <span class="n">i1</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_i</span><span class="p">])</span> <span class="o">==</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;Norm_constraint&quot;</span>
+        <span class="k">for</span> <span class="n">j1</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_j</span><span class="p">:</span>
+            <span class="n">prob</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dmu_constraint</span><span class="p">(</span><span class="n">j0</span><span class="p">,</span> <span class="n">j1</span><span class="p">)</span> <span class="o">-</span> <span class="n">w</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;DMU_constraint_</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">dmu</span><span class="p">)</span>
+            
+        <span class="k">return</span> <span class="n">prob</span>
+
+
+        
+
+    <span class="k">def</span> <span class="nf">_create_problems</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">dmu_dict</span> <span class="o">=</span> <span class="p">{</span><span class="n">make_problem</span><span class="p">()</span> <span class="k">for</span> <span class="n">dmu</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_dmu</span><span class="p">)}</span>
+        <span class="k">return</span> <span class="n">dmu_dict</span>
+        
+    
+        
+    <span class="k">def</span> <span class="nf">_create_problems</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Iterate over the inputs and create a dictionary of LP problems, one</span>
+<span class="sd">        for each DMU.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">dmu_dict</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">j0</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_j</span><span class="p">:</span>
+            <span class="n">dmu_dict</span><span class="p">[</span><span class="n">j0</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_make_problem</span><span class="p">(</span><span class="n">j0</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">dmu_dict</span>
+
+    <span class="k">def</span> <span class="nf">_make_problem</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">j0</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Create a pulp.LpProblem for a DMU.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># Set up pulp</span>
+        <span class="n">prob</span> <span class="o">=</span> <span class="n">LpProblem</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s2">&quot;DMU_&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">j0</span><span class="p">)]),</span> <span class="n">LpMaximize</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">inputWeights</span> <span class="o">=</span> <span class="n">LpVariable</span><span class="o">.</span><span class="n">dicts</span><span class="p">(</span><span class="s2">&quot;inputWeight&quot;</span><span class="p">,</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_j</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_i</span><span class="p">),</span>
+                                                  <span class="n">lowBound</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_in_weights</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">upBound</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_in_weights</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">outputWeights</span> <span class="o">=</span> <span class="n">LpVariable</span><span class="o">.</span><span class="n">dicts</span><span class="p">(</span><span class="s2">&quot;outputWeight&quot;</span><span class="p">,</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_j</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_r</span><span class="p">),</span>
+                                                   <span class="n">lowBound</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_out_weights</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">upBound</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_out_weights</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+
+        <span class="c1"># Set returns to scale</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">returns</span> <span class="o">==</span> <span class="s2">&quot;CRS&quot;</span><span class="p">:</span>
+            <span class="n">w</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">returns</span> <span class="o">==</span> <span class="s2">&quot;VRS&quot;</span><span class="p">:</span>
+            <span class="n">w</span> <span class="o">=</span> <span class="n">LpVariable</span><span class="o">.</span><span class="n">dicts</span><span class="p">(</span><span class="s2">&quot;w&quot;</span><span class="p">,</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_j</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_r</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="ne">ValueError</span><span class="p">)</span>
+
+        <span class="c1"># Set up objective function</span>
+        <span class="n">prob</span> <span class="o">+=</span> <span class="n">LpAffineExpression</span><span class="p">(</span>
+            <span class="p">[(</span><span class="bp">self</span><span class="o">.</span><span class="n">outputWeights</span><span class="p">[</span><span class="n">j0</span><span class="p">][</span><span class="n">r1</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">outputs</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="n">j0</span><span class="p">][</span><span class="n">r1</span><span class="p">])</span> <span class="k">for</span> <span class="n">r1</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_r</span><span class="p">])</span> <span class="o">-</span> <span class="n">w</span>
+
+        <span class="c1"># Set up constraints</span>
+        <span class="n">prob</span> <span class="o">+=</span> <span class="n">LpAffineExpression</span><span class="p">([(</span><span class="bp">self</span><span class="o">.</span><span class="n">inputWeights</span><span class="p">[</span><span class="n">j0</span><span class="p">][</span><span class="n">i1</span><span class="p">],</span>
+                                          <span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="n">j0</span><span class="p">][</span><span class="n">i1</span><span class="p">])</span> <span class="k">for</span> <span class="n">i1</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_i</span><span class="p">])</span> <span class="o">==</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;Norm_constraint&quot;</span>
+        <span class="k">for</span> <span class="n">j1</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_j</span><span class="p">:</span>
+            <span class="n">prob</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dmu_constraint</span><span class="p">(</span><span class="n">j0</span><span class="p">,</span> <span class="n">j1</span><span class="p">)</span> <span class="o">-</span> \
+                <span class="n">w</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s1">&#39;DMU_constraint_&#39;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">j1</span><span class="p">)])</span>
+        <span class="k">return</span> <span class="n">prob</span>
+
+    <span class="k">def</span> <span class="nf">_dmu_constraint</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">j0</span><span class="p">,</span> <span class="n">j1</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Calculate and return the DMU constraint for a single DMU&#39;s LP problem.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">eOut</span> <span class="o">=</span> <span class="n">LpAffineExpression</span><span class="p">(</span>
+            <span class="p">[(</span><span class="bp">self</span><span class="o">.</span><span class="n">outputWeights</span><span class="p">[</span><span class="n">j0</span><span class="p">][</span><span class="n">r1</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">outputs</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="n">j1</span><span class="p">][</span><span class="n">r1</span><span class="p">])</span> <span class="k">for</span> <span class="n">r1</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_r</span><span class="p">])</span>
+        <span class="n">eIn</span> <span class="o">=</span> <span class="n">LpAffineExpression</span><span class="p">(</span>
+            <span class="p">[(</span><span class="bp">self</span><span class="o">.</span><span class="n">inputWeights</span><span class="p">[</span><span class="n">j0</span><span class="p">][</span><span class="n">i1</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="n">j1</span><span class="p">][</span><span class="n">i1</span><span class="p">])</span> <span class="k">for</span> <span class="n">i1</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_i</span><span class="p">])</span>
+        <span class="k">return</span> <span class="n">eOut</span> <span class="o">-</span> <span class="n">eIn</span>
+
+    <span class="k">def</span> <span class="nf">_solver</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Iterate over the dictionary of DMUs&#39; problems, solve them, and collate</span>
+<span class="sd">        the results into a pandas dataframe.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">sol_status</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">sol_weights</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">sol_efficiency</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="k">for</span> <span class="n">ind</span><span class="p">,</span> <span class="n">problem</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dmus</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
+            <span class="n">problem</span><span class="o">.</span><span class="n">solve</span><span class="p">()</span>
+            <span class="n">sol_status</span><span class="p">[</span><span class="n">ind</span><span class="p">]</span> <span class="o">=</span> <span class="n">pulp</span><span class="o">.</span><span class="n">LpStatus</span><span class="p">[</span><span class="n">problem</span><span class="o">.</span><span class="n">status</span><span class="p">]</span>
+            <span class="n">sol_weights</span><span class="p">[</span><span class="n">ind</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">problem</span><span class="o">.</span><span class="n">variables</span><span class="p">():</span>
+                <span class="n">sol_weights</span><span class="p">[</span><span class="n">ind</span><span class="p">][</span><span class="n">v</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span><span class="o">.</span><span class="n">varValue</span>
+            <span class="n">sol_efficiency</span><span class="p">[</span><span class="n">ind</span><span class="p">]</span> <span class="o">=</span> <span class="n">pulp</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="n">problem</span><span class="o">.</span><span class="n">objective</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">sol_status</span><span class="p">,</span> <span class="n">sol_efficiency</span><span class="p">,</span> <span class="n">sol_weights</span>
+
+    <span class="k">def</span> <span class="nf">_build_weight_results_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sol_weights</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Rename weights from input and output column names, then build a</span>
+<span class="sd">        pandas dataframe of all weights.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">import</span> <span class="nn">re</span>
+        <span class="n">tmp_dict</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">dmu</span><span class="p">,</span> <span class="n">d</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">sol_weights</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
+            <span class="n">tmp_dict</span><span class="p">[</span><span class="n">dmu</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
+                <span class="n">m</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;[0-9]+$&#39;</span><span class="p">,</span><span class="n">key</span><span class="p">)</span>
+                <span class="n">i</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
+                <span class="k">if</span> <span class="n">key</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;input&quot;</span><span class="p">):</span>
+                    <span class="n">tmp_dict</span><span class="p">[</span><span class="n">dmu</span><span class="p">][</span><span class="s2">&quot;in_&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="n">i</span><span class="p">])]</span> <span class="o">=</span> <span class="n">d</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+                <span class="k">if</span> <span class="n">key</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;output&quot;</span><span class="p">):</span>
+                    <span class="n">tmp_dict</span><span class="p">[</span><span class="n">dmu</span><span class="p">][</span>
+                        <span class="s2">&quot;out_&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">outputs</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="n">i</span><span class="p">])]</span> <span class="o">=</span> <span class="n">d</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+        <span class="n">weight_results</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">tmp_dict</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
+
+        <span class="k">return</span> <span class="n">weight_results</span>
+
+    <span class="k">def</span> <span class="nf">solve</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sol_type</span><span class="o">=</span><span class="s1">&#39;technical&#39;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;&quot;</span>
+<span class="sd">        Solve the problem and create attributes to hold the solutions.</span>
+
+<span class="sd">        Takes:</span>
+<span class="sd">            sol_type: &#39;technical&#39;/&#39;allocative&#39;/&#39;economic&#39;</span>
+<span class="sd">            dmus: tuple defining range of DMUs to solve for.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="n">sol_type</span> <span class="o">==</span> <span class="s1">&#39;technical&#39;</span><span class="p">:</span>
+            <span class="n">sol_status</span><span class="p">,</span> <span class="n">sol_efficiency</span><span class="p">,</span> <span class="n">sol_weights</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_solver</span><span class="p">()</span>
+            <span class="n">weight_results</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_build_weight_results_dict</span><span class="p">(</span><span class="n">sol_weights</span><span class="p">)</span>
+            <span class="n">status_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">sol_status</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;Status&#39;</span><span class="p">)</span>
+            <span class="n">status_df</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">index</span>
+            <span class="n">efficiency_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">sol_efficiency</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;Efficiency&#39;</span><span class="p">)</span>
+            <span class="n">efficiency_df</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">index</span>
+
+            <span class="k">return</span> <span class="n">DEAResults</span><span class="p">(((</span><span class="s1">&#39;Status&#39;</span><span class="p">,</span> <span class="n">status_df</span><span class="p">),</span>
+                               <span class="p">(</span><span class="s1">&#39;Efficiency&#39;</span><span class="p">,</span> <span class="n">efficiency_df</span><span class="p">),</span>
+                               <span class="p">(</span><span class="s1">&#39;Weights&#39;</span><span class="p">,</span> <span class="n">weight_results</span><span class="p">)))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Solution type not yet implemented.&quot;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Solving for technical efficiency instead.&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">solve</span><span class="p">()</span>
+
+
+<span class="k">class</span> <span class="nc">DEAResults</span><span class="p">(</span><span class="nb">dict</span><span class="p">):</span>
+
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A class to hold the results of a DEAProblem and provide methods for</span>
+<span class="sd">    their examination. Essentially a dictionary of pandas Series with</span>
+<span class="sd">    methods for conducting particular operations on DEA results.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<span class="c1">#    def __init__(self):</span>
+<span class="c1">#        super(DEAResults, self).__init__()</span>
+<span class="c1">#        pass</span>
+
+    <span class="k">def</span> <span class="nf">find_comparators</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dmu</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return the DMUs that form the frontier for the specified DMU.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span>
+
+    <span class="k">def</span> <span class="nf">env_corr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">env_vars</span><span class="p">,</span> <span class="n">coeff_plot</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">qq_plot</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Determine correlations with environmental/non-discretionary variables</span>
+<span class="sd">        using a logit regression. Tobit will be implemented when available</span>
+<span class="sd">        upstream in statsmodels.</span>
+
+<span class="sd">        Takes:</span>
+<span class="sd">            env_vars: A pandas dataframe of environmental variables</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            corr_mod: the statsmodels&#39; model instance containing the inputs</span>
+<span class="sd">                      and results from the logit model.</span>
+
+<span class="sd">        Note that there can be no spaces in the variables&#39; names.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+        <span class="kn">from</span> <span class="nn">statsmodels.regression.linear_model</span> <span class="kn">import</span> <span class="n">OLS</span>
+        <span class="kn">from</span> <span class="nn">statsmodels.graphics.gofplots</span> <span class="kn">import</span> <span class="n">qqplot</span>
+        <span class="kn">from</span> <span class="nn">seaborn</span> <span class="kn">import</span> <span class="n">coefplot</span>
+
+        <span class="n">env_data</span> <span class="o">=</span> <span class="n">_to_dataframe</span><span class="p">(</span><span class="n">env_vars</span><span class="p">)</span>
+        <span class="n">corr_data</span> <span class="o">=</span> <span class="n">env_data</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="p">[</span><span class="s1">&#39;Efficiency&#39;</span><span class="p">])</span>
+        <span class="n">corr_mod</span> <span class="o">=</span> <span class="n">OLS</span><span class="o">.</span><span class="n">from_formula</span><span class="p">(</span>
+            <span class="s2">&quot;Efficiency ~ &quot;</span> <span class="o">+</span> <span class="s2">&quot; + &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">env_vars</span><span class="o">.</span><span class="n">columns</span><span class="p">),</span> <span class="n">corr_data</span><span class="p">)</span>
+        <span class="n">corr_res</span> <span class="o">=</span> <span class="n">corr_mod</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+
+        <span class="c1">#plot coeffs</span>
+        <span class="k">if</span> <span class="n">coeff_plot</span><span class="p">:</span>
+            <span class="n">coefplot</span><span class="p">(</span><span class="s2">&quot;Efficiency ~ &quot;</span> <span class="o">+</span> <span class="s2">&quot; + &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">env_vars</span><span class="o">.</span><span class="n">columns</span><span class="p">),</span>
+                     <span class="n">data</span><span class="o">=</span><span class="n">corr_data</span><span class="p">)</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">rotation</span><span class="o">=</span><span class="mi">45</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;right&#39;</span><span class="p">)</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Regression coefficients and standard errors&#39;</span><span class="p">)</span>
+
+        <span class="c1">#plot qq of residuals</span>
+        <span class="k">if</span> <span class="n">qq_plot</span><span class="p">:</span>
+            <span class="n">qqplot</span><span class="p">(</span><span class="n">corr_res</span><span class="o">.</span><span class="n">resid</span><span class="p">,</span> <span class="n">line</span><span class="o">=</span><span class="s1">&#39;s&#39;</span><span class="p">)</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Distribution of residuals&#39;</span><span class="p">)</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="n">corr_res</span><span class="o">.</span><span class="n">summary</span><span class="p">())</span>
+
+        <span class="k">return</span> <span class="n">corr_res</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./docs/decision-making"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+    <a class='left-prev' id="prev-link" href="../metaheuristics/introduction-ant-colony.html" title="previous page">Ant Colony Optimization</a>
+    <a class='right-next' id="next-link" href="../queueing/queueing.html" title="next page">Queueing Theory</a>
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By Kyung-Su Kang<br/>
+        
+            &copy; Copyright 2020.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    
+  <script src="../../_static/js/index.3da636dd464baa7582d2.js"></script>
+
+
+    
+    <!-- Google Analytics -->
+    <script>
+      window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+      ga('create', 'UA-171260246-1', 'auto');
+      ga('set', 'anonymizeIp', true);
+      ga('send', 'pageview');
+    </script>
+    <script async src='https://www.google-analytics.com/analytics.js'></script>
+    <!-- End Google Analytics -->
+    
+  </body>
+</html>

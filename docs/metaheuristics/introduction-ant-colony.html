@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Plant Location Problem &#8212; Operations Research with Python</title>
+    <title>Ant Colony Optimization &#8212; Operations Research with Python</title>
     
   <link rel="stylesheet" href="../../_static/css/index.73d71520a4ca3b99cfee5594769eaaae.css">
 
@@ -57,8 +57,7 @@
     <script async="async" src="../../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Metaheuristics" href="../metaheuristics/introduction-metaheuristics.html" />
-    <link rel="prev" title="Knapsack Problem" href="knapsack.html" />
+    <link rel="prev" title="Particle Swarm Optimization" href="introduction-particle-swarm.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
@@ -98,7 +97,7 @@
   Operations Research
  </span>
 </p>
-<ul class="current nav sidenav_l1">
+<ul class="nav sidenav_l1">
  <li class="toctree-l1 collapsible-parent">
   <a class="reference internal" href="../linear-programming/linear-programming.html">
    Linear Programming
@@ -143,33 +142,33 @@
   <i class="fas fa-chevron-down">
   </i>
  </li>
- <li class="toctree-l1 current active collapsible-parent">
-  <a class="reference internal" href="integer-programming.html">
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../integer-programming/integer-programming.html">
    Integer Programming
   </a>
-  <ul class="current collapse-ul">
+  <ul class="collapse-ul">
    <li class="toctree-l2">
-    <a class="reference internal" href="capital-budgeting.html">
+    <a class="reference internal" href="../integer-programming/capital-budgeting.html">
      Capital Budgeting Problem
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="set-covering.html">
+    <a class="reference internal" href="../integer-programming/set-covering.html">
      Set Covering Problem
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="traveling-salesman.html">
+    <a class="reference internal" href="../integer-programming/traveling-salesman.html">
      Travelling Salesman Problem
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="knapsack.html">
+    <a class="reference internal" href="../integer-programming/knapsack.html">
      Knapsack Problem
     </a>
    </li>
-   <li class="toctree-l2 current active">
-    <a class="current reference internal" href="#">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../integer-programming/plant.html">
      Plant Location Problem
     </a>
    </li>
@@ -183,43 +182,43 @@
   Metaheuristics
  </span>
 </p>
-<ul class="nav sidenav_l1">
+<ul class="current nav sidenav_l1">
  <li class="toctree-l1">
-  <a class="reference internal" href="../metaheuristics/introduction-metaheuristics.html">
+  <a class="reference internal" href="introduction-metaheuristics.html">
    Metaheuristics
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="../metaheuristics/introduction-simulated-annealing.html">
+  <a class="reference internal" href="introduction-simulated-annealing.html">
    Simulated Annealing
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="../metaheuristics/introduction-tabu-search.html">
+  <a class="reference internal" href="introduction-tabu-search.html">
    Tabu Search
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="../metaheuristics/evolution-strategy.html">
+  <a class="reference internal" href="evolution-strategy.html">
    Evolution Strategy
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="../metaheuristics/evolution-strategy.html#id3">
+  <a class="reference internal" href="evolution-strategy.html#id3">
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="../metaheuristics/introduction-genetic-algorithm.html">
+  <a class="reference internal" href="introduction-genetic-algorithm.html">
    Genetic Algorithm
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="../metaheuristics/introduction-particle-swarm.html">
+  <a class="reference internal" href="introduction-particle-swarm.html">
    Particle Swarm Optimization
   </a>
  </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../metaheuristics/introduction-ant-colony.html">
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
    Ant Colony Optimization
   </a>
  </li>
@@ -263,7 +262,7 @@
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../../_sources/docs/integer-programming/plant.ipynb"><button type="button"
+        <a class="dropdown-buttons" href="../../_sources/docs/metaheuristics/introduction-ant-colony.ipynb"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
                 data-placement="left">.ipynb</button></a>
         <!-- Download PDF via print -->
@@ -288,7 +287,7 @@
         aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
     <div class="dropdown-buttons">
         
-        <a class="binder-button" href="https://mybinder.org/v2/gh/executablebooks/jupyter-book/master?urlpath=tree/docs/integer-programming/plant.ipynb"><button type="button"
+        <a class="binder-button" href="https://mybinder.org/v2/gh/executablebooks/jupyter-book/master?urlpath=tree/docs/metaheuristics/introduction-ant-colony.ipynb"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
                 data-placement="left"><img class="binder-button-logo"
                     src="../../_static/images/logo_binder.svg"
@@ -305,6 +304,20 @@
     <!-- Table of contents -->
     <div class="d-none d-md-block col-md-2 bd-toc show">
         
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i> Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#s-aco">
+   S-ACO 알고리즘 절차
+  </a>
+ </li>
+</ul>
+
+        </nav>
+        
     </div>
 </div>
     <div id="main-content" class="row">
@@ -312,63 +325,67 @@
         
               <div>
                 
-  <div class="section" id="plant-location-problem">
-<h1>Plant Location Problem<a class="headerlink" href="#plant-location-problem" title="Permalink to this headline">¶</a></h1>
-<p><strong>이강우 &amp; 김정자. (2012). EXCEL 2010 경영과학. 한경사, 409.</strong></p>
-<p style="text-indent: 1.5em">B전자는 최근 자사 제품의 수요가 급증하여 새로운 제품을 생산할 공장을 신축하기 위하여 3개의 공장 후보지를 선정하였다. B전자는 현재 각 공장에서 생산된 제품을 4개의 물류센터에 공급하고 있으므로 새로 신축할 공장에서 생산될 제품도 4개의 물류센터에 공급하려고 한다. 3개의 공장 후보지의 월 공급능력(개), 월 고정비(천원), 각 공장 후보지에서 4개의 물류센터까지의 수송단가(천원) 및 각 물류센터의 월 수요량(개)은 Table과 같다. B전자의 총비용을 최소로 하는 공장 후보지와 각 신축 공장에서 각 물류센터로의 최적 수송계획을 수립하기 위한 정수계획모형을 작성하고 최적해와 총비용을 구하라.</p>
-<table>
-  <caption><b>Table 1. </b>파출소 후보지역별 설치비용과 8분 이내 도착가능 후보지역</caption>
-  <tr>
-    <th>파출소 후보지역</th>
-    <th>파출소 설치비용(천만원)</th>
-    <th>8분 이내 도착가능 후보지역</th>
-  </tr>
-  <tr> 
-    <td align="center">1</td>
-    <td align="center">6</td>
-    <td align="center">1, 2, 3, 4, 5</td>
-  </tr>
-  <tr> 
-    <td align="center">2</td>
-    <td align="center">7</td>
-    <td align="center">1, 2, 4, 5, 9</td>
-  </tr>
-  <tr>
-    <td align="center">3</td>
-    <td align="center">5</td>
-    <td align="center">1, 3, 4, 5, 6, 7, 8</td>
-  </tr>
-  <tr>
-    <td align="center">4</td>
-    <td align="center">7</td>
-    <td align="center">1, 2, 3, 4, 5, 6, 9</td>
-  </tr>
-  <tr>
-    <td align="center">5</td>
-    <td align="center">9</td>
-    <td align="center">1, 2, 3, 4, 5, 9</td>
-  </tr>
-  <tr>
-    <td align="center">6</td>
-    <td align="center">10</td>
-    <td align="center">3, 4, 6, 7, 8</td>
-  </tr>
-  <tr>
-    <td align="center">7</td>
-    <td align="center">8</td>
-    <td align="center">3, 5, 7, 8, 9</td>
-  </tr>
-  <tr>
-    <td align="center">8</td>
-    <td align="center">5</td>
-    <td align="center">3, 6, 7, 8, 9</td>
-  </tr>
-  <tr>
-    <td align="center">9</td>
-    <td align="center">11</td>
-    <td align="center">2, 4, 5, 7, 8, 9</td>
-  </tr>
-</table>
+  <div class="section" id="ant-colony-optimization">
+<h1>Ant Colony Optimization<a class="headerlink" href="#ant-colony-optimization" title="Permalink to this headline">¶</a></h1>
+<p style="text-indent: 1.5em">개미 군집 최적화(ant colony optimization) 알고리즘은 개미 집단이 먹이를 찾고 둥지로 나르는 행동에서 영감을 얻어 개발한 확률적 탐색기법입니다. 개미들은 지나온 길에 페르몬(pheromone) 자국을 남기며 이 페르몬 자국은 뒤 따르는 개미들의 행동에 영향을 줍니다. 개미는 먹이를 찾을 때 페르몬을 매개로 하는 간접 의사소통에 의해 상호작용하면서 짧은 길을 찾아 나가는 것으로 알려져 있습니다. 개미 군집 최적화는 이산 탐색 공간을 갖는 조합 최적화 문제에 주로 적용됩니다.</p>
+<p style="text-indent: 1.5em">$m_{A}(t)$와 $m_{B}(t)$는 시간 $t$에 각 경로 A와 B에 있는 개미의 수며 개미가 시간 단계 $t+1$에서 경로 A를 선택할 확률, $P_{A}(t+1)$은 다음과 같습니다.</p>
+<div class="math notranslate nohighlight">
+\[\begin{equation}
+P_{A}(t+1)=\frac{(c+m_{A}(t))^{\alpha}}{(c+m_{A}(t))^{\alpha}+(c+m_{B}(t))^{\alpha}}=1-P_{B}(t+1)
+\end{equation}\]</div>
+<p style="text-indent: 1.5em">$\alpha$는 축적된 페로몬 양에 따른 편향을 나타내며 $\alpha$가 클수록 개미가 페로몬 농도가 높은 경로를 선택할 확률이 높아집니다. $c$는 새로운 경로로 이끄는 정도를 나타내며 $c$가 커질수록 경로의 무작위 선택을 막기 위해서 더 많은 양의 페로몬이 축적되어야 합니다.</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{equation}
+p_{ij}^{k}(t)=
+    \begin{cases}
+        \frac{\tau_{ij}^{\alpha}(t)}{\sum_{u \in N_{i}^{k}} \tau_{iu}^{\alpha}(t)}, \quad \text{if } j \in N_{i}^{k}\\
+        0 \qquad \qquad     \text{if } j \notin N_{i}^{k}
+    \end{cases}
+\end{equation}\end{split}\]</div>
+<div class="section" id="s-aco">
+<h2>S-ACO 알고리즘 절차<a class="headerlink" href="#s-aco" title="Permalink to this headline">¶</a></h2>
+<p style="text-indent: 1.5em"></p>
+<div>
+    <ul style="list-style-type: none;">
+        <li><b>STEP 1: (Initialize)</b></li>
+            <ol>
+                <li>$\tau_{ij}(0)=\tau(0),\,\forall (i,j) \in A$에 작은 값을 부여한다.</li>
+                <li>$t=0$으로 두고, $m$개의 모든 개미를 시작점에 둔다.</li>
+            </ol>
+        <li><b>STEP 2: (Finding, Removing, Calculating route)</b></li>
+            <ol>
+                <li>$x^{k}(t)=\emptyset,\, k=1,2,\dots,m$으로 둔다.</li>
+                <li>전이확률을 계산한 뒤, 다음에 이동할 호를 선택하여 경로 $x^{k}(t)$에 추가하면서 목적지까지 도달한다.</li>
+                <li>목적지에 도달하면 전진 경로를 찾으며 $x^{k}(t)$에서 모든 경로를 제거한다.</li>
+                <li>$x^{k}(t)$의 경로길이, $f(x^{k}(t))$를 계산한다.</li>
+            </ol>
+        <li><b>STEP 3: </b>(Pheromone vaporization)</li>
+            <ol>
+                <li>$\tau_{ij}(t) \leftarrow(1-\rho)\tau_{ij}(t),\, \forall(i,j) \in A$로 모든 호에서 페로몬 $tau_{ij}(t), \, \forall(i,j) \in A$를 감소(증발)시킨다.</li>
+                <li></li>
+            </ol>
+        <li><b>STEP 4: </b>(Adding pheromone)</li>
+            <ol>
+                <li>각 개미 $k=1,2,\dots,m$에 대해 시간 단계 $t$의 경로 $x^{k}(t)$에 있는 모든 호 $(i,j)\in x^{k}(t)$에 추가되는 페로몬 양, $\Delta \tau_{ij}^{k}(t) = \frac{1}{f(x^{k}(t)},\,\forall (i,j) \in x^{k}(t), \forall k$를 구한다.</li>
+                <li>$\tau_{ij}(t+1)=\tau_{ij}(t)+\sum_{k=1}^{m}\Delta \tau_{ij}^{k}(t), \forall (i,j)\in A$를 계산하여 모든 호 $(i,j) \in A$에 대해 $\tau_{ij}(t+1)$을 구한다.</li>
+            </ol>
+        <li><b>STEP 5: </b>(Terminal condition)</li>
+            <ol>
+                <li>종료조건을 만족하면 끝낸다.</li>
+                <li>그렇지 않으면 모든 개미를 시작점에 두고, $t \leftarrow t+1$로 두고 <b>STEP 2</b>로 간다.</li>
+            </ol>
+    </ul>
+</div><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">단점</span>
+
+<span class="o">*</span> <span class="n">매우</span> <span class="n">단순한</span> <span class="n">그래프에서는</span> <span class="n">최단</span> <span class="n">경로를</span> <span class="n">잘</span> <span class="n">찾으나</span><span class="p">,</span> <span class="n">문제가</span> <span class="n">복잡해질수록</span> <span class="n">안정적이지</span> <span class="n">못하고</span> <span class="n">파라미터에</span> <span class="n">민감해서</span> <span class="n">성능이</span> <span class="n">매우</span> <span class="n">떨어진다</span><span class="o">.</span>
+<span class="o">*</span> <span class="n">해의</span> <span class="n">품질에</span> <span class="n">기초한</span> <span class="n">페로몬</span> <span class="n">갱신이</span> <span class="n">그렇지</span> <span class="n">않는</span> <span class="n">경우보다</span> <span class="n">월등히</span> <span class="n">좋읂</span> <span class="n">ㅐ를</span> <span class="n">찾았다</span><span class="o">.</span> 
+</pre></div>
+</div>
+</div>
+</div>
+</div>
 </div>
 
     <script type="text/x-thebe-config">
@@ -384,7 +401,7 @@
         },
         kernelOptions: {
             kernelName: "python3",
-            path: "./docs/integer-programming"
+            path: "./docs/metaheuristics"
         },
         predefinedOutput: true
     }
@@ -399,8 +416,7 @@
     
     <div class='prev-next-bottom'>
         
-    <a class='left-prev' id="prev-link" href="knapsack.html" title="previous page">Knapsack Problem</a>
-    <a class='right-next' id="next-link" href="../metaheuristics/introduction-metaheuristics.html" title="next page">Metaheuristics</a>
+    <a class='left-prev' id="prev-link" href="introduction-particle-swarm.html" title="previous page">Particle Swarm Optimization</a>
 
     </div>
     <footer class="footer mt-5 mt-md-0">

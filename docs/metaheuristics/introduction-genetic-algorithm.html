@@ -1,0 +1,685 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Genetic Algorithm &#8212; Operations Research with Python</title>
+    
+  <link rel="stylesheet" href="../../_static/css/index.73d71520a4ca3b99cfee5594769eaaae.css">
+
+    
+  <link rel="stylesheet"
+    href="../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="../../_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="../../_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/sphinx-book-theme.40e2e510f6b7d1648584402491bb10fe.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="../../_static/js/index.3da636dd464baa7582d2.js">
+
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../../_static/sphinx-book-theme.d31b09fe5c1d09cb49b26a786de4a05d.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Particle Swarm Optimization" href="introduction-particle-swarm.html" />
+    <link rel="prev" title="Evolution Strategy" href="evolution-strategy.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="../../index.html">
+  
+  
+  <h1 class="site-logo" id="site-title">Operations Research with Python</h1>
+  
+</a>
+</div><form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+    <ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../index.html">
+   Introduction
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Operations Research
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../linear-programming/linear-programming.html">
+   Linear Programming
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../linear-programming/product-mix.html">
+     Product Mix Problem
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../linear-programming/production-planning.html">
+     Production Planning Problem
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../linear-programming/sensitivity-analysis.html">
+     Sensitivity Analysis
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../linear-programming/workforce-scheduling.html">
+     Workforce Scheduling
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../linear-programming/vehicle-routing.html">
+     Vehicle Routing Problem
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../linear-programming/transportation.html">
+     Transportation Problem
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../linear-programming/unbalanced-transportation.html">
+     Unbalanced Transportation Problem
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../integer-programming/integer-programming.html">
+   Integer Programming
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../integer-programming/capital-budgeting.html">
+     Capital Budgeting Problem
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../integer-programming/set-covering.html">
+     Set Covering Problem
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../integer-programming/traveling-salesman.html">
+     Travelling Salesman Problem
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../integer-programming/knapsack.html">
+     Knapsack Problem
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../integer-programming/plant.html">
+     Plant Location Problem
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Metaheuristics
+ </span>
+</p>
+<ul class="current nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="introduction-metaheuristics.html">
+   Metaheuristics
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="introduction-simulated-annealing.html">
+   Simulated Annealing
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="introduction-tabu-search.html">
+   Tabu Search
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="evolution-strategy.html">
+   Evolution Strategy
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="evolution-strategy.html#id3">
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Genetic Algorithm
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="introduction-particle-swarm.html">
+   Particle Swarm Optimization
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="introduction-ant-colony.html">
+   Ant Colony Optimization
+  </a>
+ </li>
+</ul>
+
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../../_sources/docs/metaheuristics/introduction-genetic-algorithm.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+        <!-- Source interaction buttons -->
+
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+                title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/executablebooks/jupyter-book/master?urlpath=tree/docs/metaheuristics/introduction-genetic-algorithm.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+    </div>
+
+    <!-- Table of contents -->
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+        
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i> Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#structure-of-genetic-algorithm">
+   Structure of Genetic Algorithm
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#representation">
+     Representation
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#evaluate-fitness">
+     Evaluate Fitness
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#selection">
+     Selection
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#dd">
+       dd
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+        </nav>
+        
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="genetic-algorithm">
+<h1>Genetic Algorithm<a class="headerlink" href="#genetic-algorithm" title="Permalink to this headline">¶</a></h1>
+<p><b>유전 알고리즘(genetic algorithm, GA)</b>은 메타휴리스틱스의 고전이며 진화알고리즘 등 여러 이론의 바탕이 되었으며 1975년 Holland가 소개하였습니다. 유전 알고리즘은 진화이론에서 사용하는 개념과 용어를 사용하고 있는데, 이는 유전자에서 발생하는 진화 현상을 모방하여 만들어졌기 때문입니다. 유전 알고리즘은 가능해의 집합(해집단)을 형성하여 그 집합에서 목적함수와 연관된 적합도를 평가한 후, 개체의 적합도에 따라 자연 선택하여 새로운 집합을 만듭니다. 그 후 집합의 개체들 간 유전연산(이종교배, 돌연변이)을 적용하여 새로운 종들을 만든 후 그 종들의 적합도를 평가합니다. 그리고 다시 자연선택으로 새로운 종들을 형성하는 과정을 반복합니다. 반복되는 과정을 통해 자연에서의 진화현상에서 뛰어난 종들이 살아남듯, 유전 알고리즘도 마찬가지로 뛰어난 해들이 남을 것이라 기대할 수 있습니다. 실제 유전 알고리즘를 적용할 때는 명확하게 설정해야 할 작업들이 많아지게 되고, 이에 따라 적용의 융통성도 많습니다. 스키마 이론을 통하여 부분적으로 설명되고는 있으나, 아직 유전 알고리즘이 최적해로 수렴한다는 것은 완벽하지 못합니다만, 그럼에도 연구자들의 많은 관심을 받는 이유는 진화 과정이 자연계에서 오랫동안 성공적으로 수행되고 있기 때문입니다.</p>
+<div class="section" id="structure-of-genetic-algorithm">
+<h2>Structure of Genetic Algorithm<a class="headerlink" href="#structure-of-genetic-algorithm" title="Permalink to this headline">¶</a></h2>
+<p style="text-indent: 1.5em">유전 알고리즘은 해를 표현한 염색체(chromosome)라는 개체들로 이루어진 해집단을 가지고 시작합니다. 해집단은 세대마다 일정 수의 개체를 유지하고 적합도를 평가하여 다음 세대에 생존할 개체를 중복 허용하여 확률적으로 선택(selection)합니다. 선택된 개체들 중 일부의 개체들은 짝(parent)을 지어 자손(children or offspring)을 낳습니다. 이를 교차(crossover)라고 하고 생산되는 자손 유전자 중, 돌연변이(mutation)가 발현될 수도 있습니다. 이러한 진화 과정이 종료조건을 만족할 때까지 반복합니다. 이것이 유전 알고리즘입니다.</p>
+<div class="section" id="representation">
+<h3>Representation<a class="headerlink" href="#representation" title="Permalink to this headline">¶</a></h3>
+<p style="text-indent: 1.5em">유전 알고리즘을 적용하는데 가장 중요한 단계로 해를 어떻게 표현할 것인가를 고민해야 합니다. 해의 표현은 유전 알고리즘의 적합도 평가와 유전연산자 적용 등에 영향을 주기 때문에 문제의 특성을 정확하게 반영해야 합니다. 예를 들어, 함수 $f(x)=x^2+5.0$를 최대화하는 변수 값 $x$를 찾는다고 생각해봅시다. 그리고 $x$는 $0\lt x\le 31$보다 작은 정수라는 제약조건도 있다고 가정합시다. $0$은 $[0 0 0 0 0]$과 $31$은 $[1 1 1 1 1]$로 표현되며, $x$를 5비트의 2진수 벡터로 표현할 수 있습니다. 유전 알고리즘에서 이진수 벡터를 생성하는 것을 인코딩(encoding) 그리고 이를 해석하여 해로 표현하는 과정을 디코딩(decoding)이라고도 합니다. 파이썬으로 구현하면 다음과 같습니다.</p><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="k">def</span> <span class="nf">decoding</span><span class="p">(</span><span class="n">chromosome</span><span class="p">):</span>
+    <span class="n">decimal</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">reversed</span><span class="p">(</span><span class="n">chromosome</span><span class="p">)):</span>
+        <span class="n">decimal</span> <span class="o">+=</span> <span class="n">v</span> <span class="o">*</span> <span class="mi">2</span><span class="o">**</span><span class="n">i</span>
+    <span class="k">return</span> <span class="n">decimal</span>
+
+<span class="n">population</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
+
+<span class="k">for</span> <span class="n">chromosome</span> <span class="ow">in</span> <span class="n">population</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Chromosome: </span><span class="si">{}</span><span class="s1"> Decimal: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">chromosome</span><span class="p">,</span> <span class="n">decoding</span><span class="p">(</span><span class="n">chromosome</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Chromosome: [1 0 0 1 1] Decimal: 19
+Chromosome: [1 1 1 1 0] Decimal: 30
+Chromosome: [1 1 0 0 0] Decimal: 24
+Chromosome: [0 0 1 0 1] Decimal: 5
+Chromosome: [1 1 1 1 1] Decimal: 31
+Chromosome: [1 0 0 0 0] Decimal: 16
+Chromosome: [0 1 0 0 0] Decimal: 8
+Chromosome: [0 0 0 0 1] Decimal: 1
+Chromosome: [1 1 0 0 1] Decimal: 25
+Chromosome: [1 0 0 1 1] Decimal: 19
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="evaluate-fitness">
+<h3>Evaluate Fitness<a class="headerlink" href="#evaluate-fitness" title="Permalink to this headline">¶</a></h3>
+<p style="text-indent: 1.5em">적합도(fitness)는 유전 알고리즘에서 최적화하려는 목적입니다. <div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">fitness</span><span class="p">(</span><span class="n">chromosome</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">decoding</span><span class="p">(</span><span class="n">chromosome</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="mf">5.0</span>
+
+<span class="k">for</span> <span class="n">chromosome</span> <span class="ow">in</span> <span class="n">population</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Chromosome: </span><span class="si">{}</span><span class="s1"> Decimal: </span><span class="si">{}</span><span class="s1"> Fitness: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">chromosome</span><span class="p">,</span> <span class="n">decoding</span><span class="p">(</span><span class="n">chromosome</span><span class="p">),</span> <span class="n">fitness</span><span class="p">(</span><span class="n">chromosome</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Chromosome: [0, 1, 1, 0, 1] Decimal: 13 Fitness: 174.0
+Chromosome: [1, 0, 1, 0, 0] Decimal: 20 Fitness: 405.0
+Chromosome: [0, 1, 0, 0, 1] Decimal: 9 Fitness: 86.0
+Chromosome: [1, 0, 0, 0, 0] Decimal: 16 Fitness: 261.0
+Chromosome: [1, 1, 0, 0, 1] Decimal: 25 Fitness: 630.0
+Chromosome: [1, 1, 0, 1, 0] Decimal: 26 Fitness: 681.0
+Chromosome: [1, 0, 0, 1, 1] Decimal: 19 Fitness: 366.0
+Chromosome: [0, 1, 1, 1, 1] Decimal: 15 Fitness: 230.0
+Chromosome: [0, 0, 0, 1, 0] Decimal: 2 Fitness: 9.0
+Chromosome: [0, 0, 0, 0, 1] Decimal: 1 Fitness: 6.0
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="selection">
+<h3>Selection<a class="headerlink" href="#selection" title="Permalink to this headline">¶</a></h3>
+<p style="text-indent: 1.5em">선택은 염색체의 적합도에 기초하여 해집단에서 다음 세대에 생존할 염색체를 고르는 과정입니다. 유전 알고리즘에서 선택은 다양성(diviersity)와 선택압력(selective pressure)이 조화를 이룰 수 있어야 합니다. 선택방법에는 룰렛휠(roulette wheel), 순위(ranking), 토너먼트(tournament) 등이 있습니다.</p> <div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">defaultdict</span>
+<span class="kn">from</span> <span class="nn">operator</span> <span class="kn">import</span> <span class="n">getitem</span> 
+
+<span class="k">def</span> <span class="nf">ranking_selection</span><span class="p">(</span><span class="n">population</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">dict</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">chromosome</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">population</span><span class="p">):</span>
+        <span class="n">result</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s1">&#39;Chromosome&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">chromosome</span>
+        <span class="n">result</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s1">&#39;Decimal&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">decoding</span><span class="p">(</span><span class="n">chromosome</span><span class="p">)</span>
+        <span class="n">result</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s1">&#39;Fitness&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">fitness</span><span class="p">(</span><span class="n">chromosome</span><span class="p">)</span>
+        
+    <span class="n">result</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">items</span><span class="p">(),</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="s1">&#39;Fitness&#39;</span><span class="p">],</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    
+    <span class="n">total</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">([</span><span class="n">i</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="s1">&#39;Fitness&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">result</span><span class="p">])</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">result</span><span class="p">:</span>
+        <span class="n">i</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="s1">&#39;Prob.&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">i</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="s1">&#39;Fitness&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="n">total</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+        
+    <span class="n">tmp</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">while</span> <span class="n">n</span><span class="p">:</span>
+        <span class="n">loop</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">while</span> <span class="n">loop</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">result</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">i</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="s1">&#39;Prob.&#39;</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">():</span>
+                    <span class="n">tmp</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+                    <span class="n">selected</span> <span class="o">=</span> <span class="kc">True</span>
+                    <span class="k">break</span>
+            <span class="k">if</span> <span class="n">selected</span><span class="p">:</span>
+                <span class="n">loop</span> <span class="o">=</span> <span class="kc">False</span>
+
+        <span class="n">n</span> <span class="o">-=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">result</span><span class="p">,</span> <span class="n">tmp</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">selected</span><span class="p">,</span> <span class="n">t</span> <span class="o">=</span> <span class="n">ranking_selection</span><span class="p">(</span><span class="n">population</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">selected</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(5, {&#39;Chromosome&#39;: [1, 1, 0, 1, 0], &#39;Decimal&#39;: 26, &#39;Fitness&#39;: 681.0, &#39;Prob.&#39;: 0.239})
+(4, {&#39;Chromosome&#39;: [1, 1, 0, 0, 1], &#39;Decimal&#39;: 25, &#39;Fitness&#39;: 630.0, &#39;Prob.&#39;: 0.221})
+(1, {&#39;Chromosome&#39;: [1, 0, 1, 0, 0], &#39;Decimal&#39;: 20, &#39;Fitness&#39;: 405.0, &#39;Prob.&#39;: 0.142})
+(6, {&#39;Chromosome&#39;: [1, 0, 0, 1, 1], &#39;Decimal&#39;: 19, &#39;Fitness&#39;: 366.0, &#39;Prob.&#39;: 0.129})
+(3, {&#39;Chromosome&#39;: [1, 0, 0, 0, 0], &#39;Decimal&#39;: 16, &#39;Fitness&#39;: 261.0, &#39;Prob.&#39;: 0.092})
+(7, {&#39;Chromosome&#39;: [0, 1, 1, 1, 1], &#39;Decimal&#39;: 15, &#39;Fitness&#39;: 230.0, &#39;Prob.&#39;: 0.081})
+(0, {&#39;Chromosome&#39;: [0, 1, 1, 0, 1], &#39;Decimal&#39;: 13, &#39;Fitness&#39;: 174.0, &#39;Prob.&#39;: 0.061})
+(2, {&#39;Chromosome&#39;: [0, 1, 0, 0, 1], &#39;Decimal&#39;: 9, &#39;Fitness&#39;: 86.0, &#39;Prob.&#39;: 0.03})
+(8, {&#39;Chromosome&#39;: [0, 0, 0, 1, 0], &#39;Decimal&#39;: 2, &#39;Fitness&#39;: 9.0, &#39;Prob.&#39;: 0.003})
+(9, {&#39;Chromosome&#39;: [0, 0, 0, 0, 1], &#39;Decimal&#39;: 1, &#39;Fitness&#39;: 6.0, &#39;Prob.&#39;: 0.002})
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="dd">
+<h4>dd<a class="headerlink" href="#dd" title="Permalink to this headline">¶</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">),</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
+
+<span class="n">x</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="s1">&#39;Prob.&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">selected</span><span class="p">]</span>
+<span class="n">labels</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">selected</span><span class="p">]</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">pie</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">labels</span><span class="o">=</span><span class="n">labels</span><span class="p">,</span> <span class="n">autopct</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%1.1f%%</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">wedgeprops</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">width</span><span class="o">=</span><span class="mf">0.7</span><span class="p">),</span> <span class="n">textprops</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;size&#39;</span><span class="p">:</span> <span class="mi">6</span><span class="p">})</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/introduction-genetic-algorithm_8_0.png" src="../../_images/introduction-genetic-algorithm_8_0.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">i</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="s1">&#39;Fitness&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">result</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
+<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">184</span><span class="o">-</span><span class="mi">53</span><span class="n">a1f89c9ffd</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="ne">----&gt; </span><span class="mi">1</span> <span class="p">[</span><span class="n">i</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="s1">&#39;Fitness&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">result</span><span class="p">]</span>
+
+<span class="ne">NameError</span>: name &#39;result&#39; is not defined
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">selected</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">i</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="s1">&#39;Fitness&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>681.0
+630.0
+405.0
+366.0
+261.0
+230.0
+174.0
+86.0
+9.0
+6.0
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Individual</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">solution</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">solution</span> <span class="o">=</span> <span class="n">solution</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">decimal</span> <span class="o">=</span> <span class="n">decoding</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">solution</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fitness</span> <span class="o">=</span> <span class="n">fitness</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">solution</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">value</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">gene</span><span class="p">,</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">v</span> <span class="o">*</span> <span class="mi">2</span><span class="o">**</span><span class="n">i</span><span class="p">)</span>
+    <span class="n">value</span> <span class="o">+=</span> <span class="n">v</span> <span class="o">*</span> <span class="mi">2</span><span class="o">**</span><span class="n">i</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0 1 1
+1 1 2
+2 1 4
+3 1 8
+4 1 16
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">value</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>31
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">gene</span><span class="o">*</span><span class="p">(</span><span class="mi">2</span><span class="o">**</span><span class="nb">len</span><span class="p">(</span><span class="n">gene</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>160
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">GeneticAlgorithm</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">pass</span>
+    
+    <span class="k">def</span> <span class="nf">_chromosome</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">pass</span>
+    
+    <span class="k">def</span> <span class="nf">_population</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">pass</span>
+    
+    <span class="k">def</span> <span class="nf">_selection</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">pass</span>
+    
+    <span class="k">def</span> <span class="nf">_roulettewheel</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">pass</span>
+    
+    <span class="k">def</span> <span class="nf">_crossover</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">pass</span>
+    
+    <span class="k">def</span> <span class="nf">_mutation</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">pass</span>
+    
+    <span class="k">def</span> <span class="nf">_next</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">pass</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./docs/metaheuristics"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+    <a class='left-prev' id="prev-link" href="evolution-strategy.html" title="previous page">Evolution Strategy</a>
+    <a class='right-next' id="next-link" href="introduction-particle-swarm.html" title="next page">Particle Swarm Optimization</a>
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By The Jupyter Book community<br/>
+        
+            &copy; Copyright 2020.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    
+  <script src="../../_static/js/index.3da636dd464baa7582d2.js"></script>
+
+
+    
+  </body>
+</html>

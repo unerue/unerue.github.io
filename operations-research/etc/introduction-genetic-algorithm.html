@@ -1,0 +1,982 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Genetic Algorithm &#8212; 경영과학과 컴퓨터 비전</title>
+    
+  <link href="../../_static/css/theme.css" rel="stylesheet">
+  <link href="../../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="../../_static/js/index.be7d3bbb2ef33a8344ce.js">
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../../_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+<script async="" src="https://www.google-analytics.com/analytics.js"></script>
+<script>
+                        window.ga = window.ga || function () {
+                            (ga.q = ga.q || []).push(arguments) };
+                        ga.l = +new Date;
+                        ga('create', 'UA-171260246-1', 'auto');
+                        ga('set', 'anonymizeIp', true);
+                        ga('send', 'pageview');
+                    </script>
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../../index.html">
+      
+      
+      
+      <h1 class="site-logo" id="site-title">경영과학과 컴퓨터 비전</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../index.html">
+   데이터 과학
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Intermediate Python
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../object-oriented/01-object-oriented.html">
+   객체 지향 프로그래밍
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../object-oriented/02-design-pattern.html">
+   디자인 패턴
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Computer Vision
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../computer-vision/introduction.html">
+   시작하기 앞서
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../computer-vision/image-libraries.html">
+     영상 처리 라이브러리
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../computer-vision/numpy-matplotlib.html">
+     NumPy와 Matplotlib
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../computer-vision/classifier-1.html">
+   이미지 분류기(1)
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+  <label for="toctree-checkbox-2">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../computer-vision/020-image-processing.html">
+     2장 영상 처리
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../computer-vision/022-thresholding.html">
+     임계처리
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../computer-vision/022-histogram.html">
+     히스토그램
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../computer-vision/023-arithmetic-operation.html">
+     산술 연산
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../computer-vision/024-geometric-transform.html">
+     기하하적 변환
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../computer-vision/025-binarization.html">
+     이진화와 모폴로지
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../computer-vision/021-color-space.html">
+     색공간
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../computer-vision/030-filtering.html">
+     영상 필터
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../computer-vision/070-machine-learning.html">
+     7장 기계학습
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../computer-vision/classifier-sift.html">
+     SIFT (2004)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../computer-vision/032-blurring.html">
+     Image Denoising with Denoising Autoencoder
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../computer-vision/classifier-hog.html">
+     HOG
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../computer-vision/classifier-lenet.html">
+     LeNet과 합성곱 신경망
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../computer-vision/classifier-2.html">
+   이미지 분류기(2)
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
+  <label for="toctree-checkbox-3">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../computer-vision/classifier-alexnet.html">
+     AlexNet
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../computer-vision/classifier-zfnet.html">
+     ZFNet
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../computer-vision/classifier-nin.html">
+     Network in Network
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../computer-vision/classifier-vgg.html">
+     VGGNet
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../computer-vision/classifier-googlenet.html">
+     GoogLeNet
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../computer-vision/classifier-resnet.html">
+     ResNet
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../computer-vision/classifier-densenet.html">
+     DenseNet
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../computer-vision/image-segmentation.html">
+   영상 분할
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/>
+  <label for="toctree-checkbox-4">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../computer-vision/semantic-fcn.html">
+     FCN
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../computer-vision/semantic-unet.html">
+     UNet
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../computer-vision/semantic-deeplab.html">
+     DeepLab
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../computer-vision/object-detection.html">
+   객체 탐지
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/>
+  <label for="toctree-checkbox-5">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../computer-vision/object-rcnn.html">
+     R-CNN
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../computer-vision/object-sppnet.html">
+     SPPNet
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../computer-vision/object-fast-rcnn.html">
+     Fast R-CNN
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../computer-vision/object-faster-rcnn.html">
+     Faster R-CNN
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../computer-vision/object-ohem.html">
+     OHEM
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../computer-vision/object-yolov1.html">
+     YOLOv1
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../computer-vision/object-ssd.html">
+     SSD
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../computer-vision/object-fpn.html">
+     FPN
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../computer-vision/object-retinanet.html">
+     RetinaNet
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../computer-vision/object-yolov3.html">
+     YOLOv3
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../computer-vision/instance-segmentation.html">
+   개체 분할
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/>
+  <label for="toctree-checkbox-6">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../computer-vision/instance-mask-rcnn.html">
+     Mask R-CNN
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Operations Research
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../000-introduction.html">
+   1장 시작하기 앞서
+  </a>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../linear-programming/linear-programming.html">
+   선형 계획법
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/>
+  <label for="toctree-checkbox-7">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../linear-programming/product-mix.html">
+     Product Mix Problem
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../linear-programming/production-planning.html">
+     생산계획문제
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../linear-programming/sensitivity-analysis.html">
+     민감도 분석
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../linear-programming/unbalanced-transportation.html">
+     Unbalanced Transportation Problem
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../linear-programming/vehicle-routing.html">
+     차량 경로 문제
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../linear-programming/workforce-scheduling.html">
+     Workforce Scheduling
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../integer-programming/integer-programming.html">
+   정수 계획법
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/>
+  <label for="toctree-checkbox-8">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../integer-programming/traveling-salesman.html">
+     Travelling Salesman Problem
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../integer-programming/knapsack.html">
+     Knapsack Problem
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../integer-programming/capital-budgeting.html">
+     Capital Budgeting Problem
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../integer-programming/plant.html">
+     Plant Location Problem
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../integer-programming/set-covering.html">
+     Set Covering Problem
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+    </div>
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../../_sources/operations-research/etc/introduction-genetic-algorithm.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+                onclick="printPdf(this)" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        
+        <a class="issues-button"
+            href="https://github.com/unerue/unerue.github.io/issues/new?title=Issue%20on%20page%20%2Foperations-research/etc/introduction-genetic-algorithm.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        
+    </div>
+</div>
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+        title="Fullscreen mode"><i
+            class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/unerue/unerue.github.io/master?urlpath=lab/tree/operations-research/etc/introduction-genetic-algorithm.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show noprint">
+            
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#structure-of-genetic-algorithm">
+   Structure of Genetic Algorithm
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#representation">
+     Representation
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#evaluate-fitness">
+     Evaluate Fitness
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#selection">
+     Selection
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#dd">
+       dd
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Genetic Algorithm</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#structure-of-genetic-algorithm">
+   Structure of Genetic Algorithm
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#representation">
+     Representation
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#evaluate-fitness">
+     Evaluate Fitness
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#selection">
+     Selection
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#dd">
+       dd
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            
+              <div>
+                
+  <div class="tex2jax_ignore mathjax_ignore section" id="genetic-algorithm">
+<h1>Genetic Algorithm<a class="headerlink" href="#genetic-algorithm" title="Permalink to this headline">¶</a></h1>
+<p><b>유전 알고리즘(genetic algorithm, GA)</b>은 메타휴리스틱스의 고전이며 진화알고리즘 등 여러 이론의 바탕이 되었으며 1975년 Holland가 소개하였습니다. 유전 알고리즘은 진화이론에서 사용하는 개념과 용어를 사용하고 있는데, 이는 유전자에서 발생하는 진화 현상을 모방하여 만들어졌기 때문입니다. 유전 알고리즘은 가능해의 집합(해집단)을 형성하여 그 집합에서 목적함수와 연관된 적합도를 평가한 후, 개체의 적합도에 따라 자연 선택하여 새로운 집합을 만듭니다. 그 후 집합의 개체들 간 유전연산(이종교배, 돌연변이)을 적용하여 새로운 종들을 만든 후 그 종들의 적합도를 평가합니다. 그리고 다시 자연선택으로 새로운 종들을 형성하는 과정을 반복합니다. 반복되는 과정을 통해 자연에서의 진화현상에서 뛰어난 종들이 살아남듯, 유전 알고리즘도 마찬가지로 뛰어난 해들이 남을 것이라 기대할 수 있습니다. 실제 유전 알고리즘를 적용할 때는 명확하게 설정해야 할 작업들이 많아지게 되고, 이에 따라 적용의 융통성도 많습니다. 스키마 이론을 통하여 부분적으로 설명되고는 있으나, 아직 유전 알고리즘이 최적해로 수렴한다는 것은 완벽하지 못합니다만, 그럼에도 연구자들의 많은 관심을 받는 이유는 진화 과정이 자연계에서 오랫동안 성공적으로 수행되고 있기 때문입니다.</p>
+<div class="section" id="structure-of-genetic-algorithm">
+<h2>Structure of Genetic Algorithm<a class="headerlink" href="#structure-of-genetic-algorithm" title="Permalink to this headline">¶</a></h2>
+<p style="text-indent: 1.5em">유전 알고리즘은 해를 표현한 염색체(chromosome)라는 개체들로 이루어진 해집단을 가지고 시작합니다. 해집단은 세대마다 일정 수의 개체를 유지하고 적합도를 평가하여 다음 세대에 생존할 개체를 중복 허용하여 확률적으로 선택(selection)합니다. 선택된 개체들 중 일부의 개체들은 짝(parent)을 지어 자손(children or offspring)을 낳습니다. 이를 교차(crossover)라고 하고 생산되는 자손 유전자 중, 돌연변이(mutation)가 발현될 수도 있습니다. 이러한 진화 과정이 종료조건을 만족할 때까지 반복합니다. 이것이 유전 알고리즘입니다.</p>
+<div class="section" id="representation">
+<h3>Representation<a class="headerlink" href="#representation" title="Permalink to this headline">¶</a></h3>
+<p style="text-indent: 1.5em">유전 알고리즘을 적용하는데 가장 중요한 단계로 해를 어떻게 표현할 것인가를 고민해야 합니다. 해의 표현은 유전 알고리즘의 적합도 평가와 유전연산자 적용 등에 영향을 주기 때문에 문제의 특성을 정확하게 반영해야 합니다. 예를 들어, 함수 $f(x)=x^2+5.0$를 최대화하는 변수 값 $x$를 찾는다고 생각해봅시다. 그리고 $x$는 $0\lt x\le 31$보다 작은 정수라는 제약조건도 있다고 가정합시다. $0$은 $[0 0 0 0 0]$과 $31$은 $[1 1 1 1 1]$로 표현되며, $x$를 5비트의 2진수 벡터로 표현할 수 있습니다. 유전 알고리즘에서 이진수 벡터를 생성하는 것을 인코딩(encoding) 그리고 이를 해석하여 해로 표현하는 과정을 디코딩(decoding)이라고도 합니다. 파이썬으로 구현하면 다음과 같습니다.</p><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="k">def</span> <span class="nf">decoding</span><span class="p">(</span><span class="n">chromosome</span><span class="p">):</span>
+    <span class="n">decimal</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">reversed</span><span class="p">(</span><span class="n">chromosome</span><span class="p">)):</span>
+        <span class="n">decimal</span> <span class="o">+=</span> <span class="n">v</span> <span class="o">*</span> <span class="mi">2</span><span class="o">**</span><span class="n">i</span>
+    <span class="k">return</span> <span class="n">decimal</span>
+
+<span class="n">population</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
+
+<span class="k">for</span> <span class="n">chromosome</span> <span class="ow">in</span> <span class="n">population</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Chromosome: </span><span class="si">{}</span><span class="s1"> Decimal: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">chromosome</span><span class="p">,</span> <span class="n">decoding</span><span class="p">(</span><span class="n">chromosome</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Chromosome: [1 0 1 1 1] Decimal: 23
+Chromosome: [0 0 1 1 0] Decimal: 6
+Chromosome: [0 1 0 0 0] Decimal: 8
+Chromosome: [1 0 1 0 0] Decimal: 20
+Chromosome: [1 0 1 1 0] Decimal: 22
+Chromosome: [0 1 1 0 1] Decimal: 13
+Chromosome: [0 1 0 0 1] Decimal: 9
+Chromosome: [0 0 1 1 0] Decimal: 6
+Chromosome: [0 0 1 0 1] Decimal: 5
+Chromosome: [0 1 0 1 0] Decimal: 10
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="evaluate-fitness">
+<h3>Evaluate Fitness<a class="headerlink" href="#evaluate-fitness" title="Permalink to this headline">¶</a></h3>
+<p style="text-indent: 1.5em">적합도(fitness)는 유전 알고리즘에서 최적화하려는 목적입니다. <div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">fitness</span><span class="p">(</span><span class="n">chromosome</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">decoding</span><span class="p">(</span><span class="n">chromosome</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="mf">5.0</span>
+
+<span class="k">for</span> <span class="n">chromosome</span> <span class="ow">in</span> <span class="n">population</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Chromosome: </span><span class="si">{}</span><span class="s1"> Decimal: </span><span class="si">{}</span><span class="s1"> Fitness: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">chromosome</span><span class="p">,</span> <span class="n">decoding</span><span class="p">(</span><span class="n">chromosome</span><span class="p">),</span> <span class="n">fitness</span><span class="p">(</span><span class="n">chromosome</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Chromosome: [1 0 1 1 1] Decimal: 23 Fitness: 534.0
+Chromosome: [0 0 1 1 0] Decimal: 6 Fitness: 41.0
+Chromosome: [0 1 0 0 0] Decimal: 8 Fitness: 69.0
+Chromosome: [1 0 1 0 0] Decimal: 20 Fitness: 405.0
+Chromosome: [1 0 1 1 0] Decimal: 22 Fitness: 489.0
+Chromosome: [0 1 1 0 1] Decimal: 13 Fitness: 174.0
+Chromosome: [0 1 0 0 1] Decimal: 9 Fitness: 86.0
+Chromosome: [0 0 1 1 0] Decimal: 6 Fitness: 41.0
+Chromosome: [0 0 1 0 1] Decimal: 5 Fitness: 30.0
+Chromosome: [0 1 0 1 0] Decimal: 10 Fitness: 105.0
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="selection">
+<h3>Selection<a class="headerlink" href="#selection" title="Permalink to this headline">¶</a></h3>
+<p style="text-indent: 1.5em">선택은 염색체의 적합도에 기초하여 해집단에서 다음 세대에 생존할 염색체를 고르는 과정입니다. 유전 알고리즘에서 선택은 다양성(diviersity)와 선택압력(selective pressure)이 조화를 이룰 수 있어야 합니다. 선택방법에는 룰렛휠(roulette wheel), 순위(ranking), 토너먼트(tournament) 등이 있습니다.</p> <div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">defaultdict</span>
+<span class="kn">from</span> <span class="nn">operator</span> <span class="kn">import</span> <span class="n">getitem</span> 
+
+<span class="k">def</span> <span class="nf">ranking_selection</span><span class="p">(</span><span class="n">population</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">dict</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">chromosome</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">population</span><span class="p">):</span>
+        <span class="n">result</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s1">&#39;Chromosome&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">chromosome</span>
+        <span class="n">result</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s1">&#39;Decimal&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">decoding</span><span class="p">(</span><span class="n">chromosome</span><span class="p">)</span>
+        <span class="n">result</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s1">&#39;Fitness&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">fitness</span><span class="p">(</span><span class="n">chromosome</span><span class="p">)</span>
+        
+    <span class="n">result</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">items</span><span class="p">(),</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="s1">&#39;Fitness&#39;</span><span class="p">],</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    
+    <span class="n">total</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">([</span><span class="n">i</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="s1">&#39;Fitness&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">result</span><span class="p">])</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">result</span><span class="p">:</span>
+        <span class="n">i</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="s1">&#39;Prob.&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">i</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="s1">&#39;Fitness&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="n">total</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+        
+    <span class="n">tmp</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">while</span> <span class="n">n</span><span class="p">:</span>
+        <span class="n">loop</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">while</span> <span class="n">loop</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">result</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">i</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="s1">&#39;Prob.&#39;</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">():</span>
+                    <span class="n">tmp</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+                    <span class="n">selected</span> <span class="o">=</span> <span class="kc">True</span>
+                    <span class="k">break</span>
+            <span class="k">if</span> <span class="n">selected</span><span class="p">:</span>
+                <span class="n">loop</span> <span class="o">=</span> <span class="kc">False</span>
+
+        <span class="n">n</span> <span class="o">-=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">result</span><span class="p">,</span> <span class="n">tmp</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">selected</span><span class="p">,</span> <span class="n">t</span> <span class="o">=</span> <span class="n">ranking_selection</span><span class="p">(</span><span class="n">population</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">selected</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(0, {&#39;Chromosome&#39;: array([1, 0, 1, 1, 1]), &#39;Decimal&#39;: 23, &#39;Fitness&#39;: 534.0, &#39;Prob.&#39;: 0.271})
+(4, {&#39;Chromosome&#39;: array([1, 0, 1, 1, 0]), &#39;Decimal&#39;: 22, &#39;Fitness&#39;: 489.0, &#39;Prob.&#39;: 0.248})
+(3, {&#39;Chromosome&#39;: array([1, 0, 1, 0, 0]), &#39;Decimal&#39;: 20, &#39;Fitness&#39;: 405.0, &#39;Prob.&#39;: 0.205})
+(5, {&#39;Chromosome&#39;: array([0, 1, 1, 0, 1]), &#39;Decimal&#39;: 13, &#39;Fitness&#39;: 174.0, &#39;Prob.&#39;: 0.088})
+(9, {&#39;Chromosome&#39;: array([0, 1, 0, 1, 0]), &#39;Decimal&#39;: 10, &#39;Fitness&#39;: 105.0, &#39;Prob.&#39;: 0.053})
+(6, {&#39;Chromosome&#39;: array([0, 1, 0, 0, 1]), &#39;Decimal&#39;: 9, &#39;Fitness&#39;: 86.0, &#39;Prob.&#39;: 0.044})
+(2, {&#39;Chromosome&#39;: array([0, 1, 0, 0, 0]), &#39;Decimal&#39;: 8, &#39;Fitness&#39;: 69.0, &#39;Prob.&#39;: 0.035})
+(1, {&#39;Chromosome&#39;: array([0, 0, 1, 1, 0]), &#39;Decimal&#39;: 6, &#39;Fitness&#39;: 41.0, &#39;Prob.&#39;: 0.021})
+(7, {&#39;Chromosome&#39;: array([0, 0, 1, 1, 0]), &#39;Decimal&#39;: 6, &#39;Fitness&#39;: 41.0, &#39;Prob.&#39;: 0.021})
+(8, {&#39;Chromosome&#39;: array([0, 0, 1, 0, 1]), &#39;Decimal&#39;: 5, &#39;Fitness&#39;: 30.0, &#39;Prob.&#39;: 0.015})
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="dd">
+<h4>dd<a class="headerlink" href="#dd" title="Permalink to this headline">¶</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">),</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
+
+<span class="n">x</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="s1">&#39;Prob.&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">selected</span><span class="p">]</span>
+<span class="n">labels</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">selected</span><span class="p">]</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">pie</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">labels</span><span class="o">=</span><span class="n">labels</span><span class="p">,</span> <span class="n">autopct</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%1.1f%%</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">wedgeprops</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">width</span><span class="o">=</span><span class="mf">0.7</span><span class="p">),</span> <span class="n">textprops</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;size&#39;</span><span class="p">:</span> <span class="mi">6</span><span class="p">})</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/introduction-genetic-algorithm_8_0.png" src="../../_images/introduction-genetic-algorithm_8_0.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">i</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="s1">&#39;Fitness&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">result</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
+<span class="nn">Input In [6],</span> in <span class="ni">&lt;cell line: 1&gt;</span><span class="nt">()</span>
+<span class="ne">----&gt; </span><span class="mi">1</span> <span class="p">[</span><span class="n">i</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="s1">&#39;Fitness&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">result</span><span class="p">]</span>
+
+<span class="ne">NameError</span>: name &#39;result&#39; is not defined
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">selected</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">i</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="s1">&#39;Fitness&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>681.0
+630.0
+405.0
+366.0
+261.0
+230.0
+174.0
+86.0
+9.0
+6.0
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Individual</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">solution</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">solution</span> <span class="o">=</span> <span class="n">solution</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">decimal</span> <span class="o">=</span> <span class="n">decoding</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">solution</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fitness</span> <span class="o">=</span> <span class="n">fitness</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">solution</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">value</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">gene</span><span class="p">,</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">v</span> <span class="o">*</span> <span class="mi">2</span><span class="o">**</span><span class="n">i</span><span class="p">)</span>
+    <span class="n">value</span> <span class="o">+=</span> <span class="n">v</span> <span class="o">*</span> <span class="mi">2</span><span class="o">**</span><span class="n">i</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0 1 1
+1 1 2
+2 1 4
+3 1 8
+4 1 16
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">value</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>31
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">gene</span><span class="o">*</span><span class="p">(</span><span class="mi">2</span><span class="o">**</span><span class="nb">len</span><span class="p">(</span><span class="n">gene</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>160
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">GeneticAlgorithm</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">pass</span>
+    
+    <span class="k">def</span> <span class="nf">_chromosome</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">pass</span>
+    
+    <span class="k">def</span> <span class="nf">_population</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">pass</span>
+    
+    <span class="k">def</span> <span class="nf">_selection</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">pass</span>
+    
+    <span class="k">def</span> <span class="nf">_roulettewheel</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">pass</span>
+    
+    <span class="k">def</span> <span class="nf">_crossover</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">pass</span>
+    
+    <span class="k">def</span> <span class="nf">_mutation</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">pass</span>
+    
+    <span class="k">def</span> <span class="nf">_next</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">pass</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./operations-research\etc"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            
+                <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+</div>
+            
+        </div>
+    </div>
+    <footer class="footer">
+  <p>
+    
+      By Kyung-Su Kang<br/>
+    
+        &copy; Copyright 2021.<br/>
+  </p>
+</footer>
+</main>
+
+
+      </div>
+    </div>
+  
+  <script src="../../_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+
+  </body>
+</html>

@@ -1,0 +1,940 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Scheduling &#8212; 경영과학과 컴퓨터 비전</title>
+    
+  <link href="../../_static/css/theme.css" rel="stylesheet">
+  <link href="../../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="../../_static/js/index.be7d3bbb2ef33a8344ce.js">
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../../_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+<script async="" src="https://www.google-analytics.com/analytics.js"></script>
+<script>
+                        window.ga = window.ga || function () {
+                            (ga.q = ga.q || []).push(arguments) };
+                        ga.l = +new Date;
+                        ga('create', 'UA-171260246-1', 'auto');
+                        ga('set', 'anonymizeIp', true);
+                        ga('send', 'pageview');
+                    </script>
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../../index.html">
+      
+      
+      
+      <h1 class="site-logo" id="site-title">경영과학과 컴퓨터 비전</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../index.html">
+   데이터 과학
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Intermediate Python
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../object-oriented/01-object-oriented.html">
+   객체 지향 프로그래밍
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../object-oriented/02-design-pattern.html">
+   디자인 패턴
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Computer Vision
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../computer-vision/introduction.html">
+   시작하기 앞서
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../computer-vision/image-libraries.html">
+     영상 처리 라이브러리
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../computer-vision/numpy-matplotlib.html">
+     NumPy와 Matplotlib
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../computer-vision/classifier-1.html">
+   이미지 분류기(1)
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+  <label for="toctree-checkbox-2">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../computer-vision/020-image-processing.html">
+     2장 영상 처리
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../computer-vision/022-thresholding.html">
+     임계처리
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../computer-vision/022-histogram.html">
+     히스토그램
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../computer-vision/023-arithmetic-operation.html">
+     산술 연산
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../computer-vision/024-geometric-transform.html">
+     기하하적 변환
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../computer-vision/025-binarization.html">
+     이진화와 모폴로지
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../computer-vision/021-color-space.html">
+     색공간
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../computer-vision/030-filtering.html">
+     영상 필터
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../computer-vision/070-machine-learning.html">
+     7장 기계학습
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../computer-vision/classifier-sift.html">
+     SIFT (2004)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../computer-vision/032-blurring.html">
+     Image Denoising with Denoising Autoencoder
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../computer-vision/classifier-hog.html">
+     HOG
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../computer-vision/classifier-lenet.html">
+     LeNet과 합성곱 신경망
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../computer-vision/classifier-2.html">
+   이미지 분류기(2)
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
+  <label for="toctree-checkbox-3">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../computer-vision/classifier-alexnet.html">
+     AlexNet
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../computer-vision/classifier-zfnet.html">
+     ZFNet
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../computer-vision/classifier-nin.html">
+     Network in Network
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../computer-vision/classifier-vgg.html">
+     VGGNet
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../computer-vision/classifier-googlenet.html">
+     GoogLeNet
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../computer-vision/classifier-resnet.html">
+     ResNet
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../computer-vision/classifier-densenet.html">
+     DenseNet
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../computer-vision/image-segmentation.html">
+   영상 분할
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/>
+  <label for="toctree-checkbox-4">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../computer-vision/semantic-fcn.html">
+     FCN
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../computer-vision/semantic-unet.html">
+     UNet
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../computer-vision/semantic-deeplab.html">
+     DeepLab
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../computer-vision/object-detection.html">
+   객체 탐지
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/>
+  <label for="toctree-checkbox-5">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../computer-vision/object-rcnn.html">
+     R-CNN
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../computer-vision/object-sppnet.html">
+     SPPNet
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../computer-vision/object-fast-rcnn.html">
+     Fast R-CNN
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../computer-vision/object-faster-rcnn.html">
+     Faster R-CNN
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../computer-vision/object-ohem.html">
+     OHEM
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../computer-vision/object-yolov1.html">
+     YOLOv1
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../computer-vision/object-ssd.html">
+     SSD
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../computer-vision/object-fpn.html">
+     FPN
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../computer-vision/object-retinanet.html">
+     RetinaNet
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../computer-vision/object-yolov3.html">
+     YOLOv3
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../computer-vision/instance-segmentation.html">
+   개체 분할
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/>
+  <label for="toctree-checkbox-6">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../computer-vision/instance-mask-rcnn.html">
+     Mask R-CNN
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Operations Research
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../000-introduction.html">
+   1장 시작하기 앞서
+  </a>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../linear-programming/linear-programming.html">
+   선형 계획법
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/>
+  <label for="toctree-checkbox-7">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../linear-programming/product-mix.html">
+     Product Mix Problem
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../linear-programming/production-planning.html">
+     생산계획문제
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../linear-programming/sensitivity-analysis.html">
+     민감도 분석
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../linear-programming/unbalanced-transportation.html">
+     Unbalanced Transportation Problem
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../linear-programming/vehicle-routing.html">
+     차량 경로 문제
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../linear-programming/workforce-scheduling.html">
+     Workforce Scheduling
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../integer-programming/integer-programming.html">
+   정수 계획법
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/>
+  <label for="toctree-checkbox-8">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../integer-programming/traveling-salesman.html">
+     Travelling Salesman Problem
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../integer-programming/knapsack.html">
+     Knapsack Problem
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../integer-programming/capital-budgeting.html">
+     Capital Budgeting Problem
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../integer-programming/plant.html">
+     Plant Location Problem
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../integer-programming/set-covering.html">
+     Set Covering Problem
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+    </div>
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../../_sources/operations-research/etc/scheduling.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+                onclick="printPdf(this)" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        
+        <a class="issues-button"
+            href="https://github.com/unerue/unerue.github.io/issues/new?title=Issue%20on%20page%20%2Foperations-research/etc/scheduling.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        
+    </div>
+</div>
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+        title="Fullscreen mode"><i
+            class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/unerue/unerue.github.io/master?urlpath=lab/tree/operations-research/etc/scheduling.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show noprint">
+            
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id1">
+   스케줄링 분류
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id2">
+   문제의 핵심으로 분류
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#one-machine-scheduling-with-release-dates-and-deadlines">
+   One machine scheduling with release dates and deadlines
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#single-machine-scheduling-with-weighted-completion-times">
+   Single Machine Scheduling with Weighted Completion Times
+  </a>
+ </li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Scheduling</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id1">
+   스케줄링 분류
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id2">
+   문제의 핵심으로 분류
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#one-machine-scheduling-with-release-dates-and-deadlines">
+   One machine scheduling with release dates and deadlines
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#single-machine-scheduling-with-weighted-completion-times">
+   Single Machine Scheduling with Weighted Completion Times
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            
+              <div>
+                
+  <div class="tex2jax_ignore mathjax_ignore section" id="scheduling">
+<h1>Scheduling<a class="headerlink" href="#scheduling" title="Permalink to this headline">¶</a></h1>
+<p>일정계획(scheduling)은 제품생산에 필요한 각 작업을 수행하는 일정에 대해 최적 또는 실행가능한 상세계획을 결정하는 것입니다. 언제, 어느 기계를 이용하여, 누가, 어떤 작업을 하는가를 정하는 것이며 일정한 기간 동안에 생산해야 할 제품의 종류와 수량이 생산계획과 생산공정(production process)에 의해서 결정되고 난 후에 이루어지며, 생산품의 종류는 생산공정계획에 의해서 결정되기 때문입니다. 일정계획에서는 주어진 기계에서 어떤 순서로 가공작업을 처리할 것인지를 결정하는 것이 가장 중요한데, 이 기능을 작업순서계획(job sequencing)이라고 합니다. 최적의 작업순서는 일정계획의 조합(permutation schedules) 중에서 주어진 평가기준의 최적화에 의해서 결정되며, 시뮬레이션을 이용하여 배정규칙 혹은 우선규칙(dispatching or priority rules)이 합리적인 일정을 얻는 데 사용됩니다. Flow Shop에서는 작업물이 거치는 기계나 공정의 순서가 완전히 동일하므로 일정계획이 상대적으로 단순하지만, Job Shop에서는 작업의 유형에 따라 기술적 순서(technological order)가 다양하므로 최적의 일정을 결정하기 어렵습니다. 기계가 공라인처럼 개개의 요소작업이 독립성을 가지고 있는 경우의 생산 일정계획을 작업일정계획(operations scheduling)이라고 합니다.</p>
+<p>작업일정계획에는 다음과 같은 세 가지 유형이 있습니다.</p>
+<ul class="simple">
+<li><p>작업순서계획(job sequencing) - 한 대의 기계에서 가공되는 작업물의 공정순서를 결정하는 것으로, 최적의 작업순서는 일정계획의 조합들(permutation schedules) 중에서 결정되거나 일정계획 시뮬레이션에 의해 합리적으로 수립된 우선규칙에 의해 얻어집니다.</p></li>
+<li><p>flow-shop 일정계획 - 다단계 생산공정에서 기계의 배치가 부품가공의 순서와 완전히 일치하는 경우의 공장이 flow shop이고, 이에 대한 일정계획을 flow-shop 스케줄링이라고 합니다. 이와 같은 흐름생산의 형식은 대량생산이 전형적인 예입니다.</p></li>
+<li><p>job-shop 일정계획 - 대부분의 다품종 생산의 경우에는 부품의 가공순서가 작업에 따라 다르며, 이 같은 공장을 job-shop이라고 하고, 이 경우의 일정계획을 job-shop 일정계획이라고 합니다.</p></li>
+</ul>
+<p>작업일정계획의 기본적인 구조</p>
+<p>작업일정계획의 전형적인 예는 다음 그림과 같습니다. 한 공장에서 N대의 기계에 M개의 작업을 처리하는 문제로 이것은 (M!)^N개의 대안이 있는 조합 문제로 어떤 평가기준에 대한 최적해가 반드시 존재하며, 이것은 이론적으로 일정한 횟수의 반복계산으로 구할 수 있습니다. 그러나 최적의 일정계획을 찾아내려면, 많은 양의 계산이 필요한데, 특히 문제의 크기가 큰 경우 매우 어려우므로 NP-hard입니다.</p>
+<ul class="simple">
+<li><p>일정계획은 주어진 작업을 수행하는데 필요한 자원을 할당하는 활동</p></li>
+<li><p>일정계획은 어떤 목적을 지향</p>
+<ul>
+<li><p>납기를 만족시킬 수 있기를 원할 수도 있고,</p></li>
+<li><p>단위시간당 생산량을 최대로 하기를 원할 수도 있고,</p></li>
+<li><p>기계 가동율을 높이는 것을 목적일 수도 있고,</p></li>
+<li><p>문제가 매우 복잡하고 제약조건이 많고 까다롭기 때문에 가능해(feasible solution)을 찾는 것 자체가 목적이 되기도 함</p></li>
+</ul>
+</li>
+<li><p>따라서 최적해를 구하기 위해서 모든 공간을 다 탐색하는 것은 실용적이지 않으며, 모형에 근거한 이론적인 분석을 통해 개발된 효율적 이론(theorem), 규칙(rule), 알고리즘(algorithm) 등을 사용하는 것이 현명함(Conway et al., 1967; Baker, 1974; French, 1982).</p></li>
+<li><p>해석을 간단하게 하기 위해 대부분 정적(static)인 경우를 가정하는데, M개의 독립적인 작업이 시간 0에서 가공이 가능하다는 것이다. 만약 이러한 작업들이 임의로 작업장에 들어온다면 이것은 동적(dynamic)이한다.</p>
+<ul>
+<li><p>한 대의 기계는 지속적으로 사용가능하다.</p></li>
+<li><p>각 가공은 오직 한 대의 기계에서만 수행된다.</p></li>
+<li><p>각 기계는 한 번에 하나의 작업만 처리할 수 있다.</p></li>
+</ul>
+</li>
+<li><p>대량생산은 대개 assembly line system에서 이루어지고</p></li>
+<li><p>단품생산은 single-site production system(항공기 제작업체나 조선소)</p></li>
+<li><p>job shop(금형, 공작기계 생산업체)</p></li>
+<li><p>FMS 등에서 많이 이루어진다는 것이다.</p></li>
+<li><p>어떤 제조업체는 수주생산(make-to-order)과 계획생산(make-to-stock) 전략을 동시에 취할 수 있는 것처럼 제조설비의 layout이나 공정의 흐름은 여러 형태가 섞여 있을 수 있다는 것이다. 반도체나 금형 생산고정은 크게 흐름생산(flow production)을 따르고 있지만 부분적으로 job-shop형태의 설비배치나 작업흐름이 동시에 존재할수도 있음</p></li>
+</ul>
+<div class="section" id="id1">
+<h2>스케줄링 분류<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>스케줄링(이하 일정계획) 문제는 매우 다양하기 때문에 분류가 쉽지 않지만, 당면한 문제를 풀기 위해 최소한 우리가 접한 문제의 유형을 파악할 수 있어야 기존의 연구결과를 활용하거나 개량하는 등의 접근이 가능</p></li>
+<li><p>일정계획 문제를 구성하는 핵심은 자원, 작업, 목적으로 구분</p></li>
+<li><p>대부분 일정계획 교재에서는,</p>
+<ul>
+<li><p>단일기계 일정계획 문제(single machine scheduling problem)</p></li>
+<li><p>병렬기계 일정계획 문제(parallel machine scheduling problem)</p></li>
+<li><p>흐름공정 일정계획 문제(flow shop scheduling problem)</p></li>
+<li><p>개별공정 일정계획 문제(job-shop scheduling problem)</p></li>
+<li><p>프로젝트 일정계획 문제(project scheduling problem)</p></li>
+</ul>
+</li>
+<li><p>이러한 구분은 설비의 구성 및 배치, 작업의 흐름에 따른 것, 최근(학계) 이런 일반적인 구분보다 자세한 분류를 선호하는 경향이 발생</p></li>
+</ul>
+</div>
+<div class="section" id="id2">
+<h2>문제의 핵심으로 분류<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>작업(jobs)</p>
+<ul>
+<li><p>우선권(Preemption) 허용 여부:</p>
+<ul>
+<li><p>작업 <span class="math notranslate nohighlight">\(J_1\)</span>을 기계에서 가공 중인데, 그 작업 외에 긴급한 작업  <span class="math notranslate nohighlight">\(J_2\)</span>이 있을 경우, _𝐽_1_이 종료되기 전에 작업을 중지하고 긴급한 작업 _𝐽_2_을 먼저 처리할 것인지에 대한 여부
+준비비용(setup cost)가 큰 경우와 기술적인 문제가 있는 경우 우선권을 허용하는가?</p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>선행관계(precedence relation):
+라우팅(routing)은 공정의 진행 순서를 나타내는데 이런 순서를 선행관계라고 하며, 예를 들어 면삭을 한 후에 드릴링을 한다고 하면 면삭공정이 드릴링공정의 선행공정이며 반드시 면삭공정이 끝난 후 드릴링공정이 가능
+선행관계가 없다면 공정의 순서와 상관없이 작업이 가능</p>
+<p>시작시기(release data, <em>𝑟_𝑗</em>):
+작업이 시스템에 도착하는 것 즉, 작업을  시작할 수 있는 가장 빠른 시점
+시작시기를 조정함으로써 생산시스템의 운용효율을 조정 가능</p>
+</div>
+<div class="section" id="one-machine-scheduling-with-release-dates-and-deadlines">
+<h2>One machine scheduling with release dates and deadlines<a class="headerlink" href="#one-machine-scheduling-with-release-dates-and-deadlines" title="Permalink to this headline">¶</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pulp</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">prob</span> <span class="o">=</span> <span class="n">LpProblem</span><span class="p">(</span><span class="s1">&#39;Minimize makespan&#39;</span><span class="p">,</span> <span class="n">LpMinimize</span><span class="p">)</span>
+
+<span class="n">S1</span> <span class="o">=</span> <span class="n">LpVariable</span><span class="p">(</span><span class="s1">&#39;S1&#39;</span><span class="p">,</span> <span class="n">lowBound</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">cat</span><span class="o">=</span><span class="s1">&#39;Integer&#39;</span><span class="p">)</span>
+<span class="n">S2</span> <span class="o">=</span> <span class="n">LpVariable</span><span class="p">(</span><span class="s1">&#39;S2&#39;</span><span class="p">,</span> <span class="n">lowBound</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">cat</span><span class="o">=</span><span class="s1">&#39;Integer&#39;</span><span class="p">)</span>
+<span class="n">X12</span> <span class="o">=</span> <span class="n">LpVariable</span><span class="p">(</span><span class="s1">&#39;X11&#39;</span><span class="p">,</span> <span class="n">lowBound</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">upBound</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">cat</span><span class="o">=</span><span class="s1">&#39;Integer&#39;</span><span class="p">)</span>
+
+<span class="n">prob</span> <span class="o">+=</span> <span class="n">S1</span> <span class="o">+</span> <span class="n">S2</span> <span class="o">+</span> <span class="mi">3</span> <span class="o">+</span> <span class="mi">2</span>
+
+<span class="n">prob</span> <span class="o">+=</span> <span class="n">S1</span> <span class="o">&gt;=</span> <span class="mi">0</span>
+<span class="n">prob</span> <span class="o">+=</span> <span class="n">S2</span> <span class="o">&gt;=</span> <span class="mi">1</span>
+<span class="n">prob</span> <span class="o">+=</span> <span class="n">S1</span> <span class="o">+</span> <span class="mi">3</span> <span class="o">&lt;=</span> <span class="mi">9</span>
+<span class="n">prob</span> <span class="o">+=</span> <span class="n">S1</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">&lt;=</span> <span class="mi">7</span>
+<span class="n">prob</span> <span class="o">+=</span> <span class="n">S2</span> <span class="o">-</span> <span class="n">S1</span> <span class="o">&gt;=</span> <span class="mi">3</span> <span class="o">-</span> <span class="mi">100</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">X12</span><span class="p">)</span>
+<span class="n">prob</span> <span class="o">+=</span> <span class="n">S1</span> <span class="o">-</span> <span class="n">S2</span> <span class="o">&gt;=</span> <span class="mi">2</span> <span class="o">-</span> <span class="mi">100</span><span class="o">*</span><span class="n">X12</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
+<span class="nn">Input In [1],</span> in <span class="ni">&lt;cell line: 1&gt;</span><span class="nt">()</span>
+<span class="ne">----&gt; </span><span class="mi">1</span> <span class="kn">from</span> <span class="nn">pulp</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="n">prob</span> <span class="o">=</span> <span class="n">LpProblem</span><span class="p">(</span><span class="s1">&#39;Minimize makespan&#39;</span><span class="p">,</span> <span class="n">LpMinimize</span><span class="p">)</span>
+<span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="n">S1</span> <span class="o">=</span> <span class="n">LpVariable</span><span class="p">(</span><span class="s1">&#39;S1&#39;</span><span class="p">,</span> <span class="n">lowBound</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">cat</span><span class="o">=</span><span class="s1">&#39;Integer&#39;</span><span class="p">)</span>
+
+<span class="ne">ModuleNotFoundError</span>: No module named &#39;pulp&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">prob</span><span class="o">.</span><span class="n">solve</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Status: &#39;</span><span class="p">,</span> <span class="n">LpStatus</span><span class="p">[</span><span class="n">prob</span><span class="o">.</span><span class="n">status</span><span class="p">])</span>
+
+<span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">prob</span><span class="o">.</span><span class="n">variables</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">v</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="s1">&#39;=&#39;</span><span class="p">,</span> <span class="n">v</span><span class="o">.</span><span class="n">varValue</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Status:  Optimal
+S1 = 0.0
+S2 = 3.0
+X11 = 1.0
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="single-machine-scheduling-with-weighted-completion-times">
+<h2>Single Machine Scheduling with Weighted Completion Times<a class="headerlink" href="#single-machine-scheduling-with-weighted-completion-times" title="Permalink to this headline">¶</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pulp</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">prob</span> <span class="o">=</span> <span class="n">LpProblem</span><span class="p">(</span><span class="s1">&#39;Single Machine Scheduling with Weighted Completion Times&#39;</span><span class="p">,</span> <span class="n">LpMinimize</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">jobs</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="n">p</span> <span class="o">=</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">7</span><span class="p">]</span>
+<span class="n">w</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Define decision variables</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">LpVariable</span><span class="o">.</span><span class="n">dicts</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="p">[(</span><span class="n">j</span><span class="p">,</span> <span class="n">k</span><span class="p">)</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">jobs</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">jobs</span><span class="p">)],</span> 
+                     <span class="n">lowBound</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">upBound</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">cat</span><span class="o">=</span><span class="s1">&#39;Integer&#39;</span><span class="p">)</span>
+
+<span class="c1"># Define objective function</span>
+<span class="n">prob</span> <span class="o">+=</span> <span class="n">lpSum</span><span class="p">([</span><span class="n">w</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">*</span> <span class="n">p</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">*</span> <span class="n">x</span><span class="p">[(</span><span class="n">k</span><span class="p">,</span> <span class="n">j</span><span class="p">)]</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">jobs</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">jobs</span><span class="p">)])</span>
+
+<span class="c1"># Define constraints</span>
+<span class="c1"># Either job j precedes job k or the other way around</span>
+<span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">jobs</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">jobs</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">j</span> <span class="o">!=</span> <span class="n">k</span><span class="p">:</span>
+            <span class="n">prob</span> <span class="o">+=</span> <span class="n">x</span><span class="p">[(</span><span class="n">k</span><span class="p">,</span> <span class="n">j</span><span class="p">)]</span> <span class="o">+</span> <span class="n">x</span><span class="p">[(</span><span class="n">j</span><span class="p">,</span> <span class="n">k</span><span class="p">)]</span> <span class="o">==</span> <span class="mi">1</span>
+
+<span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">jobs</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">jobs</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">jobs</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">j</span> <span class="o">!=</span> <span class="n">k</span> <span class="ow">and</span> <span class="n">j</span> <span class="o">!=</span> <span class="n">l</span> <span class="ow">and</span> <span class="n">k</span> <span class="o">!=</span> <span class="n">l</span><span class="p">:</span>
+                <span class="n">prob</span> <span class="o">+=</span> <span class="n">x</span><span class="p">[(</span><span class="n">k</span><span class="p">,</span> <span class="n">j</span><span class="p">)]</span> <span class="o">+</span> <span class="n">x</span><span class="p">[</span><span class="n">l</span><span class="p">,</span> <span class="n">k</span><span class="p">]</span> <span class="o">+</span> <span class="n">x</span><span class="p">[(</span><span class="n">j</span><span class="p">,</span> <span class="n">l</span><span class="p">)]</span> <span class="o">&gt;=</span> <span class="mi">1</span>
+
+<span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">jobs</span><span class="p">):</span>
+    <span class="n">prob</span> <span class="o">+=</span> <span class="n">x</span><span class="p">[(</span><span class="n">j</span><span class="p">,</span> <span class="n">j</span><span class="p">)]</span> <span class="o">==</span> <span class="mi">0</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">prob</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="n">GUROBI</span><span class="p">())</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Status&#39;</span><span class="p">,</span> <span class="n">LpStatus</span><span class="p">[</span><span class="n">prob</span><span class="o">.</span><span class="n">status</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">value</span><span class="p">(</span><span class="n">prob</span><span class="o">.</span><span class="n">objective</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">prob</span><span class="o">.</span><span class="n">variables</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">v</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="s1">&#39;=&#39;</span><span class="p">,</span> <span class="n">v</span><span class="o">.</span><span class="n">varValue</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Optimize a model with 85 rows, 25 columns and 225 nonzeros
+Variable types: 0 continuous, 25 integer (0 binary)
+Coefficient statistics:
+  Matrix range     [1e+00, 1e+00]
+  Objective range  [5e+00, 1e+02]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [1e+00, 1e+00]
+Found heuristic solution: objective 363.0000000
+Presolve removed 65 rows and 15 columns
+Presolve time: 0.01s
+Presolved: 20 rows, 10 columns, 60 nonzeros
+Variable types: 0 continuous, 10 integer (10 binary)
+
+Root relaxation: objective 1.970000e+02, 0 iterations, 0.00 seconds
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+*    0     0               0     197.0000000  197.00000  0.00%     -    0s
+
+Explored 0 nodes (0 simplex iterations) in 0.03 seconds
+Thread count was 8 (of 8 available processors)
+
+Solution count 2: 197 363 
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 1.970000000000e+02, best bound 1.970000000000e+02, gap 0.0000%
+Gurobi status= 2
+Status Optimal
+197.0
+x_(0,_0) = 0.0
+x_(0,_1) = -0.0
+x_(0,_2) = 1.0
+x_(0,_3) = -0.0
+x_(0,_4) = -0.0
+x_(1,_0) = 1.0
+x_(1,_1) = 0.0
+x_(1,_2) = 1.0
+x_(1,_3) = -0.0
+x_(1,_4) = -0.0
+x_(2,_0) = 0.0
+x_(2,_1) = 0.0
+x_(2,_2) = 0.0
+x_(2,_3) = -0.0
+x_(2,_4) = -0.0
+x_(3,_0) = 1.0
+x_(3,_1) = 1.0
+x_(3,_2) = 1.0
+x_(3,_3) = 0.0
+x_(3,_4) = 1.0
+x_(4,_0) = 1.0
+x_(4,_1) = 1.0
+x_(4,_2) = 1.0
+x_(4,_3) = 0.0
+x_(4,_4) = 0.0
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./operations-research\etc"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            
+                <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+</div>
+            
+        </div>
+    </div>
+    <footer class="footer">
+  <p>
+    
+      By Kyung-Su Kang<br/>
+    
+        &copy; Copyright 2021.<br/>
+  </p>
+</footer>
+</main>
+
+
+      </div>
+    </div>
+  
+  <script src="../../_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+
+  </body>
+</html>

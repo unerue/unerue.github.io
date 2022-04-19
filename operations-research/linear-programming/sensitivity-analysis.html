@@ -1,0 +1,883 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>민감도 분석 &#8212; 경영과학과 컴퓨터 비전</title>
+    
+  <link href="../../_static/css/theme.css" rel="stylesheet">
+  <link href="../../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="../../_static/js/index.be7d3bbb2ef33a8344ce.js">
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../../_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Unbalanced Transportation Problem" href="unbalanced-transportation.html" />
+    <link rel="prev" title="생산계획문제" href="production-planning.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+<script async="" src="https://www.google-analytics.com/analytics.js"></script>
+<script>
+                        window.ga = window.ga || function () {
+                            (ga.q = ga.q || []).push(arguments) };
+                        ga.l = +new Date;
+                        ga('create', 'UA-171260246-1', 'auto');
+                        ga('set', 'anonymizeIp', true);
+                        ga('send', 'pageview');
+                    </script>
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../../index.html">
+      
+      
+      
+      <h1 class="site-logo" id="site-title">경영과학과 컴퓨터 비전</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../index.html">
+   데이터 과학
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Intermediate Python
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../object-oriented/01-object-oriented.html">
+   객체 지향 프로그래밍
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../object-oriented/02-design-pattern.html">
+   디자인 패턴
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Computer Vision
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../computer-vision/introduction.html">
+   시작하기 앞서
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../computer-vision/image-libraries.html">
+     영상 처리 라이브러리
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../computer-vision/numpy-matplotlib.html">
+     NumPy와 Matplotlib
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../computer-vision/classifier-1.html">
+   이미지 분류기(1)
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+  <label for="toctree-checkbox-2">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../computer-vision/020-image-processing.html">
+     2장 영상 처리
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../computer-vision/022-thresholding.html">
+     임계처리
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../computer-vision/022-histogram.html">
+     히스토그램
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../computer-vision/023-arithmetic-operation.html">
+     산술 연산
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../computer-vision/024-geometric-transform.html">
+     기하하적 변환
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../computer-vision/025-binarization.html">
+     이진화와 모폴로지
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../computer-vision/021-color-space.html">
+     색공간
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../computer-vision/030-filtering.html">
+     영상 필터
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../computer-vision/070-machine-learning.html">
+     7장 기계학습
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../computer-vision/classifier-sift.html">
+     SIFT (2004)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../computer-vision/032-blurring.html">
+     Image Denoising with Denoising Autoencoder
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../computer-vision/classifier-hog.html">
+     HOG
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../computer-vision/classifier-lenet.html">
+     LeNet과 합성곱 신경망
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../computer-vision/classifier-2.html">
+   이미지 분류기(2)
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
+  <label for="toctree-checkbox-3">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../computer-vision/classifier-alexnet.html">
+     AlexNet
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../computer-vision/classifier-zfnet.html">
+     ZFNet
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../computer-vision/classifier-nin.html">
+     Network in Network
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../computer-vision/classifier-vgg.html">
+     VGGNet
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../computer-vision/classifier-googlenet.html">
+     GoogLeNet
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../computer-vision/classifier-resnet.html">
+     ResNet
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../computer-vision/classifier-densenet.html">
+     DenseNet
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../computer-vision/image-segmentation.html">
+   영상 분할
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/>
+  <label for="toctree-checkbox-4">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../computer-vision/semantic-fcn.html">
+     FCN
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../computer-vision/semantic-unet.html">
+     UNet
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../computer-vision/semantic-deeplab.html">
+     DeepLab
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../computer-vision/object-detection.html">
+   객체 탐지
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/>
+  <label for="toctree-checkbox-5">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../computer-vision/object-rcnn.html">
+     R-CNN
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../computer-vision/object-sppnet.html">
+     SPPNet
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../computer-vision/object-fast-rcnn.html">
+     Fast R-CNN
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../computer-vision/object-faster-rcnn.html">
+     Faster R-CNN
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../computer-vision/object-ohem.html">
+     OHEM
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../computer-vision/object-yolov1.html">
+     YOLOv1
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../computer-vision/object-ssd.html">
+     SSD
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../computer-vision/object-fpn.html">
+     FPN
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../computer-vision/object-retinanet.html">
+     RetinaNet
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../computer-vision/object-yolov3.html">
+     YOLOv3
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../computer-vision/instance-segmentation.html">
+   개체 분할
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/>
+  <label for="toctree-checkbox-6">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../computer-vision/instance-mask-rcnn.html">
+     Mask R-CNN
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Operations Research
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../000-introduction.html">
+   1장 시작하기 앞서
+  </a>
+ </li>
+ <li class="toctree-l1 current active has-children">
+  <a class="reference internal" href="linear-programming.html">
+   선형 계획법
+  </a>
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/>
+  <label for="toctree-checkbox-7">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul class="current">
+   <li class="toctree-l2">
+    <a class="reference internal" href="product-mix.html">
+     Product Mix Problem
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="production-planning.html">
+     생산계획문제
+    </a>
+   </li>
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     민감도 분석
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="unbalanced-transportation.html">
+     Unbalanced Transportation Problem
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="vehicle-routing.html">
+     차량 경로 문제
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="workforce-scheduling.html">
+     Workforce Scheduling
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../integer-programming/integer-programming.html">
+   정수 계획법
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/>
+  <label for="toctree-checkbox-8">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../integer-programming/traveling-salesman.html">
+     Travelling Salesman Problem
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../integer-programming/knapsack.html">
+     Knapsack Problem
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../integer-programming/capital-budgeting.html">
+     Capital Budgeting Problem
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../integer-programming/plant.html">
+     Plant Location Problem
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../integer-programming/set-covering.html">
+     Set Covering Problem
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+    </div>
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../../_sources/operations-research/linear-programming/sensitivity-analysis.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+                onclick="printPdf(this)" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        
+        <a class="issues-button"
+            href="https://github.com/unerue/unerue.github.io/issues/new?title=Issue%20on%20page%20%2Foperations-research/linear-programming/sensitivity-analysis.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        
+    </div>
+</div>
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+        title="Fullscreen mode"><i
+            class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/unerue/unerue.github.io/master?urlpath=lab/tree/operations-research/linear-programming/sensitivity-analysis.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show noprint">
+            
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#optimization-with-pulp">
+   Optimization with PuLP
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#optimization-with-gurobi">
+   Optimization with GUROBI
+  </a>
+ </li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>민감도 분석</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#optimization-with-pulp">
+   Optimization with PuLP
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#optimization-with-gurobi">
+   Optimization with GUROBI
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            
+              <div>
+                
+  <div class="tex2jax_ignore mathjax_ignore section" id="id1">
+<h1>민감도 분석<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
+<p>민감도 분석(sensitivity analysis)</p>
+<p><strong>이강우 &amp; 김정자. (2012). <em>EXCEL 2010 경영과학</em>. 한경사, 225.</strong></p>
+<p>D전자는 통신장비를 생산하여 판매하고 있는 회사이며 최근 개발한 신제품의 판매시장을 국내, 아시아지역, 유럽지역으로 확장하려고 한다. 이를 위하여 각 지역별 시장조사를 한 결과 수집된 자료는 <strong>표 1</strong>와 같다.</p>
+<p><strong>Table 1</strong> D전자의 마케팅자료</p>
+<table class="colwidths-auto table">
+<thead>
+<tr class="row-odd"><th class="text-align:right head"><p>지역</p></th>
+<th class="text-align:right head"><p>단위당 판매이익(만원)</p></th>
+<th class="text-align:right head"><p>단위당 광고비용(만원)</p></th>
+<th class="text-align:right head"><p>단위당 판매활동시간(시간)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-align:right"><p>국내</p></td>
+<td class="text-align:right"><p>6</p></td>
+<td class="text-align:right"><p>1.0</p></td>
+<td class="text-align:right"><p>1.5</p></td>
+</tr>
+<tr class="row-odd"><td class="text-align:right"><p>아시아</p></td>
+<td class="text-align:right"><p>4</p></td>
+<td class="text-align:right"><p>0.8</p></td>
+<td class="text-align:right"><p>2.0</p></td>
+</tr>
+<tr class="row-even"><td class="text-align:right"><p>유럽</p></td>
+<td class="text-align:right"><p>7</p></td>
+<td class="text-align:right"><p>1.5</p></td>
+<td class="text-align:right"><p>3.0</p></td>
+</tr>
+</tbody>
+</table>
+<p>D전자의 신제품 생산능력은 1개월에 3,500개이고 1개월 동안 아시아 지역에 최소한 500개를 공급할 계획을 가지고 있다. 그리고 D전자의 판매원의 판매활동시간은 1개월에 총 5,000시간이며 1개월 광고비 예산은 3,000만원이다. 한편 D전자는 주문생산을 원칙으로 하고 있기 대문에 재고는 보유하지 않는다. D전자의 월 판매이익을 최대로 하는 지역별 신제품의 판매량을 구하기 위한 선형계획 모형을 작성하여 지역별 최적 판매계획을 수립하고 민감도분석을 수행하라.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="c1"># Add the parent directory for importing custom library</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">(),</span> <span class="n">os</span><span class="o">.</span><span class="n">pardir</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="optimization-with-pulp">
+<h2>Optimization with PuLP<a class="headerlink" href="#optimization-with-pulp" title="Permalink to this headline">¶</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pulp</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="c1"># Define problem</span>
+<span class="n">prob</span> <span class="o">=</span> <span class="n">LpProblem</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;Marketing&#39;</span><span class="p">,</span> <span class="n">sense</span><span class="o">=</span><span class="n">LpMaximize</span><span class="p">)</span>
+
+<span class="c1"># Create decision variables and non-negative constraint</span>
+<span class="n">x1</span> <span class="o">=</span> <span class="n">LpVariable</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;X1&#39;</span><span class="p">,</span> <span class="n">lowBound</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">upBound</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">cat</span><span class="o">=</span><span class="s1">&#39;Continuous&#39;</span><span class="p">)</span>
+<span class="n">x2</span> <span class="o">=</span> <span class="n">LpVariable</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;X2&#39;</span><span class="p">,</span> <span class="n">lowBound</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">upBound</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">cat</span><span class="o">=</span><span class="s1">&#39;Continuous&#39;</span><span class="p">)</span>
+<span class="n">x3</span> <span class="o">=</span> <span class="n">LpVariable</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;X3&#39;</span><span class="p">,</span> <span class="n">lowBound</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">upBound</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">cat</span><span class="o">=</span><span class="s1">&#39;Continuous&#39;</span><span class="p">)</span>
+
+<span class="c1"># Set objective function</span>
+<span class="n">prob</span> <span class="o">+=</span> <span class="mi">6</span><span class="o">*</span><span class="n">x1</span> <span class="o">+</span> <span class="mi">4</span><span class="o">*</span><span class="n">x2</span> <span class="o">+</span> <span class="mi">7</span><span class="o">*</span><span class="n">x3</span>
+
+<span class="c1"># Set constraints</span>
+<span class="n">prob</span> <span class="o">+=</span> <span class="mf">1.0</span><span class="o">*</span><span class="n">x1</span> <span class="o">+</span> <span class="mf">0.8</span><span class="o">*</span><span class="n">x2</span> <span class="o">+</span> <span class="mf">1.5</span><span class="o">*</span><span class="n">x3</span> <span class="o">&lt;=</span> <span class="mi">3000</span>
+<span class="n">prob</span> <span class="o">+=</span> <span class="mf">1.5</span><span class="o">*</span><span class="n">x1</span> <span class="o">+</span> <span class="mf">2.0</span><span class="o">*</span><span class="n">x2</span> <span class="o">+</span> <span class="mf">3.0</span><span class="o">*</span><span class="n">x3</span> <span class="o">&lt;=</span> <span class="mi">5000</span>
+<span class="n">prob</span> <span class="o">+=</span> <span class="n">x1</span> <span class="o">+</span> <span class="n">x2</span> <span class="o">+</span> <span class="n">x3</span> <span class="o">&lt;=</span> <span class="mi">3500</span>
+<span class="n">prob</span> <span class="o">+=</span> <span class="n">x2</span> <span class="o">&gt;=</span> <span class="mi">500</span>
+
+<span class="c1"># Solving problem</span>
+<span class="n">prob</span><span class="o">.</span><span class="n">solve</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Status: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">LpStatus</span><span class="p">[</span><span class="n">prob</span><span class="o">.</span><span class="n">status</span><span class="p">]))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
+<span class="nn">Input In [2],</span> in <span class="ni">&lt;cell line: 1&gt;</span><span class="nt">()</span>
+<span class="ne">----&gt; </span><span class="mi">1</span> <span class="kn">from</span> <span class="nn">pulp</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="c1"># Define problem</span>
+<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="n">prob</span> <span class="o">=</span> <span class="n">LpProblem</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;Marketing&#39;</span><span class="p">,</span> <span class="n">sense</span><span class="o">=</span><span class="n">LpMaximize</span><span class="p">)</span>
+
+<span class="ne">ModuleNotFoundError</span>: No module named &#39;pulp&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Z = </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">value</span><span class="p">(</span><span class="n">prob</span><span class="o">.</span><span class="n">objective</span><span class="p">)))</span>
+<span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">prob</span><span class="o">.</span><span class="n">variables</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1"> = </span><span class="si">{}</span><span class="se">\t</span><span class="s1">Reduced cost </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">v</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">v</span><span class="o">.</span><span class="n">varValue</span><span class="p">,</span> <span class="n">v</span><span class="o">.</span><span class="n">dj</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Z = 17600.0
+X1 = 2600.0	Reduced cost 0.0
+X2 = 500.0	Reduced cost -8.8817842e-16
+X3 = 0.0	Reduced cost -2.0
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Sensitivity Analysis</span><span class="se">\n</span><span class="s1">Constraint</span><span class="se">\t</span><span class="s1">Shadow Price</span><span class="se">\t</span><span class="s1">Slack&#39;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">prob</span><span class="o">.</span><span class="n">constraints</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">: </span><span class="se">\t\t</span><span class="si">{}</span><span class="se">\t\t</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">c</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="n">c</span><span class="o">.</span><span class="n">slack</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sensitivity Analysis
+Constraint	Shadow Price	Slack
+_C1: 		6.0		-0.0
+_C2: 		-0.0		100.0
+_C3: 		-0.0		400.0
+_C4: 		-0.8		-0.0
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="optimization-with-gurobi">
+<h2>Optimization with GUROBI<a class="headerlink" href="#optimization-with-gurobi" title="Permalink to this headline">¶</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">gurobipy</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">ortools.utils</span> <span class="kn">import</span> <span class="n">set_gurobi</span><span class="p">,</span> <span class="n">custom_callback</span>
+
+<span class="c1"># Create a new model</span>
+<span class="n">m</span> <span class="o">=</span> <span class="n">Model</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;Marketing&#39;</span><span class="p">)</span>
+
+<span class="c1"># Create variables</span>
+<span class="n">x1</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">addVar</span><span class="p">(</span><span class="n">lb</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">ub</span><span class="o">=</span><span class="mf">1e+100</span><span class="p">,</span> <span class="n">vtype</span><span class="o">=</span><span class="n">GRB</span><span class="o">.</span><span class="n">CONTINUOUS</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;X1&#39;</span><span class="p">)</span>
+<span class="n">x2</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">addVar</span><span class="p">(</span><span class="n">lb</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">ub</span><span class="o">=</span><span class="mf">1e+100</span><span class="p">,</span> <span class="n">vtype</span><span class="o">=</span><span class="n">GRB</span><span class="o">.</span><span class="n">CONTINUOUS</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;X2&#39;</span><span class="p">)</span>
+<span class="n">x3</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">addVar</span><span class="p">(</span><span class="n">lb</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">ub</span><span class="o">=</span><span class="mf">1e+100</span><span class="p">,</span> <span class="n">vtype</span><span class="o">=</span><span class="n">GRB</span><span class="o">.</span><span class="n">CONTINUOUS</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;X3&#39;</span><span class="p">)</span>
+
+<span class="c1"># Set objective</span>
+<span class="n">m</span><span class="o">.</span><span class="n">setObjective</span><span class="p">(</span><span class="mi">6</span><span class="o">*</span><span class="n">x1</span> <span class="o">+</span> <span class="mi">4</span><span class="o">*</span><span class="n">x2</span> <span class="o">+</span> <span class="mi">7</span><span class="o">*</span><span class="n">x3</span><span class="p">,</span> <span class="n">sense</span><span class="o">=</span><span class="n">GRB</span><span class="o">.</span><span class="n">MAXIMIZE</span><span class="p">)</span>
+
+<span class="c1"># Add constraint</span>
+<span class="n">m</span><span class="o">.</span><span class="n">addConstr</span><span class="p">(</span><span class="mf">1.0</span><span class="o">*</span><span class="n">x1</span> <span class="o">+</span> <span class="mf">0.8</span><span class="o">*</span><span class="n">x2</span> <span class="o">+</span> <span class="mf">1.5</span><span class="o">*</span><span class="n">x3</span> <span class="o">&lt;=</span> <span class="mi">3000</span><span class="p">)</span>
+<span class="n">m</span><span class="o">.</span><span class="n">addConstr</span><span class="p">(</span><span class="mf">1.5</span><span class="o">*</span><span class="n">x1</span> <span class="o">+</span> <span class="mf">2.0</span><span class="o">*</span><span class="n">x2</span> <span class="o">+</span> <span class="mf">3.0</span><span class="o">*</span><span class="n">x3</span> <span class="o">&lt;=</span> <span class="mi">5000</span><span class="p">)</span>
+<span class="n">m</span><span class="o">.</span><span class="n">addConstr</span><span class="p">(</span><span class="n">x1</span> <span class="o">+</span> <span class="n">x2</span> <span class="o">+</span> <span class="n">x3</span> <span class="o">&lt;=</span> <span class="mi">3500</span><span class="p">)</span>
+<span class="n">m</span><span class="o">.</span><span class="n">addConstr</span><span class="p">(</span><span class="n">x2</span> <span class="o">&gt;=</span> <span class="mi">500</span><span class="p">)</span>
+
+<span class="n">set_gurobi</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+<span class="c1"># Optimize model</span>
+<span class="n">m</span><span class="o">.</span><span class="n">optimize</span><span class="p">(</span><span class="n">custom_callback</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">m</span><span class="o">.</span><span class="n">status</span> <span class="o">==</span> <span class="n">GRB</span><span class="o">.</span><span class="n">Status</span><span class="o">.</span><span class="n">OPTIMAL</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Status: Optimal&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Status: Optimal
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Z = </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">objVal</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">m</span><span class="o">.</span><span class="n">getVars</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1"> = </span><span class="si">{}</span><span class="se">\t</span><span class="s1">Reduced cost </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">v</span><span class="o">.</span><span class="n">varName</span><span class="p">,</span> <span class="n">v</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">v</span><span class="o">.</span><span class="n">RC</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Z = 17600.0
+X1 = 2600.0	Reduced cost 0.0
+X2 = 500.0	Reduced cost 0.0
+X3 = 0.0	Reduced cost -2.0
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Sensitivity Analysis</span><span class="se">\n</span><span class="s1">Constraint</span><span class="se">\t</span><span class="s1">Shadow Price</span><span class="se">\t</span><span class="s1">Slack&#39;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">m</span><span class="o">.</span><span class="n">getConstrs</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">: </span><span class="se">\t\t</span><span class="si">{}</span><span class="se">\t\t</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">ConstrName</span><span class="p">,</span> <span class="n">c</span><span class="o">.</span><span class="n">Pi</span><span class="p">,</span> <span class="n">c</span><span class="o">.</span><span class="n">Slack</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sensitivity Analysis
+Constraint	Shadow Price	Slack
+R0: 		6.0		0.0
+R1: 		0.0		100.0
+R2: 		0.0		400.0
+R3: 		-0.8000000000000007		0.0
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./operations-research\linear-programming"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            
+                <!-- Previous / next buttons -->
+<div class='prev-next-area'> 
+    <a class='left-prev' id="prev-link" href="production-planning.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">생산계획문제</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="unbalanced-transportation.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Unbalanced Transportation Problem</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            
+        </div>
+    </div>
+    <footer class="footer">
+  <p>
+    
+      By Kyung-Su Kang<br/>
+    
+        &copy; Copyright 2021.<br/>
+  </p>
+</footer>
+</main>
+
+
+      </div>
+    </div>
+  
+  <script src="../../_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+
+  </body>
+</html>

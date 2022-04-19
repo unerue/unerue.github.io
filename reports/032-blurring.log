@@ -1,0 +1,168 @@
+Traceback (most recent call last):
+  File "C:\Users\unerue\miniconda3\envs\vision\lib\site-packages\jupyter_cache\executors\utils.py", line 51, in single_nb_execution
+    executenb(
+  File "C:\Users\unerue\miniconda3\envs\vision\lib\site-packages\nbclient\client.py", line 1204, in execute
+    return NotebookClient(nb=nb, resources=resources, km=km, **kwargs).execute()
+  File "C:\Users\unerue\miniconda3\envs\vision\lib\site-packages\nbclient\util.py", line 84, in wrapped
+    return just_run(coro(*args, **kwargs))
+  File "C:\Users\unerue\miniconda3\envs\vision\lib\site-packages\nbclient\util.py", line 62, in just_run
+    return loop.run_until_complete(coro)
+  File "C:\Users\unerue\miniconda3\envs\vision\lib\asyncio\base_events.py", line 642, in run_until_complete
+    return future.result()
+  File "C:\Users\unerue\miniconda3\envs\vision\lib\site-packages\nbclient\client.py", line 663, in async_execute
+    await self.async_execute_cell(
+  File "C:\Users\unerue\miniconda3\envs\vision\lib\site-packages\nbclient\client.py", line 965, in async_execute_cell
+    await self._check_raise_for_error(cell, cell_index, exec_reply)
+  File "C:\Users\unerue\miniconda3\envs\vision\lib\site-packages\nbclient\client.py", line 862, in _check_raise_for_error
+    raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
+nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
+------------------
+import os
+import numpy as np
+import matplotlib.pylab as plt
+#! pip install torchviz
+import torch
+from torch import nn
+from torch.autograd import Variable
+from torch.utils.data import DataLoader
+from torchvision import transforms
+from torchvision.utils import save_image
+from torchviz import make_dot
+
+from sklearn.datasets import fetch_lfw_people
+
+#print(torch.cuda.current_device())
+#print(torch.cuda.device(0))
+#print(torch.cuda.device_count())
+#print(torch.cuda.get_device_name(0))
+
+def to_img(x):
+    x = x.view(x.size(0), 1, 50, 37)
+    return x
+
+num_epochs = 100 #100
+batch_size = 8 # 16
+learning_rate = 1e-3
+cuda = False #True 
+
+
+def add_noise(img):
+    noise = torch.randn(img.size()) * 0.2
+    noisy_img = img + noise
+    return noisy_img
+
+
+def plot_sample_img(img, name):
+    img = img.view(1, 50, 37)
+    save_image(img, './sample_{}.png'.format(name))
+
+
+def min_max_normalization(tensor, min_value, max_value):
+    min_tensor = tensor.min()
+    tensor = (tensor - min_tensor)
+    max_tensor = tensor.max()
+    tensor = tensor / max_tensor
+    tensor = tensor * (max_value - min_value) + min_value
+    return tensor
+
+
+def tensor_round(tensor):
+    return torch.round(tensor)
+
+
+img_transform = transforms.Compose([
+    transforms.ToTensor(),
+    transforms.Lambda(lambda tensor:min_max_normalization(tensor, 0, 1)),
+    transforms.Lambda(lambda tensor:tensor_round(tensor))
+])
+
+dataset = fetch_lfw_people(min_faces_per_person=70, resize=0.4).images / 255
+print(dataset.shape)
+dataloader = DataLoader(dataset, batch_size=batch_size, shuffle=True)
+
+class autoencoder(nn.Module):
+    def __init__(self):
+        super(autoencoder, self).__init__()
+        self.encoder = nn.Sequential(
+            nn.Linear(50 * 37, 512),
+            nn.ReLU(True),
+            nn.Linear(512, 128),
+            nn.ReLU(True))
+        self.decoder = nn.Sequential(
+            nn.Linear(128, 512),
+            nn.ReLU(True),
+            nn.Linear(512, 50 * 37),
+            nn.Sigmoid())
+
+    def forward(self, x):
+        x = self.encoder(x)
+        x = self.decoder(x)
+        return x
+
+model = autoencoder()
+if cuda:
+    model = model.cuda()
+criterion = nn.BCELoss()
+optimizer = torch.optim.Adam(
+    model.parameters(), lr=learning_rate, weight_decay=1e-5)
+
+for epoch in range(1, num_epochs+1):
+    for data in dataloader:
+        img = data
+        img = img.view(img.size(0), -1)
+        noisy_img = add_noise(img)
+        noisy_img = Variable(noisy_img)
+        if cuda:
+            noisy_img = noisy_img.cuda()
+        img = Variable(img)
+        if cuda:
+            img = img.cuda()
+        # ===================forward=====================
+        output = model(noisy_img)
+        loss = criterion(output, img)
+        MSE_loss = nn.MSELoss()(output, img)
+        # ===================backward====================
+        optimizer.zero_grad()
+        loss.backward()
+        optimizer.step()
+    # ===================log========================
+    print('epoch [{}/{}], loss:{:.4f}, MSE_loss:{:.4f}'
+          .format(epoch, num_epochs, loss.data.item(), MSE_loss.data.item()))
+    if epoch % 10 == 0:
+        x = to_img(img.cpu().data)
+        x_hat = to_img(output.cpu().data)
+        x_noisy = to_img(noisy_img.cpu().data)
+        weights = to_img(model.encoder[0].weight.cpu().data)
+        plt.figure(figsize=(20,20))
+        plt.gray()
+        for i in range(8):
+            plt.subplot(8,8,i+1), plt.imshow(x.data.numpy()[i,0,...]), plt.axis('off')
+        for i in range(8):
+            plt.subplot(8,8,i+9), plt.imshow(x_noisy.data.numpy()[i,0,...]), plt.axis('off')
+        for i in range(8):
+            plt.subplot(8,8,i+17), plt.imshow(x_hat.data.numpy()[i,0,...]), plt.axis('off')
+        indices = np.random.choice(512, 40)
+        for i in range(40):
+            plt.subplot(8,8,i+25), plt.imshow(weights.data.numpy()[indices[i],0,...]), plt.axis('off')
+        plt.suptitle('Original (Row 1), Noisy input (Row 2), DAE output (Row 3) images \n and some features (Rows 4-8) learnt by the DAE in Epoch {}'.format(epoch), size=30)
+        plt.show()
+        #print(weights.shape)
+
+#torch.save(model.state_dict(), './sim_dautoencoder.pth')
+------------------
+
+[1;31m---------------------------------------------------------------------------[0m
+[1;31mModuleNotFoundError[0m                       Traceback (most recent call last)
+Input [1;32mIn [1][0m, in [0;36m<cell line: 11>[1;34m()[0m
+[0;32m      9[0m [38;5;28;01mfrom[39;00m [38;5;21;01mtorchvision[39;00m [38;5;28;01mimport[39;00m transforms
+[0;32m     10[0m [38;5;28;01mfrom[39;00m [38;5;21;01mtorchvision[39;00m[38;5;21;01m.[39;00m[38;5;21;01mutils[39;00m [38;5;28;01mimport[39;00m save_image
+[1;32m---> 11[0m [38;5;28;01mfrom[39;00m [38;5;21;01mtorchviz[39;00m [38;5;28;01mimport[39;00m make_dot
+[0;32m     13[0m [38;5;28;01mfrom[39;00m [38;5;21;01msklearn[39;00m[38;5;21;01m.[39;00m[38;5;21;01mdatasets[39;00m [38;5;28;01mimport[39;00m fetch_lfw_people
+[0;32m     15[0m [38;5;66;03m#print(torch.cuda.current_device())[39;00m
+[0;32m     16[0m [38;5;66;03m#print(torch.cuda.device(0))[39;00m
+[0;32m     17[0m [38;5;66;03m#print(torch.cuda.device_count())[39;00m
+[0;32m     18[0m [38;5;66;03m#print(torch.cuda.get_device_name(0))[39;00m
+
+[1;31mModuleNotFoundError[0m: No module named 'torchviz'
+ModuleNotFoundError: No module named 'torchviz'
+

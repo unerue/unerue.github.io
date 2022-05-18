@@ -51,6 +51,8 @@ const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
     <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="SPPNet" href="object-sppnet.html" />
@@ -565,6 +567,46 @@ const thebe_selector_output = ".output, .cell_output"
         <!-- Table of contents -->
         <div class="d-none d-md-block col-md-2 bd-toc show noprint">
             
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#selective-search">
+   Selective Search
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#intersection-of-union">
+   Intersection of union
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#linear-support-vector-machines">
+   Linear support vector machines
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#hard-negative-mining">
+     Hard negative mining
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#bounding-box-regressor">
+   Bounding box regressor
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#non-maximum-suppression">
+   Non maximum suppression
+  </a>
+ </li>
+</ul>
+
+            </nav>
         </div>
     </div>
 </div>
@@ -577,6 +619,46 @@ const thebe_selector_output = ".output, .cell_output"
                 <div id="print-main-content">
                     <div id="jb-print-toc">
                         
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#selective-search">
+   Selective Search
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#intersection-of-union">
+   Intersection of union
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#linear-support-vector-machines">
+   Linear support vector machines
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#hard-negative-mining">
+     Hard negative mining
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#bounding-box-regressor">
+   Bounding box regressor
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#non-maximum-suppression">
+   Non maximum suppression
+  </a>
+ </li>
+</ul>
+
+                        </nav>
                     </div>
                 </div>
             </div>
@@ -585,6 +667,540 @@ const thebe_selector_output = ".output, .cell_output"
                 
   <div class="tex2jax_ignore mathjax_ignore section" id="r-cnn">
 <h1>R-CNN<a class="headerlink" href="#r-cnn" title="Permalink to this headline">¶</a></h1>
+<p>Rich feature hierarchies for accurate object detection and semantic segmentation</p>
+<div>
+    <img src="https://unerue.synology.me/course/computer-vision/rcnn1.png" style="height: 240px;" />
+</div><div class="section" id="selective-search">
+<h2>Selective Search<a class="headerlink" href="#selective-search" title="Permalink to this headline">¶</a></h2>
+<p>색상, 질감, 영역크기 등을 이용해 non-objective segmentation을 수행한다. 이 작업을 통해 좌측 제일 하단 그림과 같이 많은 small segmented areas들을 얻을 수 있다. Bottom-up 방식으로 small segemented areas들을 합쳐서 더 큰 segemented areas들을 만든다. (2)의 작업을 반복하여 최종적으로 2000개의 region proposal을 생성한다. 2000장의 region proposals를 얻게 되면 warp를 통해 이미지를 227x227로 사이즈를 통합시켜준다.(CNN arichitecture는 고정된 227x227 pixel size의 입력을 요구한다.)</p>
+<div class="math notranslate nohighlight">
+\[S_{\text{color}}(r_i,r_j)=\sum_{k=1}^{n}\min{(c_i^k,c_j^k)}\]</div>
+<div class="math notranslate nohighlight">
+\[C_t=\frac{\text{size}(r_i)\times C_i+\text{size}(r_j)\times C_j}{\text{size}(r_i)+\text{size}(r_j)}\]</div>
+<div class="math notranslate nohighlight">
+\[S_{\text{texture}}(r_i,r_j)=\sum_{k=1}^{n}\min{(c_i^k,c_j^k)}\]</div>
+<div class="math notranslate nohighlight">
+\[S_{\text{size}}(r_i,r_j)=1-\frac{\text{size}(r_i)+\text{size}(r_j)}{\text{size}(\text{image})}\]</div>
+<div class="math notranslate nohighlight">
+\[\text{fill}(r_i,r_j)=1-\frac{\text{size}(\text{BB}_{ij})-\text{size}(r_i)-\text{size}(r_i)}{\text{size}(\text{image})}\]</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">matplotlib.patches</span> <span class="kn">import</span> <span class="n">Rectangle</span>
+<span class="kn">from</span> <span class="nn">skimage</span> <span class="kn">import</span> <span class="n">io</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">color</span><span class="p">,</span> <span class="n">transform</span><span class="p">,</span> <span class="n">feature</span><span class="p">,</span> <span class="n">segmentation</span><span class="p">,</span> <span class="n">util</span>
+
+
+<span class="k">def</span> <span class="nf">_generate_segments</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">scale</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">min_size</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Segment smallest regions by the algorithm of Felzenswalb and Huttenlocher</span>
+<span class="sd">    </span>
+<span class="sd">    Args:</span>
+<span class="sd">        image: an original image</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># open the Image</span>
+    <span class="n">mask</span> <span class="o">=</span> <span class="n">segmentation</span><span class="o">.</span><span class="n">felzenszwalb</span><span class="p">(</span>
+        <span class="n">util</span><span class="o">.</span><span class="n">img_as_float</span><span class="p">(</span><span class="n">image</span><span class="p">),</span> <span class="n">scale</span><span class="o">=</span><span class="n">scale</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="n">sigma</span><span class="p">,</span> <span class="n">min_size</span><span class="o">=</span><span class="n">min_size</span>
+    <span class="p">)</span>
+
+    <span class="c1"># merge mask channel to the image as a 4th channel</span>
+    <span class="n">image</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">image</span><span class="o">.</span><span class="n">shape</span><span class="p">[:</span><span class="mi">2</span><span class="p">])[:,</span> <span class="p">:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">image</span><span class="p">[:,</span> <span class="p">:,</span> <span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="n">mask</span>
+
+    <span class="k">return</span> <span class="n">image</span>
+
+
+<span class="k">def</span> <span class="nf">_similarity_color</span><span class="p">(</span><span class="n">r1</span><span class="p">,</span> <span class="n">r2</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Calculate the sum of histogram intersection of colour&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="nb">sum</span><span class="p">([</span><span class="nb">min</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span> <span class="k">for</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">r1</span><span class="p">[</span><span class="s2">&quot;hist_c&quot;</span><span class="p">],</span> <span class="n">r2</span><span class="p">[</span><span class="s2">&quot;hist_c&quot;</span><span class="p">])])</span>
+
+
+<span class="k">def</span> <span class="nf">_similarity_texture</span><span class="p">(</span><span class="n">r1</span><span class="p">,</span> <span class="n">r2</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Calculate the sum of histogram intersection of texture&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="nb">sum</span><span class="p">([</span><span class="nb">min</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span> <span class="k">for</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">r1</span><span class="p">[</span><span class="s2">&quot;hist_t&quot;</span><span class="p">],</span> <span class="n">r2</span><span class="p">[</span><span class="s2">&quot;hist_t&quot;</span><span class="p">])])</span>
+
+
+<span class="k">def</span> <span class="nf">_similarity_size</span><span class="p">(</span><span class="n">r1</span><span class="p">,</span> <span class="n">r2</span><span class="p">,</span> <span class="n">imsize</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Calculate the size similarity over the image&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="mf">1.0</span> <span class="o">-</span> <span class="p">(</span><span class="n">r1</span><span class="p">[</span><span class="s2">&quot;size&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="n">r2</span><span class="p">[</span><span class="s2">&quot;size&quot;</span><span class="p">])</span> <span class="o">/</span> <span class="n">imsize</span>
+
+
+<span class="k">def</span> <span class="nf">_similarity_fill</span><span class="p">(</span><span class="n">r1</span><span class="p">,</span> <span class="n">r2</span><span class="p">,</span> <span class="n">imsize</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Calculate the fill similarity over the image&quot;&quot;&quot;</span>
+    <span class="n">bbsize</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">r1</span><span class="p">[</span><span class="s2">&quot;max_x&quot;</span><span class="p">],</span> <span class="n">r2</span><span class="p">[</span><span class="s2">&quot;max_x&quot;</span><span class="p">])</span> <span class="o">-</span> <span class="nb">min</span><span class="p">(</span><span class="n">r1</span><span class="p">[</span><span class="s2">&quot;min_x&quot;</span><span class="p">],</span> <span class="n">r2</span><span class="p">[</span><span class="s2">&quot;min_x&quot;</span><span class="p">]))</span>
+        <span class="o">*</span> <span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">r1</span><span class="p">[</span><span class="s2">&quot;max_y&quot;</span><span class="p">],</span> <span class="n">r2</span><span class="p">[</span><span class="s2">&quot;max_y&quot;</span><span class="p">])</span> <span class="o">-</span> <span class="nb">min</span><span class="p">(</span><span class="n">r1</span><span class="p">[</span><span class="s2">&quot;min_y&quot;</span><span class="p">],</span> <span class="n">r2</span><span class="p">[</span><span class="s2">&quot;min_y&quot;</span><span class="p">]))</span>
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="mf">1.0</span> <span class="o">-</span> <span class="p">(</span><span class="n">bbsize</span> <span class="o">-</span> <span class="n">r1</span><span class="p">[</span><span class="s2">&quot;size&quot;</span><span class="p">]</span> <span class="o">-</span> <span class="n">r2</span><span class="p">[</span><span class="s2">&quot;size&quot;</span><span class="p">])</span> <span class="o">/</span> <span class="n">imsize</span>
+
+
+<span class="k">def</span> <span class="nf">_calc_similarity</span><span class="p">(</span><span class="n">r1</span><span class="p">,</span> <span class="n">r2</span><span class="p">,</span> <span class="n">imsize</span><span class="p">):</span>
+    <span class="k">return</span> <span class="p">(</span>
+        <span class="n">_similarity_color</span><span class="p">(</span><span class="n">r1</span><span class="p">,</span> <span class="n">r2</span><span class="p">)</span> <span class="o">+</span> <span class="n">_similarity_texture</span><span class="p">(</span><span class="n">r1</span><span class="p">,</span> <span class="n">r2</span><span class="p">)</span>
+        <span class="o">+</span> <span class="n">_similarity_size</span><span class="p">(</span><span class="n">r1</span><span class="p">,</span> <span class="n">r2</span><span class="p">,</span> <span class="n">imsize</span><span class="p">)</span> <span class="o">+</span> <span class="n">_similarity_fill</span><span class="p">(</span><span class="n">r1</span><span class="p">,</span> <span class="n">r2</span><span class="p">,</span> <span class="n">imsize</span><span class="p">)</span>
+    <span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">_calc_colour_hist</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">num_channels</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">25</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Calculate colour histogram for each region the size of output </span>
+<span class="sd">    histogram will be BINS * COLOUR_CHANNELS(3) number of bins is 25 </span>
+<span class="sd">    as same as [uijlings_ijcv2013_draft.pdf] extract HSV</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">hist</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([])</span>
+    <span class="k">for</span> <span class="n">channel</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_channels</span><span class="p">):</span>
+        <span class="c1"># extracting one colour channel</span>
+        <span class="n">c</span> <span class="o">=</span> <span class="n">image</span><span class="p">[:,</span> <span class="n">channel</span><span class="p">]</span>
+        <span class="c1"># calculate histogram for each colour and join to the result</span>
+        <span class="n">hist</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span>
+            <span class="p">[</span><span class="n">hist</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">histogram</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">bins</span><span class="p">,</span> <span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">255.0</span><span class="p">))[</span><span class="mi">0</span><span class="p">]]</span>
+        <span class="p">)</span>
+    <span class="c1"># L1 normalize</span>
+    <span class="n">hist</span> <span class="o">=</span> <span class="n">hist</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">hist</span>
+
+
+<span class="k">def</span> <span class="nf">_calc_texture_gradient</span><span class="p">(</span><span class="n">image</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        calculate texture gradient for entire image</span>
+<span class="sd">        The original SelectiveSearch algorithm proposed Gaussian derivative</span>
+<span class="sd">        for 8 orientations, but we use LBP instead.</span>
+<span class="sd">        output will be [height(*)][width(*)]</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">ret</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">image</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">image</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">image</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">2</span><span class="p">]))</span>
+    <span class="k">for</span> <span class="n">channel</span> <span class="ow">in</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">):</span>
+        <span class="n">ret</span><span class="p">[:,</span> <span class="p">:,</span> <span class="n">channel</span><span class="p">]</span> <span class="o">=</span> <span class="n">feature</span><span class="o">.</span><span class="n">local_binary_pattern</span><span class="p">(</span>
+            <span class="n">img</span><span class="p">[:,</span> <span class="p">:,</span> <span class="n">channel</span><span class="p">],</span> <span class="n">P</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">R</span><span class="o">=</span><span class="mf">1.0</span>
+        <span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">ret</span>
+
+
+<span class="k">def</span> <span class="nf">_calc_texture_hist</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">num_channels</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        calculate texture histogram for each region</span>
+<span class="sd">        calculate the histogram of gradient for each colours</span>
+<span class="sd">        the size of output histogram will be</span>
+<span class="sd">            BINS * ORIENTATIONS * COLOUR_CHANNELS(3)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">hist</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([])</span>
+    <span class="k">for</span> <span class="n">channel</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_channels</span><span class="p">):</span>
+        <span class="c1"># mask by the color channel</span>
+        <span class="n">fd</span> <span class="o">=</span> <span class="n">image</span><span class="p">[:,</span> <span class="n">channel</span><span class="p">]</span>
+        <span class="c1"># calculate histogram for each orientation and concatenate them all</span>
+        <span class="c1"># and join to the result</span>
+        <span class="n">hist</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span>
+            <span class="p">[</span><span class="n">hist</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">histogram</span><span class="p">(</span><span class="n">fd</span><span class="p">,</span> <span class="n">bins</span><span class="p">,</span> <span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">))[</span><span class="mi">0</span><span class="p">]]</span>
+        <span class="p">)</span>
+    <span class="c1"># L1 Normalize</span>
+    <span class="n">hist</span> <span class="o">=</span> <span class="n">hist</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">hist</span>
+
+
+<span class="k">def</span> <span class="nf">_extract_regions</span><span class="p">(</span><span class="n">img</span><span class="p">):</span>
+    <span class="n">regions</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="c1"># get hsv image</span>
+    <span class="n">hsv</span> <span class="o">=</span> <span class="n">color</span><span class="o">.</span><span class="n">rgb2hsv</span><span class="p">(</span><span class="n">img</span><span class="p">[:,</span> <span class="p">:,</span> <span class="p">:</span><span class="mi">3</span><span class="p">])</span>
+    <span class="c1"># pass 1: count pixel positions</span>
+    <span class="k">for</span> <span class="n">y</span><span class="p">,</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">img</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">x</span><span class="p">,</span> <span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">l</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">i</span><span class="p">):</span>
+            <span class="c1"># initialize a new region</span>
+            <span class="k">if</span> <span class="n">l</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">regions</span><span class="p">:</span>
+                <span class="n">regions</span><span class="p">[</span><span class="n">l</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+                    <span class="s2">&quot;min_x&quot;</span><span class="p">:</span> <span class="mh">0xffff</span><span class="p">,</span> <span class="s2">&quot;min_y&quot;</span><span class="p">:</span> <span class="mh">0xffff</span><span class="p">,</span>
+                    <span class="s2">&quot;max_x&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;max_y&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;labels&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">l</span><span class="p">]</span>
+                <span class="p">}</span>
+            <span class="c1"># bounding box</span>
+            <span class="k">if</span> <span class="n">regions</span><span class="p">[</span><span class="n">l</span><span class="p">][</span><span class="s2">&quot;min_x&quot;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">x</span><span class="p">:</span>
+                <span class="n">regions</span><span class="p">[</span><span class="n">l</span><span class="p">][</span><span class="s2">&quot;min_x&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">x</span>
+            <span class="k">elif</span> <span class="n">regions</span><span class="p">[</span><span class="n">l</span><span class="p">][</span><span class="s2">&quot;min_y&quot;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">y</span><span class="p">:</span>
+                <span class="n">regions</span><span class="p">[</span><span class="n">l</span><span class="p">][</span><span class="s2">&quot;min_y&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">y</span>
+            <span class="k">elif</span> <span class="n">regions</span><span class="p">[</span><span class="n">l</span><span class="p">][</span><span class="s2">&quot;max_x&quot;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">x</span><span class="p">:</span>
+                <span class="n">regions</span><span class="p">[</span><span class="n">l</span><span class="p">][</span><span class="s2">&quot;max_x&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">x</span>
+            <span class="k">elif</span> <span class="n">regions</span><span class="p">[</span><span class="n">l</span><span class="p">][</span><span class="s2">&quot;max_y&quot;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">y</span><span class="p">:</span>
+                <span class="n">regions</span><span class="p">[</span><span class="n">l</span><span class="p">][</span><span class="s2">&quot;max_y&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">y</span>
+
+    <span class="c1"># pass 2: calculate texture gradient</span>
+    <span class="n">tex_grad</span> <span class="o">=</span> <span class="n">_calc_texture_gradient</span><span class="p">(</span><span class="n">img</span><span class="p">)</span>
+    <span class="c1"># pass 3: calculate colour histogram of each region</span>
+    <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">regions</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
+        <span class="c1"># colour histogram</span>
+        <span class="n">masked_pixels</span> <span class="o">=</span> <span class="n">hsv</span><span class="p">[:,</span> <span class="p">:,</span> <span class="p">:][</span><span class="n">img</span><span class="p">[:,</span> <span class="p">:,</span> <span class="mi">3</span><span class="p">]</span> <span class="o">==</span> <span class="n">k</span><span class="p">]</span>
+        <span class="n">regions</span><span class="p">[</span><span class="n">k</span><span class="p">][</span><span class="s2">&quot;size&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">masked_pixels</span> <span class="o">/</span> <span class="mi">4</span><span class="p">)</span>
+        <span class="n">regions</span><span class="p">[</span><span class="n">k</span><span class="p">][</span><span class="s2">&quot;hist_c&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_calc_colour_hist</span><span class="p">(</span><span class="n">masked_pixels</span><span class="p">)</span>
+        <span class="c1"># texture histogram</span>
+        <span class="n">regions</span><span class="p">[</span><span class="n">k</span><span class="p">][</span><span class="s2">&quot;hist_t&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_calc_texture_hist</span><span class="p">(</span><span class="n">tex_grad</span><span class="p">[:,</span> <span class="p">:][</span><span class="n">img</span><span class="p">[:,</span> <span class="p">:,</span> <span class="mi">3</span><span class="p">]</span> <span class="o">==</span> <span class="n">k</span><span class="p">])</span>
+
+    <span class="k">return</span> <span class="n">regions</span>
+
+
+<span class="k">def</span> <span class="nf">_extract_neighbours</span><span class="p">(</span><span class="n">regions</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">intersect</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="s2">&quot;min_x&quot;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">b</span><span class="p">[</span><span class="s2">&quot;min_x&quot;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">a</span><span class="p">[</span><span class="s2">&quot;max_x&quot;</span><span class="p">]</span>
+                <span class="ow">and</span> <span class="n">a</span><span class="p">[</span><span class="s2">&quot;min_y&quot;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">b</span><span class="p">[</span><span class="s2">&quot;min_y&quot;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">a</span><span class="p">[</span><span class="s2">&quot;max_y&quot;</span><span class="p">])</span> <span class="ow">or</span> <span class="p">(</span>
+            <span class="n">a</span><span class="p">[</span><span class="s2">&quot;min_x&quot;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">b</span><span class="p">[</span><span class="s2">&quot;max_x&quot;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">a</span><span class="p">[</span><span class="s2">&quot;max_x&quot;</span><span class="p">]</span>
+                <span class="ow">and</span> <span class="n">a</span><span class="p">[</span><span class="s2">&quot;min_y&quot;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">b</span><span class="p">[</span><span class="s2">&quot;max_y&quot;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">a</span><span class="p">[</span><span class="s2">&quot;max_y&quot;</span><span class="p">])</span> <span class="ow">or</span> <span class="p">(</span>
+            <span class="n">a</span><span class="p">[</span><span class="s2">&quot;min_x&quot;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">b</span><span class="p">[</span><span class="s2">&quot;min_x&quot;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">a</span><span class="p">[</span><span class="s2">&quot;max_x&quot;</span><span class="p">]</span>
+                <span class="ow">and</span> <span class="n">a</span><span class="p">[</span><span class="s2">&quot;min_y&quot;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">b</span><span class="p">[</span><span class="s2">&quot;max_y&quot;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">a</span><span class="p">[</span><span class="s2">&quot;max_y&quot;</span><span class="p">])</span> <span class="ow">or</span> <span class="p">(</span>
+            <span class="n">a</span><span class="p">[</span><span class="s2">&quot;min_x&quot;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">b</span><span class="p">[</span><span class="s2">&quot;max_x&quot;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">a</span><span class="p">[</span><span class="s2">&quot;max_x&quot;</span><span class="p">]</span>
+                <span class="ow">and</span> <span class="n">a</span><span class="p">[</span><span class="s2">&quot;min_y&quot;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">b</span><span class="p">[</span><span class="s2">&quot;min_y&quot;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">a</span><span class="p">[</span><span class="s2">&quot;max_y&quot;</span><span class="p">]):</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">return</span> <span class="kc">False</span>
+
+    <span class="n">R</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">regions</span><span class="o">.</span><span class="n">items</span><span class="p">())</span>
+    <span class="n">neighbours</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">cur</span><span class="p">,</span> <span class="n">a</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">R</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]):</span>
+        <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">R</span><span class="p">[</span><span class="n">cur</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:]:</span>
+            <span class="k">if</span> <span class="n">intersect</span><span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">b</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span>
+                <span class="n">neighbours</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">))</span>
+
+    <span class="k">return</span> <span class="n">neighbours</span>
+
+
+<span class="k">def</span> <span class="nf">_merge_regions</span><span class="p">(</span><span class="n">r1</span><span class="p">,</span> <span class="n">r2</span><span class="p">):</span>
+    <span class="n">new_size</span> <span class="o">=</span> <span class="n">r1</span><span class="p">[</span><span class="s2">&quot;size&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="n">r2</span><span class="p">[</span><span class="s2">&quot;size&quot;</span><span class="p">]</span>
+    <span class="n">rt</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;min_x&quot;</span><span class="p">:</span> <span class="nb">min</span><span class="p">(</span><span class="n">r1</span><span class="p">[</span><span class="s2">&quot;min_x&quot;</span><span class="p">],</span> <span class="n">r2</span><span class="p">[</span><span class="s2">&quot;min_x&quot;</span><span class="p">]),</span>
+        <span class="s2">&quot;min_y&quot;</span><span class="p">:</span> <span class="nb">min</span><span class="p">(</span><span class="n">r1</span><span class="p">[</span><span class="s2">&quot;min_y&quot;</span><span class="p">],</span> <span class="n">r2</span><span class="p">[</span><span class="s2">&quot;min_y&quot;</span><span class="p">]),</span>
+        <span class="s2">&quot;max_x&quot;</span><span class="p">:</span> <span class="nb">max</span><span class="p">(</span><span class="n">r1</span><span class="p">[</span><span class="s2">&quot;max_x&quot;</span><span class="p">],</span> <span class="n">r2</span><span class="p">[</span><span class="s2">&quot;max_x&quot;</span><span class="p">]),</span>
+        <span class="s2">&quot;max_y&quot;</span><span class="p">:</span> <span class="nb">max</span><span class="p">(</span><span class="n">r1</span><span class="p">[</span><span class="s2">&quot;max_y&quot;</span><span class="p">],</span> <span class="n">r2</span><span class="p">[</span><span class="s2">&quot;max_y&quot;</span><span class="p">]),</span>
+        <span class="s2">&quot;size&quot;</span><span class="p">:</span> <span class="n">new_size</span><span class="p">,</span>
+        <span class="s2">&quot;hist_c&quot;</span><span class="p">:</span> <span class="p">(</span>
+            <span class="n">r1</span><span class="p">[</span><span class="s2">&quot;hist_c&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="n">r1</span><span class="p">[</span><span class="s2">&quot;size&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="n">r2</span><span class="p">[</span><span class="s2">&quot;hist_c&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="n">r2</span><span class="p">[</span><span class="s2">&quot;size&quot;</span><span class="p">])</span> <span class="o">/</span> <span class="n">new_size</span><span class="p">,</span>
+        <span class="s2">&quot;hist_t&quot;</span><span class="p">:</span> <span class="p">(</span>
+            <span class="n">r1</span><span class="p">[</span><span class="s2">&quot;hist_t&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="n">r1</span><span class="p">[</span><span class="s2">&quot;size&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="n">r2</span><span class="p">[</span><span class="s2">&quot;hist_t&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="n">r2</span><span class="p">[</span><span class="s2">&quot;size&quot;</span><span class="p">])</span> <span class="o">/</span> <span class="n">new_size</span><span class="p">,</span>
+        <span class="s2">&quot;labels&quot;</span><span class="p">:</span> <span class="n">r1</span><span class="p">[</span><span class="s2">&quot;labels&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="n">r2</span><span class="p">[</span><span class="s2">&quot;labels&quot;</span><span class="p">]</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">rt</span>
+
+
+<span class="k">class</span> <span class="nc">SelectiveSearch</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Selective Search</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        im_orig : ndarray</span>
+<span class="sd">            Input image</span>
+<span class="sd">        scale : int</span>
+<span class="sd">            Free parameter. Higher means larger clusters in felzenszwalb segmentation.</span>
+<span class="sd">        sigma : float</span>
+<span class="sd">            Width of Gaussian kernel for felzenszwalb segmentation.</span>
+<span class="sd">        min_size : int</span>
+<span class="sd">            Minimum component size for felzenszwalb segmentation.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        img : ndarray</span>
+<span class="sd">            image with region label</span>
+<span class="sd">            region label is stored in the 4th value of each pixel [r,g,b,(region)]</span>
+<span class="sd">        regions : array of dict</span>
+<span class="sd">            [</span>
+<span class="sd">                {</span>
+<span class="sd">                    &#39;rect&#39;: (left, top, width, height),</span>
+<span class="sd">                    &#39;labels&#39;: [...],</span>
+<span class="sd">                    &#39;size&#39;: component_size</span>
+<span class="sd">                },</span>
+<span class="sd">                ...</span>
+<span class="sd">            ]</span>
+<span class="sd">    </span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span> <span class="n">min_size</span><span class="o">=</span><span class="mi">50</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">scale</span> <span class="o">=</span> <span class="n">scale</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sigma</span> <span class="o">=</span> <span class="n">sigma</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">min_size</span> <span class="o">=</span> <span class="n">min_size</span>
+        
+    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">image</span><span class="p">):</span>
+        <span class="k">assert</span> <span class="n">image</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">==</span> <span class="mi">3</span><span class="p">,</span> <span class="s1">&#39;An image is expected to be 3 channels&#39;</span>
+        <span class="n">image</span> <span class="o">=</span> <span class="n">_generate_segments</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">scale</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sigma</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">min_size</span><span class="p">)</span>
+        <span class="n">image_size</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">image</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">regions</span> <span class="o">=</span> <span class="n">_extract_regions</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
+        <span class="c1"># extract neighbouring information</span>
+        <span class="n">neighbours</span> <span class="o">=</span> <span class="n">_extract_neighbours</span><span class="p">(</span><span class="n">regions</span><span class="p">)</span>
+        <span class="c1"># calculate initial similarities</span>
+        <span class="n">similarities</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="p">(</span><span class="n">ai</span><span class="p">,</span> <span class="n">ar</span><span class="p">),</span> <span class="p">(</span><span class="n">bi</span><span class="p">,</span> <span class="n">br</span><span class="p">)</span> <span class="ow">in</span> <span class="n">neighbours</span><span class="p">:</span>
+            <span class="n">similarities</span><span class="p">[(</span><span class="n">ai</span><span class="p">,</span> <span class="n">bi</span><span class="p">)]</span> <span class="o">=</span> <span class="n">_calc_similarity</span><span class="p">(</span><span class="n">ar</span><span class="p">,</span> <span class="n">br</span><span class="p">,</span> <span class="n">image_size</span><span class="p">)</span>
+
+        <span class="c1"># hierarchal search</span>
+        <span class="k">while</span> <span class="n">similarities</span> <span class="o">!=</span> <span class="p">{}:</span>
+            <span class="c1"># get highest similarity</span>
+            <span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">similarities</span><span class="o">.</span><span class="n">items</span><span class="p">(),</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">i</span><span class="p">:</span> <span class="n">i</span><span class="p">[</span><span class="mi">1</span><span class="p">])[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+            <span class="c1"># merge corresponding regions</span>
+            <span class="n">t</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">regions</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span> <span class="o">+</span> <span class="mf">1.0</span>
+            <span class="n">regions</span><span class="p">[</span><span class="n">t</span><span class="p">]</span> <span class="o">=</span> <span class="n">_merge_regions</span><span class="p">(</span><span class="n">regions</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">regions</span><span class="p">[</span><span class="n">j</span><span class="p">])</span>
+            <span class="c1"># mark similarities for regions to be removed</span>
+            <span class="n">key_to_delete</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">similarities</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="ow">in</span> <span class="n">k</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">j</span> <span class="ow">in</span> <span class="n">k</span><span class="p">):</span>
+                    <span class="n">key_to_delete</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">k</span><span class="p">)</span>
+            <span class="c1"># remove old similarities of related regions</span>
+            <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">key_to_delete</span><span class="p">:</span>
+                <span class="k">del</span> <span class="n">similarities</span><span class="p">[</span><span class="n">k</span><span class="p">]</span>
+            <span class="c1"># calculate similarity set with the new region</span>
+            <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="p">[</span><span class="n">a</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">key_to_delete</span> <span class="k">if</span> <span class="n">a</span> <span class="o">!=</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">)]:</span>
+                <span class="n">n</span> <span class="o">=</span> <span class="n">k</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">if</span> <span class="n">k</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">in</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">)</span> <span class="k">else</span> <span class="n">k</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="n">similarities</span><span class="p">[(</span><span class="n">t</span><span class="p">,</span> <span class="n">n</span><span class="p">)]</span> <span class="o">=</span> <span class="n">_calc_similarity</span><span class="p">(</span><span class="n">regions</span><span class="p">[</span><span class="n">t</span><span class="p">],</span> <span class="n">regions</span><span class="p">[</span><span class="n">n</span><span class="p">],</span> <span class="n">image_size</span><span class="p">)</span>
+
+        <span class="n">boxes</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">r</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">regions</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
+            <span class="n">boxes</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+                <span class="s1">&#39;boxes&#39;</span><span class="p">:</span> <span class="p">(</span>
+                    <span class="n">r</span><span class="p">[</span><span class="s1">&#39;min_x&#39;</span><span class="p">],</span> <span class="n">r</span><span class="p">[</span><span class="s1">&#39;min_y&#39;</span><span class="p">],</span> 
+                    <span class="n">r</span><span class="p">[</span><span class="s1">&#39;max_x&#39;</span><span class="p">]</span> <span class="o">-</span> <span class="n">r</span><span class="p">[</span><span class="s1">&#39;min_x&#39;</span><span class="p">],</span> <span class="n">r</span><span class="p">[</span><span class="s1">&#39;max_y&#39;</span><span class="p">]</span> <span class="o">-</span> <span class="n">r</span><span class="p">[</span><span class="s1">&#39;min_y&#39;</span><span class="p">]),</span>
+<span class="c1">#                     r[&#39;min_x&#39;], r[&#39;min_y&#39;], r[&#39;max_x&#39;], r[&#39;max_y&#39;]</span>
+                <span class="s1">&#39;size&#39;</span><span class="p">:</span> <span class="n">r</span><span class="p">[</span><span class="s1">&#39;size&#39;</span><span class="p">],</span>
+                <span class="s1">&#39;labels&#39;</span><span class="p">:</span> <span class="n">r</span><span class="p">[</span><span class="s1">&#39;labels&#39;</span><span class="p">]</span>
+            <span class="p">})</span>
+            
+        <span class="n">candidates</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">boxes</span><span class="p">:</span>
+            <span class="c1"># excluding same rectangle (with different segments)</span>
+            <span class="k">if</span> <span class="n">r</span><span class="p">[</span><span class="s1">&#39;boxes&#39;</span><span class="p">]</span> <span class="ow">in</span> <span class="n">candidates</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="c1"># excluding regions smaller than 2000 pixels</span>
+            <span class="k">if</span> <span class="n">r</span><span class="p">[</span><span class="s1">&#39;size&#39;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">1000</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="c1"># distorted rects</span>
+            <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">h</span> <span class="o">=</span> <span class="n">r</span><span class="p">[</span><span class="s1">&#39;boxes&#39;</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">w</span> <span class="o">/</span> <span class="n">h</span> <span class="o">&gt;</span> <span class="mf">1.2</span> <span class="ow">or</span> <span class="n">h</span> <span class="o">/</span> <span class="n">w</span> <span class="o">&gt;</span> <span class="mf">1.2</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="n">candidates</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">r</span><span class="p">[</span><span class="s1">&#39;boxes&#39;</span><span class="p">])</span>
+
+<span class="c1">#         return image, boxes</span>
+        <span class="k">return</span> <span class="n">image</span><span class="p">,</span> <span class="n">candidates</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">img</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">astronaut</span><span class="p">()</span>
+
+<span class="c1"># perform selective search</span>
+<span class="n">selective_search</span> <span class="o">=</span> <span class="n">SelectiveSearch</span><span class="p">(</span><span class="n">scale</span><span class="o">=</span><span class="mf">500.0</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span> <span class="n">min_size</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
+<span class="n">img_lbl</span><span class="p">,</span> <span class="n">regions</span> <span class="o">=</span> <span class="n">selective_search</span><span class="p">(</span><span class="n">img</span><span class="p">)</span>
+
+<span class="c1"># candidates = set()</span>
+<span class="c1"># for r in regions:</span>
+<span class="c1">#     # excluding same rectangle (with different segments)</span>
+<span class="c1">#     if r[&#39;boxes&#39;] in candidates:</span>
+<span class="c1">#         continue</span>
+<span class="c1">#     # excluding regions smaller than 2000 pixels</span>
+<span class="c1">#     if r[&#39;size&#39;] &lt; 1000:</span>
+<span class="c1">#         continue</span>
+<span class="c1">#     # distorted rects</span>
+<span class="c1">#     x, y, w, h = r[&#39;boxes&#39;]</span>
+<span class="c1">#     if w / h &gt; 1.2 or h / w &gt; 1.2:</span>
+<span class="c1">#         continue</span>
+<span class="c1">#     candidates.add(r[&#39;boxes&#39;])</span>
+    
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">ncols</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">nrows</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">150</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">img</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">img_lbl</span><span class="p">[:,</span> <span class="p">:,</span> <span class="mi">3</span><span class="p">])</span>
+<span class="k">for</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">h</span> <span class="ow">in</span> <span class="n">regions</span><span class="p">:</span>
+    <span class="n">rect</span> <span class="o">=</span> <span class="n">Rectangle</span><span class="p">(</span>
+        <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">),</span> <span class="n">w</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span> <span class="n">fill</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">add_patch</span><span class="p">(</span><span class="n">rect</span><span class="p">)</span>
+
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/object-rcnn_5_0.png" src="../_images/object-rcnn_5_0.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">torchvision</span> <span class="kn">import</span> <span class="n">transforms</span>
+<span class="kn">from</span> <span class="nn">torchvision</span> <span class="kn">import</span> <span class="n">models</span>
+<span class="kn">from</span> <span class="nn">torch</span> <span class="kn">import</span> <span class="n">nn</span><span class="p">,</span> <span class="n">Tensor</span>
+
+<span class="n">transform</span> <span class="o">=</span> <span class="n">transforms</span><span class="o">.</span><span class="n">Compose</span><span class="p">([</span>
+    <span class="n">transforms</span><span class="o">.</span><span class="n">ToPILImage</span><span class="p">(),</span>
+    <span class="n">transforms</span><span class="o">.</span><span class="n">Resize</span><span class="p">((</span><span class="mi">227</span><span class="p">,</span> <span class="mi">227</span><span class="p">)),</span>
+    <span class="n">transforms</span><span class="o">.</span><span class="n">ToTensor</span><span class="p">(),</span>
+    <span class="n">transforms</span><span class="o">.</span><span class="n">Normalize</span><span class="p">((</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">),</span> <span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">))</span>
+<span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>2000장의 region proposals와 ground-truth box의 IoU(Intersection of Union)을 비교하여 IoU가 0.5보다 큰 경우 positive samples, 0.5보다 작은 경우 negative samples로 나눈다. 이렇게 sample을 나눴을 때, ground truth만 positive sample로 정의할때 보다 30배 많은 학습데이터를 얻을 수 있다. 많은 데이터를 통해 overfitting을 방지한다. Positive sample는 객체가 포함되어 있는 sample을 의미하고, negative sample은 객체가 포함되지 않은 배경 sample을 의미한다. 이렇게 나눈 후 positive sample 32개 + negative sample 96개 = 128개의 이미지로 이루어진 하나의 미니 배치를 만든다.
+이렇게 생성된 배치들을 이용해 fine-tuning을 진행한다. fine-tuning을 하기 위해서 기존의 pre-trained된 AlexNet의 마지막 softmax layer를 수정해서 N+1 way classification을 수행하게 한다. 이때, N은 R-CNN에서 사용하는 dataset의 객체들의 종류의 개수이고, 1을 더해준 이유는 배경인지 판단하기 위해서이다. SGD를 통해 N+1 way classification을 수행하면서 학습된 CNN 구조는 domain-specific fine-tuning을 이룬다.
+마지막의 N+1 way classification을 위해 수정한 softmax layer는 R-CNN 모델 사용시 사용하지 않는다. 왜냐하면 softmax layer는 fine-tuning을 위해 사용한 것이고, 원래 R-CNN에서 CNN 구조의 목표는 4096-dimensional feature vector를 추출하는 것이기 때문이다.</p>
+</div>
+<div class="section" id="intersection-of-union">
+<h2>Intersection of union<a class="headerlink" href="#intersection-of-union" title="Permalink to this headline">¶</a></h2>
+<p>Intersection of union(IoU)는 교집합 영역 넓이 / 합집합 영역 넓이</p>
+</div>
+<div class="section" id="linear-support-vector-machines">
+<h2>Linear support vector machines<a class="headerlink" href="#linear-support-vector-machines" title="Permalink to this headline">¶</a></h2>
+<p>Linear support vector machines(SVMs)은 2000장의 region proposals에서 fine-tuning때와는 다르게 ground truth box만을 positive sample, IoU 값이 0.3보다 작은 것은 negative sample로 지정한다. 이때, IoU값이 0.3보다 큰 경우 무시한다. 이때 0.3은 gird search를 통해 찾은 값이다. 이후는 fine-tuning과 마찬가지로 positive sample 32개 + negative sample 96개 = 128개의 미니배치를 구성한 후 fine-tuning된 AlexNet에 입력하여 4096 dimensional feature vector를 추출한다. 추출된 벡터를 이용해 linear SVMs를 학습한다. SVM은 2진 분류를 수행하므로 분류하려는 객체의 종류만큼 SVM이 필요하다. 학습이 한 차례 끝난 후, hard negative mining 기법을 적용하여 재학습을 수행한다.</p>
+<p>R-CNN에서는 단순히 N-way softmax layer를 통해 분류를 진행하지 않고, SVMs를 이용해 분류를 한다. 이는 SVM을 사용했을 때 성능이 더 좋기 때문이다. 성능 차이의 이유를 논문의 저자들은 positive sample을 정의할 때 SVM을 학습시킬 때 더 엄밀하게 정의한다는 점과 SVM이 hard negative를 이용해 학습하기 때문이라고 서술했다.</p>
+<p>linear SVM에서는 output으로 class와 confidence score를 반환한다.</p>
+<div class="section" id="hard-negative-mining">
+<h3>Hard negative mining<a class="headerlink" href="#hard-negative-mining" title="Permalink to this headline">¶</a></h3>
+<p>이미지에서 사람을 탐지하는 경우 사람은 positive sample이 되고, 그 외의 배경은 negative sample이 된다. 이때, 모델이 bounding box를 배경이라고 예측하고 실제로 배경인 경우 true negative sample라고 한다. 반면에 모델이 사람이라고 예측했지만, 실제로 배경인 경우 false positive sample에 해당한다.</p>
+<p>객체 탐지 시, positive sample보다 negative sample이 더 많은 클래스 불균형 때문에 모델은 주로 false positive 오류를 주로 범하게 된다. 이러한 문제를 해결하기 위해 처음 linear SVMs를 학습시킬 때의 false positive sample들을 epoch마다 학습 데이터에 추가하여 학습을 진행한다. 이를 통해 모델이 강건해지고, false positive 오류가 줄어든다.</p>
+</div>
+</div>
+<div class="section" id="bounding-box-regressor">
+<h2>Bounding box regressor<a class="headerlink" href="#bounding-box-regressor" title="Permalink to this headline">¶</a></h2>
+<p>selective search 알고리즘을 통해 얻은 객체의 위치는 부정확할 수 있다. 이런 문제를 해결하기 위해 객체의 위치를 조절해주는 Bounding box regressor가 있다.</p>
+<p><span class="math notranslate nohighlight">\(N\)</span>개의 학습데이터쌍(training pair)인 <span class="math notranslate nohighlight">\(\{(P^{i}, G^{i})\}_{i=1,...,N}\)</span>에 대해 <span class="math notranslate nohighlight">\(P^{i}=(P^{i}_{x}, P^{i}_{y}, P^{i}_{w}, P^{i}_{h})\)</span>는 해당 지역(region)에 대한 추정값으로 각 지역 중심의 좌표 <span class="math notranslate nohighlight">\(x\)</span>, <span class="math notranslate nohighlight">\(y\)</span>와 너비(width, <span class="math notranslate nohighlight">\(w\)</span>), 높이(height, <span class="math notranslate nohighlight">\(h\)</span>)를 나타내고, 이에 대응되게 <span class="math notranslate nohighlight">\(G^{i}=(G^{i}_{x},G^{i}_{y},G^{i}_{w},G^{i}_{h})\)</span>은 해당 지역(region)에 대한 정답(ground truth)이다.</p>
+<div class="math notranslate nohighlight">
+\[\mathbf{w}_{\star}=\arg \min_{\hat{\mathbf{w}}_{\star}}\sum_{i}^{N}(t_{\star}^{i}-\hat{\mathbf{w}}_{\star}^{T}\theta_{5}(P^{i})^{2}+\lambda )\]</div>
+<div class="math notranslate nohighlight">
+\[
+t_{x}=(G_{x}-P_{x})/P_{w}
+\]</div>
+</div>
+<div class="section" id="non-maximum-suppression">
+<h2>Non maximum suppression<a class="headerlink" href="#non-maximum-suppression" title="Permalink to this headline">¶</a></h2>
+<p>R-CNN을 통해 얻게 되는 2000개의 bounding box를 전부 다 표시할 경우우 하나의 객체에 대해 지나치게 많은 bounding box가 겹칠 수 있다. 따라서 가장 적합한 bounding box를 선택하는 Non maximum supression 알고리즘을 적용한다.</p>
+<p>bounding box별로 지정한 confidence scroe threshold 이하의 box를 제거한다.
+남은 bounding box를 confidence score에 따라 내림차순으로 정렬한다. 그 다음 confidence score가 높은 순의 bounding box부터 다른 box와의 IoU값을 조사하여 IoU threshold 이상인 box를 모두 제거한다.
+2의 과정을 반복하여 남아있는 box만 선택한다.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">from</span> <span class="nn">torchvision.ops</span> <span class="kn">import</span> <span class="n">nms</span><span class="p">,</span> <span class="n">box_iou</span>
+<span class="kn">from</span> <span class="nn">sklearn.svm</span> <span class="kn">import</span> <span class="n">LinearSVC</span>
+
+
+<span class="k">def</span> <span class="nf">_xywh_to_xyxy</span><span class="p">(</span><span class="n">box</span><span class="p">):</span>
+    <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">h</span> <span class="o">=</span> <span class="n">box</span>
+    <span class="k">return</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">x</span> <span class="o">+</span> <span class="n">w</span><span class="p">,</span> <span class="n">y</span> <span class="o">+</span> <span class="n">h</span>
+
+
+<span class="k">class</span> <span class="nc">RegionsCNN</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">num_classes</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">max_size</span><span class="o">=</span><span class="mi">227</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">max_size</span> <span class="o">=</span> <span class="n">max_size</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">region_proposal</span> <span class="o">=</span> <span class="n">SelectiveSearch</span><span class="p">(</span><span class="n">min_size</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
+        <span class="n">feature_extractor</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">alexnet</span><span class="p">(</span><span class="n">pretrained</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">feature_extractor</span><span class="o">.</span><span class="n">classifier</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">feature_extractor</span><span class="o">.</span><span class="n">classifier</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">in_features</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">feature_extractor</span> <span class="o">=</span> <span class="n">feature_extractor</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">classifier</span> <span class="o">=</span> <span class="n">LinearSVC</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">regressor</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">256</span> <span class="o">*</span> <span class="mi">6</span> <span class="o">*</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+        
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">images</span><span class="p">):</span>
+        <span class="n">_</span><span class="p">,</span> <span class="n">regions</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">region_proposal</span><span class="p">(</span><span class="n">images</span><span class="p">)</span>
+        
+        
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">training</span><span class="p">:</span>
+            <span class="n">positives</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">negatives</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="c1"># compute ious</span>
+            <span class="c1"># dict to list modify selective search returns</span>
+            <span class="n">regions</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">regions</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">int64</span><span class="p">)</span>
+            <span class="n">gt</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([[</span><span class="mi">50</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">150</span><span class="p">,</span> <span class="mi">150</span><span class="p">]],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">int64</span><span class="p">)</span>
+            
+            <span class="n">ious</span> <span class="o">=</span> <span class="n">box_iou</span><span class="p">(</span><span class="n">regions</span><span class="p">,</span> <span class="n">gt</span><span class="p">)</span>
+            
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">ious</span><span class="p">)):</span>
+                <span class="n">xmin</span><span class="p">,</span> <span class="n">ymin</span><span class="p">,</span> <span class="n">xmax</span><span class="p">,</span> <span class="n">ymax</span> <span class="o">=</span> <span class="n">regions</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+                <span class="n">iou_score</span> <span class="o">=</span> <span class="n">ious</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+                <span class="k">if</span> <span class="mi">0</span> <span class="o">&lt;</span> <span class="n">iou_score</span> <span class="o">&lt;=</span> <span class="mf">0.3</span><span class="p">:</span>
+                    <span class="n">negatives</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">regions</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+                <span class="k">elif</span> <span class="n">iou_score</span> <span class="o">&gt;=</span> <span class="mf">0.5</span><span class="p">:</span>
+                    <span class="n">positives</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">regions</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+                    
+            <span class="nb">print</span><span class="p">(</span><span class="n">negatives</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">()</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">positives</span><span class="p">)</span>
+            
+            <span class="k">for</span> <span class="n">positive</span> <span class="ow">in</span> <span class="n">positives</span><span class="p">:</span>
+                <span class="n">xmin</span><span class="p">,</span> <span class="n">ymin</span><span class="p">,</span> <span class="n">xmax</span><span class="p">,</span> <span class="n">ymax</span> <span class="o">=</span> <span class="n">_xywh_to_xyxy</span><span class="p">(</span><span class="n">positive</span><span class="p">)</span>  <span class="c1"># return x, y, w, h</span>
+                <span class="n">warp_image</span> <span class="o">=</span> <span class="n">images</span><span class="p">[</span><span class="n">ymin</span><span class="p">:</span><span class="n">ymax</span><span class="p">,</span> <span class="n">xmin</span><span class="p">:</span><span class="n">xmax</span><span class="p">]</span>  <span class="c1"># H, W, C</span>
+                <span class="n">warp_image</span> <span class="o">=</span> <span class="n">transform</span><span class="p">(</span><span class="n">warp_image</span><span class="p">)</span>  <span class="c1"># C, H, W</span>
+                <span class="n">feature</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">feature_extractor</span><span class="o">.</span><span class="n">features</span><span class="p">(</span><span class="n">warp_image</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span> <span class="c1"># [?, ?]</span>
+                <span class="n">feature</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">flatten</span><span class="p">(</span><span class="n">feature</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+                <span class="bp">self</span><span class="o">.</span><span class="n">classifier</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">feature</span><span class="p">,</span> <span class="n">targets</span><span class="p">)</span>
+                <span class="n">outputs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">regressor</span><span class="p">(</span><span class="n">feature</span><span class="p">)</span>
+                <span class="nb">print</span><span class="p">(</span><span class="n">outputs</span><span class="p">)</span>
+                            
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">scores</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">positives</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">region</span> <span class="ow">in</span> <span class="n">regions</span><span class="p">:</span>
+                <span class="n">xmin</span><span class="p">,</span> <span class="n">ymin</span><span class="p">,</span> <span class="n">xmax</span><span class="p">,</span> <span class="n">ymax</span> <span class="o">=</span> <span class="n">_xywh_to_xyxy</span><span class="p">(</span><span class="n">region</span><span class="p">)</span>  <span class="c1"># return x, y, w, h</span>
+                <span class="n">warp_image</span> <span class="o">=</span> <span class="n">images</span><span class="p">[</span><span class="n">ymin</span><span class="p">:</span><span class="n">ymax</span><span class="p">,</span> <span class="n">xmin</span><span class="p">:</span><span class="n">xmax</span><span class="p">]</span>  <span class="c1"># H, W, C</span>
+                <span class="n">warp_image</span> <span class="o">=</span> <span class="n">transform</span><span class="p">(</span><span class="n">warp_image</span><span class="p">)</span>  <span class="c1"># C, H, W</span>
+                <span class="n">output</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">feature_extractor</span><span class="p">(</span><span class="n">warp_image</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">0</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span> <span class="c1"># [?, ?]</span>
+                
+                <span class="n">boxes</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">regressor</span><span class="p">(</span><span class="n">feature</span><span class="p">)</span>
+                
+                <span class="k">if</span> <span class="n">torch</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">output</span><span class="p">)</span><span class="o">.</span><span class="n">item</span><span class="p">()</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                    <span class="n">probs</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">softmax</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="c1">#.cpu().numpy()</span>
+                    <span class="k">if</span> <span class="n">probs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="mf">0.3</span><span class="p">:</span>
+                        <span class="n">scores</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">probs</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+                        <span class="n">positives</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">xmin</span><span class="p">,</span> <span class="n">ymin</span><span class="p">,</span> <span class="n">xmax</span><span class="p">,</span> <span class="n">ymax</span><span class="p">])</span>
+
+            <span class="n">positives</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">positives</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">positives</span><span class="o">.</span><span class="n">size</span><span class="p">())</span>
+            <span class="n">scores</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">FloatTensor</span><span class="p">(</span><span class="n">scores</span><span class="p">)</span>
+            <span class="n">results</span> <span class="o">=</span> <span class="n">nms</span><span class="p">(</span><span class="n">positives</span><span class="p">,</span> <span class="n">scores</span><span class="p">,</span> <span class="n">iou_threshold</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">results</span><span class="o">.</span><span class="n">size</span><span class="p">())</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">positives</span><span class="p">[</span><span class="n">results</span><span class="p">])</span>
+                
+
+<span class="n">rcnn</span> <span class="o">=</span> <span class="n">RegionsCNN</span><span class="p">()</span><span class="o">.</span><span class="n">train</span><span class="p">()</span>
+<span class="n">img</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">astronaut</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">img</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>  <span class="c1"># skimnage h, w, depth</span>
+<span class="n">rcnn</span><span class="p">(</span><span class="n">img</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
+<span class="nn">Input In [4],</span> in <span class="ni">&lt;cell line: 3&gt;</span><span class="nt">()</span>
+<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="kn">import</span> <span class="nn">torch</span>
+<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="kn">from</span> <span class="nn">torchvision.ops</span> <span class="kn">import</span> <span class="n">nms</span><span class="p">,</span> <span class="n">box_iou</span>
+<span class="ne">----&gt; </span><span class="mi">3</span> <span class="kn">from</span> <span class="nn">sklearn.svm</span> <span class="kn">import</span> <span class="n">LinearSVC</span>
+<span class="g g-Whitespace">      </span><span class="mi">6</span> <span class="k">def</span> <span class="nf">_xywh_to_xyxy</span><span class="p">(</span><span class="n">box</span><span class="p">):</span>
+<span class="g g-Whitespace">      </span><span class="mi">7</span>     <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">h</span> <span class="o">=</span> <span class="n">box</span>
+
+<span class="ne">ModuleNotFoundError</span>: No module named &#39;sklearn&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">LossFunction</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">pass</span>
+    
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">targets</span><span class="p">):</span>
+        <span class="n">xmin</span><span class="p">,</span> <span class="n">ymin</span><span class="p">,</span> <span class="n">xmax</span><span class="p">,</span> <span class="n">ymax</span> <span class="o">=</span> <span class="n">positive</span>
+        <span class="n">pw</span> <span class="o">=</span> <span class="n">xmax</span> <span class="o">-</span> <span class="n">xmin</span>
+        <span class="n">ph</span> <span class="o">=</span> <span class="n">ymax</span> <span class="o">-</span> <span class="n">ymin</span>
+        <span class="n">px</span> <span class="o">=</span> <span class="n">xmin</span> <span class="o">+</span> <span class="n">p_w</span> <span class="o">/</span> <span class="mi">2</span>
+        <span class="n">py</span> <span class="o">=</span> <span class="n">ymin</span> <span class="o">+</span> <span class="n">p_h</span> <span class="o">/</span> <span class="mi">2</span>
+
+        <span class="n">xmin</span><span class="p">,</span> <span class="n">ymin</span><span class="p">,</span> <span class="n">xmax</span><span class="p">,</span> <span class="n">ymax</span> <span class="o">=</span> <span class="n">bndbox</span>
+        <span class="n">gw</span> <span class="o">=</span> <span class="n">xmax</span> <span class="o">-</span> <span class="n">xmin</span>
+        <span class="n">gh</span> <span class="o">=</span> <span class="n">ymax</span> <span class="o">-</span> <span class="n">ymin</span>
+        <span class="n">gx</span> <span class="o">=</span> <span class="n">xmin</span> <span class="o">+</span> <span class="n">g_w</span> <span class="o">/</span> <span class="mi">2</span>
+        <span class="n">gy</span> <span class="o">=</span> <span class="n">ymin</span> <span class="o">+</span> <span class="n">g_h</span> <span class="o">/</span> <span class="mi">2</span>
+
+        <span class="c1"># 计算t</span>
+        <span class="n">tx</span> <span class="o">=</span> <span class="p">(</span><span class="n">g_x</span> <span class="o">-</span> <span class="n">p_x</span><span class="p">)</span> <span class="o">/</span> <span class="n">p_w</span>
+        <span class="n">ty</span> <span class="o">=</span> <span class="p">(</span><span class="n">g_y</span> <span class="o">-</span> <span class="n">p_y</span><span class="p">)</span> <span class="o">/</span> <span class="n">p_h</span>
+        <span class="n">tw</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">g_w</span> <span class="o">/</span> <span class="n">p_w</span><span class="p">)</span>
+        <span class="n">th</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">g_h</span> <span class="o">/</span> <span class="n">p_h</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
 </div>
 
     <script type="text/x-thebe-config">

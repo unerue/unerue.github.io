@@ -17,30 +17,115 @@ Traceback (most recent call last):
     raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
 nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
 ------------------
-import cv2
+%matplotlib inline
+from skimage.exposure import cumulative_distribution
+from skimage.io import imread
+from skimage.color import rgb2gray
+import matplotlib.pylab as plt
 import numpy as np
-import matplotlib.pyplot as plt
 
-img = cv2.imread('./img/cat-01.jpg')
-img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+def hist_matching(c, c_t, im):
+    b = np.interp(c, c_t, np.arange(256))   # find closest matches to b_t
+    pix_repl = {i:b[i] for i in range(256)} # dictionary to replace the pixels
+    mp = np.arange(0,256)
+    for (k, v) in pix_repl.items():
+        mp[k] = v
+    s = im.shape
+    im = np.reshape(mp[im.ravel()], im.shape)
+    im = np.reshape(im, s)
+    return im
 
-hist = cv2.calcHist([img], [0], None, [256], [0,256])
-print(hist.shape)
-print(hist.sum(), img.shape)
+def cdf(im):
+    c, b = cumulative_distribution(im)
+    #print(b)
+    for i in range(b[0]):
+        c = np.insert(c, 0, 0)
+    for i in range(b[-1]+1, 256):
+        c = np.append(c, 1)
+    return c
 
-fig, axes = plt.subplots(ncols=2, figsize=(7,3))
-axes[0].imshow(img, cmap='gray')
-axes[1].plot(hist)
+im = imread('images/goddess.png').astype(np.uint8)
+im_t = imread('images/leaves.png')
+print(np.max(im), np.max(im_t))
+
+im1 = np.zeros(im.shape).astype(np.uint8)
+for i in range(3):
+    c = cdf(im[...,i])
+    c_t = cdf(im_t[...,i])
+    im1[...,i] = hist_matching(c, c_t, im[...,i])
+
+plt.figure(figsize=(20,17))
+plt.subplots_adjust(left=0, top=0.95, right=1, bottom=0, wspace=0.05, hspace=0.05)
+plt.subplot(221), plt.imshow(im), plt.axis('off'), plt.title('Input Image', size=25)
+plt.subplot(222), plt.imshow(im_t), plt.axis('off'), plt.title('Template Image', size=25)
+plt.subplot(223), plt.imshow(im1[...,:3]), plt.axis('off'), plt.title('Output Image', size=25)
 plt.show()
 ------------------
 
 [1;31m---------------------------------------------------------------------------[0m
-[1;31mModuleNotFoundError[0m                       Traceback (most recent call last)
-Input [1;32mIn [1][0m, in [0;36m<cell line: 1>[1;34m()[0m
-[1;32m----> 1[0m [38;5;28;01mimport[39;00m [38;5;21;01mcv2[39;00m
-[0;32m      2[0m [38;5;28;01mimport[39;00m [38;5;21;01mnumpy[39;00m [38;5;28;01mas[39;00m [38;5;21;01mnp[39;00m
-[0;32m      3[0m [38;5;28;01mimport[39;00m [38;5;21;01mmatplotlib[39;00m[38;5;21;01m.[39;00m[38;5;21;01mpyplot[39;00m [38;5;28;01mas[39;00m [38;5;21;01mplt[39;00m
+[1;31mFileNotFoundError[0m                         Traceback (most recent call last)
+Input [1;32mIn [8][0m, in [0;36m<cell line: 28>[1;34m()[0m
+[0;32m     25[0m         c [38;5;241m=[39m np[38;5;241m.[39mappend(c, [38;5;241m1[39m)
+[0;32m     26[0m     [38;5;28;01mreturn[39;00m c
+[1;32m---> 28[0m im [38;5;241m=[39m [43mimread[49m[43m([49m[38;5;124;43m'[39;49m[38;5;124;43mimages/goddess.png[39;49m[38;5;124;43m'[39;49m[43m)[49m[38;5;241m.[39mastype(np[38;5;241m.[39muint8)
+[0;32m     29[0m im_t [38;5;241m=[39m imread([38;5;124m'[39m[38;5;124mimages/leaves.png[39m[38;5;124m'[39m)
+[0;32m     30[0m [38;5;28mprint[39m(np[38;5;241m.[39mmax(im), np[38;5;241m.[39mmax(im_t))
 
-[1;31mModuleNotFoundError[0m: No module named 'cv2'
-ModuleNotFoundError: No module named 'cv2'
+File [1;32m~\miniconda3\envs\vision\lib\site-packages\skimage\io\_io.py:53[0m, in [0;36mimread[1;34m(fname, as_gray, plugin, **plugin_args)[0m
+[0;32m     50[0m         plugin [38;5;241m=[39m [38;5;124m'[39m[38;5;124mtifffile[39m[38;5;124m'[39m
+[0;32m     52[0m [38;5;28;01mwith[39;00m file_or_url_context(fname) [38;5;28;01mas[39;00m fname:
+[1;32m---> 53[0m     img [38;5;241m=[39m call_plugin([38;5;124m'[39m[38;5;124mimread[39m[38;5;124m'[39m, fname, plugin[38;5;241m=[39mplugin, [38;5;241m*[39m[38;5;241m*[39mplugin_args)
+[0;32m     55[0m [38;5;28;01mif[39;00m [38;5;129;01mnot[39;00m [38;5;28mhasattr[39m(img, [38;5;124m'[39m[38;5;124mndim[39m[38;5;124m'[39m):
+[0;32m     56[0m     [38;5;28;01mreturn[39;00m img
+
+File [1;32m~\miniconda3\envs\vision\lib\site-packages\skimage\io\manage_plugins.py:207[0m, in [0;36mcall_plugin[1;34m(kind, *args, **kwargs)[0m
+[0;32m    203[0m     [38;5;28;01mexcept[39;00m [38;5;167;01mIndexError[39;00m:
+[0;32m    204[0m         [38;5;28;01mraise[39;00m [38;5;167;01mRuntimeError[39;00m([38;5;124m'[39m[38;5;124mCould not find the plugin [39m[38;5;124m"[39m[38;5;132;01m%s[39;00m[38;5;124m"[39m[38;5;124m for [39m[38;5;132;01m%s[39;00m[38;5;124m.[39m[38;5;124m'[39m [38;5;241m%[39m
+[0;32m    205[0m                            (plugin, kind))
+[1;32m--> 207[0m [38;5;28;01mreturn[39;00m func([38;5;241m*[39margs, [38;5;241m*[39m[38;5;241m*[39mkwargs)
+
+File [1;32m~\miniconda3\envs\vision\lib\site-packages\skimage\io\_plugins\imageio_plugin.py:10[0m, in [0;36mimread[1;34m(*args, **kwargs)[0m
+[0;32m      8[0m [38;5;129m@wraps[39m(imageio_imread)
+[0;32m      9[0m [38;5;28;01mdef[39;00m [38;5;21mimread[39m([38;5;241m*[39margs, [38;5;241m*[39m[38;5;241m*[39mkwargs):
+[1;32m---> 10[0m     [38;5;28;01mreturn[39;00m np[38;5;241m.[39masarray(imageio_imread([38;5;241m*[39margs, [38;5;241m*[39m[38;5;241m*[39mkwargs))
+
+File [1;32m~\miniconda3\envs\vision\lib\site-packages\imageio\core\functions.py:265[0m, in [0;36mimread[1;34m(uri, format, **kwargs)[0m
+[0;32m    260[0m     [38;5;28;01mraise[39;00m [38;5;167;01mTypeError[39;00m(
+[0;32m    261[0m         [38;5;124m'[39m[38;5;124mInvalid keyword argument [39m[38;5;124m"[39m[38;5;124mmode[39m[38;5;124m"[39m[38;5;124m, [39m[38;5;124m'[39m [38;5;124m'[39m[38;5;124mperhaps you mean [39m[38;5;124m"[39m[38;5;124mpilmode[39m[38;5;124m"[39m[38;5;124m?[39m[38;5;124m'[39m
+[0;32m    262[0m     )
+[0;32m    264[0m [38;5;66;03m# Get reader and read first[39;00m
+[1;32m--> 265[0m reader [38;5;241m=[39m read(uri, [38;5;28mformat[39m, [38;5;124m"[39m[38;5;124mi[39m[38;5;124m"[39m, [38;5;241m*[39m[38;5;241m*[39mkwargs)
+[0;32m    266[0m [38;5;28;01mwith[39;00m reader:
+[0;32m    267[0m     [38;5;28;01mreturn[39;00m reader[38;5;241m.[39mget_data([38;5;241m0[39m)
+
+File [1;32m~\miniconda3\envs\vision\lib\site-packages\imageio\core\functions.py:172[0m, in [0;36mget_reader[1;34m(uri, format, mode, **kwargs)[0m
+[0;32m    149[0m [38;5;124;03m""" get_reader(uri, format=None, mode='?', **kwargs)[39;00m
+[0;32m    150[0m 
+[0;32m    151[0m [38;5;124;03mReturns a :class:`.Reader` object which can be used to read data[39;00m
+[1;32m   (...)[0m
+[0;32m    168[0m [38;5;124;03m    to see what arguments are available for a particular format.[39;00m
+[0;32m    169[0m [38;5;124;03m"""[39;00m
+[0;32m    171[0m [38;5;66;03m# Create request object[39;00m
+[1;32m--> 172[0m request [38;5;241m=[39m Request(uri, [38;5;124m"[39m[38;5;124mr[39m[38;5;124m"[39m [38;5;241m+[39m mode, [38;5;241m*[39m[38;5;241m*[39mkwargs)
+[0;32m    174[0m [38;5;66;03m# Get format[39;00m
+[0;32m    175[0m [38;5;28;01mif[39;00m [38;5;28mformat[39m [38;5;129;01mis[39;00m [38;5;129;01mnot[39;00m [38;5;28;01mNone[39;00m:
+
+File [1;32m~\miniconda3\envs\vision\lib\site-packages\imageio\core\request.py:124[0m, in [0;36mRequest.__init__[1;34m(self, uri, mode, **kwargs)[0m
+[0;32m    121[0m     [38;5;28;01mraise[39;00m [38;5;167;01mValueError[39;00m([38;5;124m'[39m[38;5;124mRequest requires mode[1] to be in [39m[38;5;124m"[39m[38;5;124miIvV?[39m[38;5;124m"[39m[38;5;124m'[39m)
+[0;32m    123[0m [38;5;66;03m# Parse what was given[39;00m
+[1;32m--> 124[0m [38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43m_parse_uri[49m[43m([49m[43muri[49m[43m)[49m
+[0;32m    126[0m [38;5;66;03m# Set extension[39;00m
+[0;32m    127[0m [38;5;28;01mif[39;00m [38;5;28mself[39m[38;5;241m.[39m_filename [38;5;129;01mis[39;00m [38;5;129;01mnot[39;00m [38;5;28;01mNone[39;00m:
+
+File [1;32m~\miniconda3\envs\vision\lib\site-packages\imageio\core\request.py:260[0m, in [0;36mRequest._parse_uri[1;34m(self, uri)[0m
+[0;32m    257[0m [38;5;28;01mif[39;00m is_read_request:
+[0;32m    258[0m     [38;5;66;03m# Reading: check that the file exists (but is allowed a dir)[39;00m
+[0;32m    259[0m     [38;5;28;01mif[39;00m [38;5;129;01mnot[39;00m os[38;5;241m.[39mpath[38;5;241m.[39mexists(fn):
+[1;32m--> 260[0m         [38;5;28;01mraise[39;00m [38;5;167;01mFileNotFoundError[39;00m([38;5;124m"[39m[38;5;124mNo such file: [39m[38;5;124m'[39m[38;5;132;01m%s[39;00m[38;5;124m'[39m[38;5;124m"[39m [38;5;241m%[39m fn)
+[0;32m    261[0m [38;5;28;01melse[39;00m:
+[0;32m    262[0m     [38;5;66;03m# Writing: check that the directory to write to does exist[39;00m
+[0;32m    263[0m     dn [38;5;241m=[39m os[38;5;241m.[39mpath[38;5;241m.[39mdirname(fn)
+
+[1;31mFileNotFoundError[0m: No such file: 'C:\Users\unerue\Documents\unerue.github.io\computer-vision\images\goddess.png'
+FileNotFoundError: No such file: 'C:\Users\unerue\Documents\unerue.github.io\computer-vision\images\goddess.png'
 

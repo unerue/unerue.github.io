@@ -585,6 +585,676 @@ const thebe_selector_output = ".output, .cell_output"
                 
   <div class="tex2jax_ignore mathjax_ignore section" id="yolov1">
 <h1>YOLOv1<a class="headerlink" href="#yolov1" title="Permalink to this headline">¶</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">from</span> <span class="nn">torch</span> <span class="kn">import</span> <span class="n">nn</span><span class="p">,</span> <span class="n">Tensor</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">architecture_config</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="s1">&#39;M&#39;</span><span class="p">,</span>
+    <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">192</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="s1">&#39;M&#39;</span><span class="p">,</span>
+    <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> 
+    <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">256</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+    <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">256</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+    <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">512</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="s1">&#39;M&#39;</span><span class="p">,</span>
+    <span class="p">[(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">256</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">512</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="mi">4</span><span class="p">],</span>
+    <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">512</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+    <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1024</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="s1">&#39;M&#39;</span><span class="p">,</span>
+    <span class="p">[(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">512</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1024</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="mi">2</span><span class="p">],</span>
+    <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1024</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+    <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1024</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+    <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1024</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+    <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1024</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">ConvBlock</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">in_channels</span><span class="p">,</span> <span class="n">out_channels</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">conv</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Conv2d</span><span class="p">(</span><span class="n">in_channels</span><span class="p">,</span> <span class="n">out_channels</span><span class="p">,</span> <span class="n">bias</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">batch_norm</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">BatchNorm2d</span><span class="p">(</span><span class="n">out_channels</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">leaky_relu</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">LeakyReLU</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
+        
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">conv</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">batch_norm</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">leaky_relu</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">x</span>
+    
+
+<span class="k">class</span> <span class="nc">Yolo</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">in_channels</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">architecture</span> <span class="o">=</span> <span class="n">architecture_config</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">in_channels</span> <span class="o">=</span> <span class="n">in_channels</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">darknet</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_conv_layers</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">architecture</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fcs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_fcs</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">darknet</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fcs</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">flatten</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">start_dim</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">x</span>
+    
+    <span class="k">def</span> <span class="nf">_create_conv_layers</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">architecture</span><span class="p">):</span>
+        <span class="n">layers</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">in_channels</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">in_channels</span>
+        
+        <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">architecture</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">==</span> <span class="nb">tuple</span><span class="p">:</span>
+                <span class="n">layers</span> <span class="o">+=</span> <span class="p">[</span>
+                    <span class="n">ConvBlock</span><span class="p">(</span><span class="n">in_channels</span><span class="p">,</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">kernel_size</span><span class="o">=</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">stride</span><span class="o">=</span><span class="n">x</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">padding</span><span class="o">=</span><span class="n">x</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span>
+                <span class="p">]</span>
+                <span class="n">in_channels</span> <span class="o">=</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+            <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">==</span> <span class="nb">str</span><span class="p">:</span>
+                <span class="n">layers</span> <span class="o">+=</span> <span class="p">[</span><span class="n">nn</span><span class="o">.</span><span class="n">MaxPool2d</span><span class="p">(</span><span class="n">kernel_size</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">stride</span><span class="o">=</span><span class="mi">2</span><span class="p">)]</span>
+            <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">==</span> <span class="nb">list</span><span class="p">:</span>
+                <span class="n">conv1</span> <span class="o">=</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="n">conv2</span> <span class="o">=</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+                <span class="n">num_repeats</span> <span class="o">=</span> <span class="n">x</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+                <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_repeats</span><span class="p">):</span>
+                    <span class="n">layers</span> <span class="o">+=</span> <span class="p">[</span>
+                        <span class="n">ConvBlock</span><span class="p">(</span><span class="n">in_channels</span><span class="p">,</span> <span class="n">conv1</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">kernel_size</span><span class="o">=</span><span class="n">conv1</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">stride</span><span class="o">=</span><span class="n">conv1</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">padding</span><span class="o">=</span><span class="n">conv1</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span>
+                    <span class="p">]</span>
+                    <span class="n">layers</span> <span class="o">+=</span> <span class="p">[</span>
+                        <span class="n">ConvBlock</span><span class="p">(</span><span class="n">conv1</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">conv2</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">kernel_size</span><span class="o">=</span><span class="n">conv2</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">stride</span><span class="o">=</span><span class="n">conv2</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">padding</span><span class="o">=</span><span class="n">conv2</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span>
+                    <span class="p">]</span>
+        <span class="k">return</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">(</span><span class="o">*</span><span class="n">layers</span><span class="p">)</span>
+    
+    <span class="k">def</span> <span class="nf">_create_fcs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">num_boxes</span><span class="p">,</span> <span class="n">num_classes</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">(</span>
+            <span class="n">nn</span><span class="o">.</span><span class="n">Flatten</span><span class="p">(),</span>
+            <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">1024</span> <span class="o">*</span> <span class="n">s</span> <span class="o">*</span> <span class="n">s</span><span class="p">,</span> <span class="mi">4096</span><span class="p">),</span>
+            <span class="n">nn</span><span class="o">.</span><span class="n">Dropout</span><span class="p">(</span><span class="mf">0.0</span><span class="p">),</span>
+            <span class="n">nn</span><span class="o">.</span><span class="n">LeakyReLU</span><span class="p">(</span><span class="mf">0.1</span><span class="p">),</span>
+            <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">4096</span><span class="p">,</span> <span class="n">s</span> <span class="o">*</span> <span class="n">s</span> <span class="o">*</span> <span class="p">(</span><span class="n">num_classes</span> <span class="o">+</span> <span class="n">num_boxes</span> <span class="o">*</span> <span class="mi">5</span><span class="p">))</span>
+        <span class="p">)</span>
+    
+
+<span class="k">def</span> <span class="nf">test</span><span class="p">(</span><span class="n">s</span><span class="o">=</span><span class="mi">7</span><span class="p">,</span> <span class="n">num_boxes</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">num_classes</span><span class="o">=</span><span class="mi">20</span><span class="p">):</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">Yolo</span><span class="p">(</span><span class="n">s</span><span class="o">=</span><span class="n">s</span><span class="p">,</span> <span class="n">num_boxes</span><span class="o">=</span><span class="n">num_boxes</span><span class="p">,</span> <span class="n">num_classes</span><span class="o">=</span><span class="n">num_classes</span><span class="p">)</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">448</span><span class="p">,</span> <span class="mi">448</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">model</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">size</span><span class="p">())</span>
+<span class="c1">#     x = x.view((-1, 7, 7, 30))</span>
+<span class="c1">#     print(model(x).size())</span>
+    
+<span class="n">test</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>torch.Size([1, 1470])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
+
+
+<span class="k">class</span> <span class="nc">VOCDataset</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">Dataset</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">csv_file</span><span class="p">,</span> <span class="n">img_dir</span><span class="p">,</span> <span class="n">label_dir</span><span class="p">,</span> <span class="n">S</span><span class="o">=</span><span class="mi">7</span><span class="p">,</span> <span class="n">B</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">C</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">annotations</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">csv_file</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">img_dir</span> <span class="o">=</span> <span class="n">img_dir</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">label_dir</span> <span class="o">=</span> <span class="n">label_dir</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">transform</span> <span class="o">=</span> <span class="n">transform</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">S</span> <span class="o">=</span> <span class="n">S</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">B</span> <span class="o">=</span> <span class="n">B</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">C</span> <span class="o">=</span> <span class="n">C</span>
+
+    <span class="k">def</span> <span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">annotations</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+        <span class="n">label_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">label_dir</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">annotations</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">index</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+        <span class="n">boxes</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">label_path</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">label</span> <span class="ow">in</span> <span class="n">f</span><span class="o">.</span><span class="n">readlines</span><span class="p">():</span>
+                <span class="n">class_label</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">height</span> <span class="o">=</span> <span class="p">[</span>
+                    <span class="nb">float</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">if</span> <span class="nb">float</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">x</span><span class="p">))</span> <span class="k">else</span> <span class="nb">int</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+                    <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">label</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+                <span class="p">]</span>
+
+                <span class="n">boxes</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">class_label</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">])</span>
+
+        <span class="n">img_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">img_dir</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">annotations</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">index</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+        <span class="n">image</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">img_path</span><span class="p">)</span>
+        <span class="n">boxes</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">boxes</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">transform</span><span class="p">:</span>
+            <span class="c1"># image = self.transform(image)</span>
+            <span class="n">image</span><span class="p">,</span> <span class="n">boxes</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">boxes</span><span class="p">)</span>
+
+        <span class="c1"># Convert To Cells</span>
+        <span class="n">label_matrix</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">S</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">S</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">C</span> <span class="o">+</span> <span class="mi">5</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">B</span><span class="p">))</span>
+        <span class="k">for</span> <span class="n">box</span> <span class="ow">in</span> <span class="n">boxes</span><span class="p">:</span>
+            <span class="n">class_label</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">height</span> <span class="o">=</span> <span class="n">box</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+            <span class="n">class_label</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">class_label</span><span class="p">)</span>
+
+            <span class="c1"># i,j represents the cell row and cell column</span>
+            <span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">S</span> <span class="o">*</span> <span class="n">y</span><span class="p">),</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">S</span> <span class="o">*</span> <span class="n">x</span><span class="p">)</span>
+            <span class="n">x_cell</span><span class="p">,</span> <span class="n">y_cell</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">S</span> <span class="o">*</span> <span class="n">x</span> <span class="o">-</span> <span class="n">j</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">S</span> <span class="o">*</span> <span class="n">y</span> <span class="o">-</span> <span class="n">i</span>
+
+            <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Calculating the width and height of cell of bounding box,</span>
+<span class="sd">            relative to the cell is done by the following, with</span>
+<span class="sd">            width as the example:</span>
+<span class="sd">            </span>
+<span class="sd">            width_pixels = (width*self.image_width)</span>
+<span class="sd">            cell_pixels = (self.image_width)</span>
+<span class="sd">            </span>
+<span class="sd">            Then to find the width relative to the cell is simply:</span>
+<span class="sd">            width_pixels/cell_pixels, simplification leads to the</span>
+<span class="sd">            formulas below.</span>
+<span class="sd">            &quot;&quot;&quot;</span>
+            <span class="n">width_cell</span><span class="p">,</span> <span class="n">height_cell</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="n">width</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">S</span><span class="p">,</span>
+                <span class="n">height</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">S</span><span class="p">,</span>
+            <span class="p">)</span>
+
+            <span class="c1"># If no object already found for specific cell i,j</span>
+            <span class="c1"># Note: This means we restrict to ONE object</span>
+            <span class="c1"># per cell!</span>
+            <span class="k">if</span> <span class="n">label_matrix</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="mi">20</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="c1"># Set that there exists an object</span>
+                <span class="n">label_matrix</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="mi">20</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+
+                <span class="c1"># Box coordinates</span>
+                <span class="n">box_coordinates</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span>
+                    <span class="p">[</span><span class="n">x_cell</span><span class="p">,</span> <span class="n">y_cell</span><span class="p">,</span> <span class="n">width_cell</span><span class="p">,</span> <span class="n">height_cell</span><span class="p">]</span>
+                <span class="p">)</span>
+
+                <span class="n">label_matrix</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="mi">21</span><span class="p">:</span><span class="mi">25</span><span class="p">]</span> <span class="o">=</span> <span class="n">box_coordinates</span>
+
+                <span class="c1"># Set one hot encoding for class_label</span>
+                <span class="n">label_matrix</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">class_label</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+
+        <span class="k">return</span> <span class="n">image</span><span class="p">,</span> <span class="n">label_matrix</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">matplotlib.patches</span> <span class="k">as</span> <span class="nn">patches</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">Counter</span>
+
+<span class="k">def</span> <span class="nf">intersection_over_union</span><span class="p">(</span><span class="n">boxes_preds</span><span class="p">,</span> <span class="n">boxes_labels</span><span class="p">,</span> <span class="n">box_format</span><span class="o">=</span><span class="s2">&quot;midpoint&quot;</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Calculates intersection over union</span>
+<span class="sd">    Parameters:</span>
+<span class="sd">        boxes_preds (tensor): Predictions of Bounding Boxes (BATCH_SIZE, 4)</span>
+<span class="sd">        boxes_labels (tensor): Correct labels of Bounding Boxes (BATCH_SIZE, 4)</span>
+<span class="sd">        box_format (str): midpoint/corners, if boxes (x,y,w,h) or (x1,y1,x2,y2)</span>
+<span class="sd">    Returns:</span>
+<span class="sd">        tensor: Intersection over union for all examples</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">if</span> <span class="n">box_format</span> <span class="o">==</span> <span class="s2">&quot;midpoint&quot;</span><span class="p">:</span>
+        <span class="n">box1_x1</span> <span class="o">=</span> <span class="n">boxes_preds</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">0</span><span class="p">:</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">boxes_preds</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">2</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span> <span class="o">/</span> <span class="mi">2</span>
+        <span class="n">box1_y1</span> <span class="o">=</span> <span class="n">boxes_preds</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">1</span><span class="p">:</span><span class="mi">2</span><span class="p">]</span> <span class="o">-</span> <span class="n">boxes_preds</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">3</span><span class="p">:</span><span class="mi">4</span><span class="p">]</span> <span class="o">/</span> <span class="mi">2</span>
+        <span class="n">box1_x2</span> <span class="o">=</span> <span class="n">boxes_preds</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">0</span><span class="p">:</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">boxes_preds</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">2</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span> <span class="o">/</span> <span class="mi">2</span>
+        <span class="n">box1_y2</span> <span class="o">=</span> <span class="n">boxes_preds</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">1</span><span class="p">:</span><span class="mi">2</span><span class="p">]</span> <span class="o">+</span> <span class="n">boxes_preds</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">3</span><span class="p">:</span><span class="mi">4</span><span class="p">]</span> <span class="o">/</span> <span class="mi">2</span>
+        <span class="n">box2_x1</span> <span class="o">=</span> <span class="n">boxes_labels</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">0</span><span class="p">:</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">boxes_labels</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">2</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span> <span class="o">/</span> <span class="mi">2</span>
+        <span class="n">box2_y1</span> <span class="o">=</span> <span class="n">boxes_labels</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">1</span><span class="p">:</span><span class="mi">2</span><span class="p">]</span> <span class="o">-</span> <span class="n">boxes_labels</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">3</span><span class="p">:</span><span class="mi">4</span><span class="p">]</span> <span class="o">/</span> <span class="mi">2</span>
+        <span class="n">box2_x2</span> <span class="o">=</span> <span class="n">boxes_labels</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">0</span><span class="p">:</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">boxes_labels</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">2</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span> <span class="o">/</span> <span class="mi">2</span>
+        <span class="n">box2_y2</span> <span class="o">=</span> <span class="n">boxes_labels</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">1</span><span class="p">:</span><span class="mi">2</span><span class="p">]</span> <span class="o">+</span> <span class="n">boxes_labels</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">3</span><span class="p">:</span><span class="mi">4</span><span class="p">]</span> <span class="o">/</span> <span class="mi">2</span>
+
+    <span class="k">if</span> <span class="n">box_format</span> <span class="o">==</span> <span class="s2">&quot;corners&quot;</span><span class="p">:</span>
+        <span class="n">box1_x1</span> <span class="o">=</span> <span class="n">boxes_preds</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">0</span><span class="p">:</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">box1_y1</span> <span class="o">=</span> <span class="n">boxes_preds</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">1</span><span class="p">:</span><span class="mi">2</span><span class="p">]</span>
+        <span class="n">box1_x2</span> <span class="o">=</span> <span class="n">boxes_preds</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">2</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span>
+        <span class="n">box1_y2</span> <span class="o">=</span> <span class="n">boxes_preds</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">3</span><span class="p">:</span><span class="mi">4</span><span class="p">]</span>  <span class="c1"># (N, 1)</span>
+        <span class="n">box2_x1</span> <span class="o">=</span> <span class="n">boxes_labels</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">0</span><span class="p">:</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">box2_y1</span> <span class="o">=</span> <span class="n">boxes_labels</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">1</span><span class="p">:</span><span class="mi">2</span><span class="p">]</span>
+        <span class="n">box2_x2</span> <span class="o">=</span> <span class="n">boxes_labels</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">2</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span>
+        <span class="n">box2_y2</span> <span class="o">=</span> <span class="n">boxes_labels</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">3</span><span class="p">:</span><span class="mi">4</span><span class="p">]</span>
+
+    <span class="n">x1</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">box1_x1</span><span class="p">,</span> <span class="n">box2_x1</span><span class="p">)</span>
+    <span class="n">y1</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">box1_y1</span><span class="p">,</span> <span class="n">box2_y1</span><span class="p">)</span>
+    <span class="n">x2</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">box1_x2</span><span class="p">,</span> <span class="n">box2_x2</span><span class="p">)</span>
+    <span class="n">y2</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">box1_y2</span><span class="p">,</span> <span class="n">box2_y2</span><span class="p">)</span>
+
+    <span class="c1"># .clamp(0) is for the case when they do not intersect</span>
+    <span class="n">intersection</span> <span class="o">=</span> <span class="p">(</span><span class="n">x2</span> <span class="o">-</span> <span class="n">x1</span><span class="p">)</span><span class="o">.</span><span class="n">clamp</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">y2</span> <span class="o">-</span> <span class="n">y1</span><span class="p">)</span><span class="o">.</span><span class="n">clamp</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+    <span class="n">box1_area</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">((</span><span class="n">box1_x2</span> <span class="o">-</span> <span class="n">box1_x1</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">box1_y2</span> <span class="o">-</span> <span class="n">box1_y1</span><span class="p">))</span>
+    <span class="n">box2_area</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">((</span><span class="n">box2_x2</span> <span class="o">-</span> <span class="n">box2_x1</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">box2_y2</span> <span class="o">-</span> <span class="n">box2_y1</span><span class="p">))</span>
+
+    <span class="k">return</span> <span class="n">intersection</span> <span class="o">/</span> <span class="p">(</span><span class="n">box1_area</span> <span class="o">+</span> <span class="n">box2_area</span> <span class="o">-</span> <span class="n">intersection</span> <span class="o">+</span> <span class="mf">1e-6</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">non_max_suppression</span><span class="p">(</span><span class="n">bboxes</span><span class="p">,</span> <span class="n">iou_threshold</span><span class="p">,</span> <span class="n">threshold</span><span class="p">,</span> <span class="n">box_format</span><span class="o">=</span><span class="s2">&quot;corners&quot;</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Does Non Max Suppression given bboxes</span>
+<span class="sd">    Parameters:</span>
+<span class="sd">        bboxes (list): list of lists containing all bboxes with each bboxes</span>
+<span class="sd">        specified as [class_pred, prob_score, x1, y1, x2, y2]</span>
+<span class="sd">        iou_threshold (float): threshold where predicted bboxes is correct</span>
+<span class="sd">        threshold (float): threshold to remove predicted bboxes (independent of IoU) </span>
+<span class="sd">        box_format (str): &quot;midpoint&quot; or &quot;corners&quot; used to specify bboxes</span>
+<span class="sd">    Returns:</span>
+<span class="sd">        list: bboxes after performing NMS given a specific IoU threshold</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">assert</span> <span class="nb">type</span><span class="p">(</span><span class="n">bboxes</span><span class="p">)</span> <span class="o">==</span> <span class="nb">list</span>
+
+    <span class="n">bboxes</span> <span class="o">=</span> <span class="p">[</span><span class="n">box</span> <span class="k">for</span> <span class="n">box</span> <span class="ow">in</span> <span class="n">bboxes</span> <span class="k">if</span> <span class="n">box</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">threshold</span><span class="p">]</span>
+    <span class="n">bboxes</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">bboxes</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">bboxes_after_nms</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">while</span> <span class="n">bboxes</span><span class="p">:</span>
+        <span class="n">chosen_box</span> <span class="o">=</span> <span class="n">bboxes</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+        <span class="n">bboxes</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">box</span>
+            <span class="k">for</span> <span class="n">box</span> <span class="ow">in</span> <span class="n">bboxes</span>
+            <span class="k">if</span> <span class="n">box</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="n">chosen_box</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="ow">or</span> <span class="n">intersection_over_union</span><span class="p">(</span>
+                <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">chosen_box</span><span class="p">[</span><span class="mi">2</span><span class="p">:]),</span>
+                <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">box</span><span class="p">[</span><span class="mi">2</span><span class="p">:]),</span>
+                <span class="n">box_format</span><span class="o">=</span><span class="n">box_format</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="o">&lt;</span> <span class="n">iou_threshold</span>
+        <span class="p">]</span>
+
+        <span class="n">bboxes_after_nms</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">chosen_box</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">bboxes_after_nms</span>
+
+
+<span class="k">def</span> <span class="nf">mean_average_precision</span><span class="p">(</span>
+    <span class="n">pred_boxes</span><span class="p">,</span> <span class="n">true_boxes</span><span class="p">,</span> <span class="n">iou_threshold</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">box_format</span><span class="o">=</span><span class="s2">&quot;midpoint&quot;</span><span class="p">,</span> <span class="n">num_classes</span><span class="o">=</span><span class="mi">20</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Calculates mean average precision </span>
+<span class="sd">    Parameters:</span>
+<span class="sd">        pred_boxes (list): list of lists containing all bboxes with each bboxes</span>
+<span class="sd">        specified as [train_idx, class_prediction, prob_score, x1, y1, x2, y2]</span>
+<span class="sd">        true_boxes (list): Similar as pred_boxes except all the correct ones </span>
+<span class="sd">        iou_threshold (float): threshold where predicted bboxes is correct</span>
+<span class="sd">        box_format (str): &quot;midpoint&quot; or &quot;corners&quot; used to specify bboxes</span>
+<span class="sd">        num_classes (int): number of classes</span>
+<span class="sd">    Returns:</span>
+<span class="sd">        float: mAP value across all classes given a specific IoU threshold </span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># list storing all AP for respective classes</span>
+    <span class="n">average_precisions</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="c1"># used for numerical stability later on</span>
+    <span class="n">epsilon</span> <span class="o">=</span> <span class="mf">1e-6</span>
+
+    <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_classes</span><span class="p">):</span>
+        <span class="n">detections</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">ground_truths</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="c1"># Go through all predictions and targets,</span>
+        <span class="c1"># and only add the ones that belong to the</span>
+        <span class="c1"># current class c</span>
+        <span class="k">for</span> <span class="n">detection</span> <span class="ow">in</span> <span class="n">pred_boxes</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">detection</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="n">c</span><span class="p">:</span>
+                <span class="n">detections</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">detection</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">true_box</span> <span class="ow">in</span> <span class="n">true_boxes</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">true_box</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="n">c</span><span class="p">:</span>
+                <span class="n">ground_truths</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">true_box</span><span class="p">)</span>
+
+        <span class="c1"># find the amount of bboxes for each training example</span>
+        <span class="c1"># Counter here finds how many ground truth bboxes we get</span>
+        <span class="c1"># for each training example, so let&#39;s say img 0 has 3,</span>
+        <span class="c1"># img 1 has 5 then we will obtain a dictionary with:</span>
+        <span class="c1"># amount_bboxes = {0:3, 1:5}</span>
+        <span class="n">amount_bboxes</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">([</span><span class="n">gt</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">gt</span> <span class="ow">in</span> <span class="n">ground_truths</span><span class="p">])</span>
+
+        <span class="c1"># We then go through each key, val in this dictionary</span>
+        <span class="c1"># and convert to the following (w.r.t same example):</span>
+        <span class="c1"># ammount_bboxes = {0:torch.tensor[0,0,0], 1:torch.tensor[0,0,0,0,0]}</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">amount_bboxes</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">amount_bboxes</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
+
+        <span class="c1"># sort by box probabilities which is index 2</span>
+        <span class="n">detections</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">TP</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">detections</span><span class="p">)))</span>
+        <span class="n">FP</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">detections</span><span class="p">)))</span>
+        <span class="n">total_true_bboxes</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">ground_truths</span><span class="p">)</span>
+        
+        <span class="c1"># If none exists for this class then we can safely skip</span>
+        <span class="k">if</span> <span class="n">total_true_bboxes</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">continue</span>
+
+        <span class="k">for</span> <span class="n">detection_idx</span><span class="p">,</span> <span class="n">detection</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">detections</span><span class="p">):</span>
+            <span class="c1"># Only take out the ground_truths that have the same</span>
+            <span class="c1"># training idx as detection</span>
+            <span class="n">ground_truth_img</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="n">bbox</span> <span class="k">for</span> <span class="n">bbox</span> <span class="ow">in</span> <span class="n">ground_truths</span> <span class="k">if</span> <span class="n">bbox</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">detection</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="p">]</span>
+
+            <span class="n">num_gts</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">ground_truth_img</span><span class="p">)</span>
+            <span class="n">best_iou</span> <span class="o">=</span> <span class="mi">0</span>
+
+            <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">gt</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">ground_truth_img</span><span class="p">):</span>
+                <span class="n">iou</span> <span class="o">=</span> <span class="n">intersection_over_union</span><span class="p">(</span>
+                    <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">detection</span><span class="p">[</span><span class="mi">3</span><span class="p">:]),</span>
+                    <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">gt</span><span class="p">[</span><span class="mi">3</span><span class="p">:]),</span>
+                    <span class="n">box_format</span><span class="o">=</span><span class="n">box_format</span><span class="p">,</span>
+                <span class="p">)</span>
+
+                <span class="k">if</span> <span class="n">iou</span> <span class="o">&gt;</span> <span class="n">best_iou</span><span class="p">:</span>
+                    <span class="n">best_iou</span> <span class="o">=</span> <span class="n">iou</span>
+                    <span class="n">best_gt_idx</span> <span class="o">=</span> <span class="n">idx</span>
+
+            <span class="k">if</span> <span class="n">best_iou</span> <span class="o">&gt;</span> <span class="n">iou_threshold</span><span class="p">:</span>
+                <span class="c1"># only detect ground truth detection once</span>
+                <span class="k">if</span> <span class="n">amount_bboxes</span><span class="p">[</span><span class="n">detection</span><span class="p">[</span><span class="mi">0</span><span class="p">]][</span><span class="n">best_gt_idx</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="c1"># true positive and add this bounding box to seen</span>
+                    <span class="n">TP</span><span class="p">[</span><span class="n">detection_idx</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+                    <span class="n">amount_bboxes</span><span class="p">[</span><span class="n">detection</span><span class="p">[</span><span class="mi">0</span><span class="p">]][</span><span class="n">best_gt_idx</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">FP</span><span class="p">[</span><span class="n">detection_idx</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+
+            <span class="c1"># if IOU is lower then the detection is a false positive</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">FP</span><span class="p">[</span><span class="n">detection_idx</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+
+        <span class="n">TP_cumsum</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cumsum</span><span class="p">(</span><span class="n">TP</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">FP_cumsum</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cumsum</span><span class="p">(</span><span class="n">FP</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">recalls</span> <span class="o">=</span> <span class="n">TP_cumsum</span> <span class="o">/</span> <span class="p">(</span><span class="n">total_true_bboxes</span> <span class="o">+</span> <span class="n">epsilon</span><span class="p">)</span>
+        <span class="n">precisions</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">divide</span><span class="p">(</span><span class="n">TP_cumsum</span><span class="p">,</span> <span class="p">(</span><span class="n">TP_cumsum</span> <span class="o">+</span> <span class="n">FP_cumsum</span> <span class="o">+</span> <span class="n">epsilon</span><span class="p">))</span>
+        <span class="n">precisions</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">((</span><span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="mi">1</span><span class="p">]),</span> <span class="n">precisions</span><span class="p">))</span>
+        <span class="n">recalls</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">((</span><span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="mi">0</span><span class="p">]),</span> <span class="n">recalls</span><span class="p">))</span>
+        <span class="c1"># torch.trapz for numerical integration</span>
+        <span class="n">average_precisions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">trapz</span><span class="p">(</span><span class="n">precisions</span><span class="p">,</span> <span class="n">recalls</span><span class="p">))</span>
+
+    <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="n">average_precisions</span><span class="p">)</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">average_precisions</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">plot_image</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">boxes</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Plots predicted bounding boxes on the image&quot;&quot;&quot;</span>
+    <span class="n">im</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
+    <span class="n">height</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">im</span><span class="o">.</span><span class="n">shape</span>
+
+    <span class="c1"># Create figure and axes</span>
+    <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="c1"># Display the image</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">im</span><span class="p">)</span>
+
+    <span class="c1"># box[0] is x midpoint, box[2] is width</span>
+    <span class="c1"># box[1] is y midpoint, box[3] is height</span>
+
+    <span class="c1"># Create a Rectangle potch</span>
+    <span class="k">for</span> <span class="n">box</span> <span class="ow">in</span> <span class="n">boxes</span><span class="p">:</span>
+        <span class="n">box</span> <span class="o">=</span> <span class="n">box</span><span class="p">[</span><span class="mi">2</span><span class="p">:]</span>
+        <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">box</span><span class="p">)</span> <span class="o">==</span> <span class="mi">4</span><span class="p">,</span> <span class="s2">&quot;Got more values than in x, y, w, h, in a box!&quot;</span>
+        <span class="n">upper_left_x</span> <span class="o">=</span> <span class="n">box</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">box</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">/</span> <span class="mi">2</span>
+        <span class="n">upper_left_y</span> <span class="o">=</span> <span class="n">box</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">box</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">/</span> <span class="mi">2</span>
+        <span class="n">rect</span> <span class="o">=</span> <span class="n">patches</span><span class="o">.</span><span class="n">Rectangle</span><span class="p">(</span>
+            <span class="p">(</span><span class="n">upper_left_x</span> <span class="o">*</span> <span class="n">width</span><span class="p">,</span> <span class="n">upper_left_y</span> <span class="o">*</span> <span class="n">height</span><span class="p">),</span>
+            <span class="n">box</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">*</span> <span class="n">width</span><span class="p">,</span>
+            <span class="n">box</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">*</span> <span class="n">height</span><span class="p">,</span>
+            <span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+            <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;r&quot;</span><span class="p">,</span>
+            <span class="n">facecolor</span><span class="o">=</span><span class="s2">&quot;none&quot;</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="c1"># Add the patch to the Axes</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">add_patch</span><span class="p">(</span><span class="n">rect</span><span class="p">)</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="k">def</span> <span class="nf">get_bboxes</span><span class="p">(</span>
+    <span class="n">loader</span><span class="p">,</span>
+    <span class="n">model</span><span class="p">,</span>
+    <span class="n">iou_threshold</span><span class="p">,</span>
+    <span class="n">threshold</span><span class="p">,</span>
+    <span class="n">pred_format</span><span class="o">=</span><span class="s2">&quot;cells&quot;</span><span class="p">,</span>
+    <span class="n">box_format</span><span class="o">=</span><span class="s2">&quot;midpoint&quot;</span><span class="p">,</span>
+    <span class="n">device</span><span class="o">=</span><span class="s2">&quot;cuda&quot;</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="n">all_pred_boxes</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">all_true_boxes</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="c1"># make sure model is in eval before get bboxes</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
+    <span class="n">train_idx</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="k">for</span> <span class="n">batch_idx</span><span class="p">,</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">labels</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">loader</span><span class="p">):</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+        <span class="n">labels</span> <span class="o">=</span> <span class="n">labels</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+
+        <span class="k">with</span> <span class="n">torch</span><span class="o">.</span><span class="n">no_grad</span><span class="p">():</span>
+            <span class="n">predictions</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+        <span class="n">batch_size</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">true_bboxes</span> <span class="o">=</span> <span class="n">cellboxes_to_boxes</span><span class="p">(</span><span class="n">labels</span><span class="p">)</span>
+        <span class="n">bboxes</span> <span class="o">=</span> <span class="n">cellboxes_to_boxes</span><span class="p">(</span><span class="n">predictions</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">batch_size</span><span class="p">):</span>
+            <span class="n">nms_boxes</span> <span class="o">=</span> <span class="n">non_max_suppression</span><span class="p">(</span>
+                <span class="n">bboxes</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span>
+                <span class="n">iou_threshold</span><span class="o">=</span><span class="n">iou_threshold</span><span class="p">,</span>
+                <span class="n">threshold</span><span class="o">=</span><span class="n">threshold</span><span class="p">,</span>
+                <span class="n">box_format</span><span class="o">=</span><span class="n">box_format</span><span class="p">,</span>
+            <span class="p">)</span>
+
+
+            <span class="c1">#if batch_idx == 0 and idx == 0:</span>
+            <span class="c1">#    plot_image(x[idx].permute(1,2,0).to(&quot;cpu&quot;), nms_boxes)</span>
+            <span class="c1">#    print(nms_boxes)</span>
+
+            <span class="k">for</span> <span class="n">nms_box</span> <span class="ow">in</span> <span class="n">nms_boxes</span><span class="p">:</span>
+                <span class="n">all_pred_boxes</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">train_idx</span><span class="p">]</span> <span class="o">+</span> <span class="n">nms_box</span><span class="p">)</span>
+
+            <span class="k">for</span> <span class="n">box</span> <span class="ow">in</span> <span class="n">true_bboxes</span><span class="p">[</span><span class="n">idx</span><span class="p">]:</span>
+                <span class="c1"># many will get converted to 0 pred</span>
+                <span class="k">if</span> <span class="n">box</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">threshold</span><span class="p">:</span>
+                    <span class="n">all_true_boxes</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">train_idx</span><span class="p">]</span> <span class="o">+</span> <span class="n">box</span><span class="p">)</span>
+
+            <span class="n">train_idx</span> <span class="o">+=</span> <span class="mi">1</span>
+
+    <span class="n">model</span><span class="o">.</span><span class="n">train</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">all_pred_boxes</span><span class="p">,</span> <span class="n">all_true_boxes</span>
+
+
+
+<span class="k">def</span> <span class="nf">convert_cellboxes</span><span class="p">(</span><span class="n">predictions</span><span class="p">,</span> <span class="n">S</span><span class="o">=</span><span class="mi">7</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Converts bounding boxes output from Yolo with</span>
+<span class="sd">    an image split size of S into entire image ratios</span>
+<span class="sd">    rather than relative to cell ratios. Tried to do this</span>
+<span class="sd">    vectorized, but this resulted in quite difficult to read</span>
+<span class="sd">    code... Use as a black box? Or implement a more intuitive,</span>
+<span class="sd">    using 2 for loops iterating range(S) and convert them one</span>
+<span class="sd">    by one, resulting in a slower but more readable implementation.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">predictions</span> <span class="o">=</span> <span class="n">predictions</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s2">&quot;cpu&quot;</span><span class="p">)</span>
+    <span class="n">batch_size</span> <span class="o">=</span> <span class="n">predictions</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">predictions</span> <span class="o">=</span> <span class="n">predictions</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">30</span><span class="p">)</span>
+    <span class="n">bboxes1</span> <span class="o">=</span> <span class="n">predictions</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">21</span><span class="p">:</span><span class="mi">25</span><span class="p">]</span>
+    <span class="n">bboxes2</span> <span class="o">=</span> <span class="n">predictions</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">26</span><span class="p">:</span><span class="mi">30</span><span class="p">]</span>
+    <span class="n">scores</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">(</span>
+        <span class="p">(</span><span class="n">predictions</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">20</span><span class="p">]</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="n">predictions</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">25</span><span class="p">]</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">0</span><span class="p">)),</span> <span class="n">dim</span><span class="o">=</span><span class="mi">0</span>
+    <span class="p">)</span>
+    <span class="n">best_box</span> <span class="o">=</span> <span class="n">scores</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">best_boxes</span> <span class="o">=</span> <span class="n">bboxes1</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">best_box</span><span class="p">)</span> <span class="o">+</span> <span class="n">best_box</span> <span class="o">*</span> <span class="n">bboxes2</span>
+    <span class="n">cell_indices</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">7</span><span class="p">)</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">S</span> <span class="o">*</span> <span class="p">(</span><span class="n">best_boxes</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="p">:</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">cell_indices</span><span class="p">)</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">S</span> <span class="o">*</span> <span class="p">(</span><span class="n">best_boxes</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">1</span><span class="p">:</span><span class="mi">2</span><span class="p">]</span> <span class="o">+</span> <span class="n">cell_indices</span><span class="o">.</span><span class="n">permute</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+    <span class="n">w_y</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">S</span> <span class="o">*</span> <span class="n">best_boxes</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">2</span><span class="p">:</span><span class="mi">4</span><span class="p">]</span>
+    <span class="n">converted_bboxes</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">((</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">w_y</span><span class="p">),</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">predicted_class</span> <span class="o">=</span> <span class="n">predictions</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="p">:</span><span class="mi">20</span><span class="p">]</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">best_confidence</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">predictions</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">20</span><span class="p">],</span> <span class="n">predictions</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">25</span><span class="p">])</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span>
+        <span class="o">-</span><span class="mi">1</span>
+    <span class="p">)</span>
+    <span class="n">converted_preds</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">(</span>
+        <span class="p">(</span><span class="n">predicted_class</span><span class="p">,</span> <span class="n">best_confidence</span><span class="p">,</span> <span class="n">converted_bboxes</span><span class="p">),</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span>
+    <span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">converted_preds</span>
+
+
+<span class="k">def</span> <span class="nf">cellboxes_to_boxes</span><span class="p">(</span><span class="n">out</span><span class="p">,</span> <span class="n">S</span><span class="o">=</span><span class="mi">7</span><span class="p">):</span>
+    <span class="n">converted_pred</span> <span class="o">=</span> <span class="n">convert_cellboxes</span><span class="p">(</span><span class="n">out</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">out</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">S</span> <span class="o">*</span> <span class="n">S</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">converted_pred</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">converted_pred</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">long</span><span class="p">()</span>
+    <span class="n">all_bboxes</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">for</span> <span class="n">ex_idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">out</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+        <span class="n">bboxes</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="k">for</span> <span class="n">bbox_idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">S</span> <span class="o">*</span> <span class="n">S</span><span class="p">):</span>
+            <span class="n">bboxes</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">x</span><span class="o">.</span><span class="n">item</span><span class="p">()</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">converted_pred</span><span class="p">[</span><span class="n">ex_idx</span><span class="p">,</span> <span class="n">bbox_idx</span><span class="p">,</span> <span class="p">:]])</span>
+        <span class="n">all_bboxes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">bboxes</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">all_bboxes</span>
+
+<span class="k">def</span> <span class="nf">save_checkpoint</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="s2">&quot;my_checkpoint.pth.tar&quot;</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&gt; Saving checkpoint&quot;</span><span class="p">)</span>
+    <span class="n">torch</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">load_checkpoint</span><span class="p">(</span><span class="n">checkpoint</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">optimizer</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&gt; Loading checkpoint&quot;</span><span class="p">)</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">load_state_dict</span><span class="p">(</span><span class="n">checkpoint</span><span class="p">[</span><span class="s2">&quot;state_dict&quot;</span><span class="p">])</span>
+    <span class="n">optimizer</span><span class="o">.</span><span class="n">load_state_dict</span><span class="p">(</span><span class="n">checkpoint</span><span class="p">[</span><span class="s2">&quot;optimizer&quot;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">import</span> <span class="nn">torch.nn</span> <span class="k">as</span> <span class="nn">nn</span>
+<span class="kn">from</span> <span class="nn">utils</span> <span class="kn">import</span> <span class="n">intersection_over_union</span>
+
+
+<span class="k">class</span> <span class="nc">YoloLoss</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Calculate the loss for yolo (v1) model</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">S</span><span class="o">=</span><span class="mi">7</span><span class="p">,</span> <span class="n">B</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">C</span><span class="o">=</span><span class="mi">20</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">YoloLoss</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mse</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">MSELoss</span><span class="p">(</span><span class="n">reduction</span><span class="o">=</span><span class="s2">&quot;sum&quot;</span><span class="p">)</span>
+
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        S is split size of image (in paper 7),</span>
+<span class="sd">        B is number of boxes (in paper 2),</span>
+<span class="sd">        C is number of classes (in paper and VOC dataset is 20),</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">S</span> <span class="o">=</span> <span class="n">S</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">B</span> <span class="o">=</span> <span class="n">B</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">C</span> <span class="o">=</span> <span class="n">C</span>
+
+        <span class="c1"># These are from Yolo paper, signifying how much we should</span>
+        <span class="c1"># pay loss for no object (noobj) and the box coordinates (coord)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lambda_noobj</span> <span class="o">=</span> <span class="mf">0.5</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lambda_coord</span> <span class="o">=</span> <span class="mi">5</span>
+
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">predictions</span><span class="p">,</span> <span class="n">target</span><span class="p">):</span>
+        <span class="c1"># predictions are shaped (BATCH_SIZE, S*S(C+B*5) when inputted</span>
+        <span class="n">predictions</span> <span class="o">=</span> <span class="n">predictions</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">S</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">S</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">C</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">B</span> <span class="o">*</span> <span class="mi">5</span><span class="p">)</span>
+
+        <span class="c1"># Calculate IoU for the two predicted bounding boxes with target bbox</span>
+        <span class="n">iou_b1</span> <span class="o">=</span> <span class="n">intersection_over_union</span><span class="p">(</span><span class="n">predictions</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">21</span><span class="p">:</span><span class="mi">25</span><span class="p">],</span> <span class="n">target</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">21</span><span class="p">:</span><span class="mi">25</span><span class="p">])</span>
+        <span class="n">iou_b2</span> <span class="o">=</span> <span class="n">intersection_over_union</span><span class="p">(</span><span class="n">predictions</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">26</span><span class="p">:</span><span class="mi">30</span><span class="p">],</span> <span class="n">target</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">21</span><span class="p">:</span><span class="mi">25</span><span class="p">])</span>
+        <span class="n">ious</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">([</span><span class="n">iou_b1</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="n">iou_b2</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">0</span><span class="p">)],</span> <span class="n">dim</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+        <span class="c1"># Take the box with highest IoU out of the two prediction</span>
+        <span class="c1"># Note that bestbox will be indices of 0, 1 for which bbox was best</span>
+        <span class="n">iou_maxes</span><span class="p">,</span> <span class="n">bestbox</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">ious</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">exists_box</span> <span class="o">=</span> <span class="n">target</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">20</span><span class="p">]</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>  <span class="c1"># in paper this is Iobj_i</span>
+
+        <span class="c1"># Set boxes with no object in them to 0. We only take out one of the two </span>
+        <span class="c1"># predictions, which is the one with highest Iou calculated previously.</span>
+        <span class="n">box_predictions</span> <span class="o">=</span> <span class="n">exists_box</span> <span class="o">*</span> <span class="p">(</span>
+            <span class="p">(</span>
+                <span class="n">bestbox</span> <span class="o">*</span> <span class="n">predictions</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">26</span><span class="p">:</span><span class="mi">30</span><span class="p">]</span>
+                <span class="o">+</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">bestbox</span><span class="p">)</span> <span class="o">*</span> <span class="n">predictions</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">21</span><span class="p">:</span><span class="mi">25</span><span class="p">]</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
+
+        <span class="n">box_targets</span> <span class="o">=</span> <span class="n">exists_box</span> <span class="o">*</span> <span class="n">target</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">21</span><span class="p">:</span><span class="mi">25</span><span class="p">]</span>
+
+        <span class="n">box_predictions</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">2</span><span class="p">:</span><span class="mi">4</span><span class="p">]</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">sign</span><span class="p">(</span><span class="n">box_predictions</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">2</span><span class="p">:</span><span class="mi">4</span><span class="p">])</span> <span class="o">*</span> <span class="n">torch</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span>
+            <span class="n">torch</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">box_predictions</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">2</span><span class="p">:</span><span class="mi">4</span><span class="p">]</span> <span class="o">+</span> <span class="mf">1e-6</span><span class="p">)</span>
+        <span class="p">)</span>
+        <span class="n">box_targets</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">2</span><span class="p">:</span><span class="mi">4</span><span class="p">]</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">box_targets</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">2</span><span class="p">:</span><span class="mi">4</span><span class="p">])</span>
+
+        <span class="n">box_loss</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mse</span><span class="p">(</span>
+            <span class="n">torch</span><span class="o">.</span><span class="n">flatten</span><span class="p">(</span><span class="n">box_predictions</span><span class="p">,</span> <span class="n">end_dim</span><span class="o">=-</span><span class="mi">2</span><span class="p">),</span>
+            <span class="n">torch</span><span class="o">.</span><span class="n">flatten</span><span class="p">(</span><span class="n">box_targets</span><span class="p">,</span> <span class="n">end_dim</span><span class="o">=-</span><span class="mi">2</span><span class="p">),</span>
+        <span class="p">)</span>
+
+        <span class="c1"># pred_box is the confidence score for the bbox with highest IoU</span>
+        <span class="n">pred_box</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">bestbox</span> <span class="o">*</span> <span class="n">predictions</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">25</span><span class="p">:</span><span class="mi">26</span><span class="p">]</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">bestbox</span><span class="p">)</span> <span class="o">*</span> <span class="n">predictions</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">20</span><span class="p">:</span><span class="mi">21</span><span class="p">]</span>
+        <span class="p">)</span>
+
+        <span class="n">object_loss</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mse</span><span class="p">(</span>
+            <span class="n">torch</span><span class="o">.</span><span class="n">flatten</span><span class="p">(</span><span class="n">exists_box</span> <span class="o">*</span> <span class="n">pred_box</span><span class="p">),</span>
+            <span class="n">torch</span><span class="o">.</span><span class="n">flatten</span><span class="p">(</span><span class="n">exists_box</span> <span class="o">*</span> <span class="n">target</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">20</span><span class="p">:</span><span class="mi">21</span><span class="p">]),</span>
+        <span class="p">)</span>
+
+        <span class="n">no_object_loss</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mse</span><span class="p">(</span>
+            <span class="n">torch</span><span class="o">.</span><span class="n">flatten</span><span class="p">((</span><span class="mi">1</span> <span class="o">-</span> <span class="n">exists_box</span><span class="p">)</span> <span class="o">*</span> <span class="n">predictions</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">20</span><span class="p">:</span><span class="mi">21</span><span class="p">],</span> <span class="n">start_dim</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
+            <span class="n">torch</span><span class="o">.</span><span class="n">flatten</span><span class="p">((</span><span class="mi">1</span> <span class="o">-</span> <span class="n">exists_box</span><span class="p">)</span> <span class="o">*</span> <span class="n">target</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">20</span><span class="p">:</span><span class="mi">21</span><span class="p">],</span> <span class="n">start_dim</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
+        <span class="p">)</span>
+
+        <span class="n">no_object_loss</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mse</span><span class="p">(</span>
+            <span class="n">torch</span><span class="o">.</span><span class="n">flatten</span><span class="p">((</span><span class="mi">1</span> <span class="o">-</span> <span class="n">exists_box</span><span class="p">)</span> <span class="o">*</span> <span class="n">predictions</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">25</span><span class="p">:</span><span class="mi">26</span><span class="p">],</span> <span class="n">start_dim</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
+            <span class="n">torch</span><span class="o">.</span><span class="n">flatten</span><span class="p">((</span><span class="mi">1</span> <span class="o">-</span> <span class="n">exists_box</span><span class="p">)</span> <span class="o">*</span> <span class="n">target</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">20</span><span class="p">:</span><span class="mi">21</span><span class="p">],</span> <span class="n">start_dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="p">)</span>
+
+        <span class="n">class_loss</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mse</span><span class="p">(</span>
+            <span class="n">torch</span><span class="o">.</span><span class="n">flatten</span><span class="p">(</span><span class="n">exists_box</span> <span class="o">*</span> <span class="n">predictions</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="p">:</span><span class="mi">20</span><span class="p">],</span> <span class="n">end_dim</span><span class="o">=-</span><span class="mi">2</span><span class="p">,),</span>
+            <span class="n">torch</span><span class="o">.</span><span class="n">flatten</span><span class="p">(</span><span class="n">exists_box</span> <span class="o">*</span> <span class="n">target</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="p">:</span><span class="mi">20</span><span class="p">],</span> <span class="n">end_dim</span><span class="o">=-</span><span class="mi">2</span><span class="p">,),</span>
+        <span class="p">)</span>
+
+        <span class="n">loss</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">lambda_coord</span> <span class="o">*</span> <span class="n">box_loss</span>  <span class="c1"># first two rows in paper</span>
+            <span class="o">+</span> <span class="n">object_loss</span>  <span class="c1"># third row in paper</span>
+            <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">lambda_noobj</span> <span class="o">*</span> <span class="n">no_object_loss</span>  <span class="c1"># forth row</span>
+            <span class="o">+</span> <span class="n">class_loss</span>  <span class="c1"># fifth row</span>
+        <span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">loss</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
+<span class="nn">Input In [6],</span> in <span class="ni">&lt;cell line: 3&gt;</span><span class="nt">()</span>
+<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="kn">import</span> <span class="nn">torch</span>
+<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="kn">import</span> <span class="nn">torch.nn</span> <span class="k">as</span> <span class="nn">nn</span>
+<span class="ne">----&gt; </span><span class="mi">3</span> <span class="kn">from</span> <span class="nn">utils</span> <span class="kn">import</span> <span class="n">intersection_over_union</span>
+<span class="g g-Whitespace">      </span><span class="mi">6</span> <span class="k">class</span> <span class="nc">YoloLoss</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+<span class="g g-Whitespace">      </span><span class="mi">7</span>     <span class="sd">&quot;&quot;&quot;</span>
+<span class="g g-Whitespace">      </span><span class="mi">8</span><span class="sd">     Calculate the loss for yolo (v1) model</span>
+<span class="g g-Whitespace">      </span><span class="mi">9</span><span class="sd">     &quot;&quot;&quot;</span>
+
+<span class="ne">ModuleNotFoundError</span>: No module named &#39;utils&#39;
+</pre></div>
+</div>
+</div>
+</div>
 </div>
 
     <script type="text/x-thebe-config">

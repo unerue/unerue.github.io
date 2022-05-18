@@ -703,16 +703,10 @@ const thebe_selector_output = ".output, .cell_output"
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
-<span class="nn">Input In [1],</span> in <span class="ni">&lt;cell line: 1&gt;</span><span class="nt">()</span>
-<span class="ne">----&gt; </span><span class="mi">1</span> <span class="kn">import</span> <span class="nn">cv2</span>
-<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-
-<span class="ne">ModuleNotFoundError</span>: No module named &#39;cv2&#39;
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>도형의 갯수: 3(3)
 </pre></div>
 </div>
+<img alt="../_images/image-segmentation_1_1.png" src="../_images/image-segmentation_1_1.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -1256,7 +1250,10 @@ vertices: 4
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/image-segmentation_16_0.png" src="../_images/image-segmentation_16_0.png" />
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.collections.LineCollection at 0x25fb5815b20&gt;
+</pre></div>
+</div>
+<img alt="../_images/image-segmentation_16_1.png" src="../_images/image-segmentation_16_1.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -1379,13 +1376,10 @@ vertices: 4
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;__class__&#39;, &#39;__contains__&#39;, &#39;__delattr__&#39;, &#39;__dict__&#39;, &#39;__dir__&#39;, &#39;__doc__&#39;, &#39;__eq__&#39;, &#39;__format__&#39;, &#39;__ge__&#39;, &#39;__getattribute__&#39;, &#39;__getitem__&#39;, &#39;__gt__&#39;, &#39;__hash__&#39;, &#39;__init__&#39;, &#39;__init_subclass__&#39;, &#39;__iter__&#39;, &#39;__le__&#39;, &#39;__len__&#39;, &#39;__lt__&#39;, &#39;__module__&#39;, &#39;__ne__&#39;, &#39;__new__&#39;, &#39;__reduce__&#39;, &#39;__reduce_ex__&#39;, &#39;__repr__&#39;, &#39;__setattr__&#39;, &#39;__sizeof__&#39;, &#39;__str__&#39;, &#39;__subclasshook__&#39;, &#39;__weakref__&#39;, &#39;_adj&#39;, &#39;_node&#39;, &#39;add_edge&#39;, &#39;add_edges_from&#39;, &#39;add_node&#39;, &#39;add_nodes_from&#39;, &#39;add_weighted_edges_from&#39;, &#39;adj&#39;, &#39;adjacency&#39;, &#39;adjlist_inner_dict_factory&#39;, &#39;adjlist_outer_dict_factory&#39;, &#39;clear&#39;, &#39;clear_edges&#39;, &#39;copy&#39;, &#39;degree&#39;, &#39;edge_attr_dict_factory&#39;, &#39;edge_subgraph&#39;, &#39;edges&#39;, &#39;get_edge_data&#39;, &#39;graph&#39;, &#39;graph_attr_dict_factory&#39;, &#39;has_edge&#39;, &#39;has_node&#39;, &#39;is_directed&#39;, &#39;is_multigraph&#39;, &#39;name&#39;, &#39;nbunch_iter&#39;, &#39;neighbors&#39;, &#39;node_attr_dict_factory&#39;, &#39;node_dict_factory&#39;, &#39;nodes&#39;, &#39;number_of_edges&#39;, &#39;number_of_nodes&#39;, &#39;order&#39;, &#39;remove_edge&#39;, &#39;remove_edges_from&#39;, &#39;remove_node&#39;, &#39;remove_nodes_from&#39;, &#39;size&#39;, &#39;subgraph&#39;, &#39;to_directed&#39;, &#39;to_directed_class&#39;, &#39;to_undirected&#39;, &#39;to_undirected_class&#39;, &#39;update&#39;]
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\Users\ryu\anaconda3\envs\vision\lib\site-packages\ipykernel_launcher.py:25: FutureWarning: The new recommended value for bg_label is 0. Until version 0.19, the default bg_label value is -1. From version 0.19, the bg_label default value will be 0. To avoid this warning, please explicitly set bg_label value.
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x25fb49f7790&gt;
 </pre></div>
 </div>
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x21f3f8dbfc8&gt;
-</pre></div>
-</div>
-<img alt="../_images/image-segmentation_20_3.png" src="../_images/image-segmentation_20_3.png" />
+<img alt="../_images/image-segmentation_20_2.png" src="../_images/image-segmentation_20_2.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -1524,6 +1518,20 @@ vertices: 4
     <span class="n">cv2</span><span class="o">.</span><span class="n">imwrite</span><span class="p">(</span><span class="s1">&#39;../img/coin_test/coin</span><span class="si">%d</span><span class="s1">.jpg&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">),</span> <span class="n">coin</span><span class="p">)</span>
 <span class="n">cv2</span><span class="o">.</span><span class="n">waitKey</span><span class="p">()</span>
 <span class="n">cv2</span><span class="o">.</span><span class="n">destroyAllWindows</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">AttributeError</span><span class="g g-Whitespace">                            </span>Traceback (most recent call last)
+<span class="nn">Input In [15],</span> in <span class="ni">&lt;cell line: 6&gt;</span><span class="nt">()</span>
+<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="c1"># 이미지 읽기</span>
+<span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="n">img</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="s1">&#39;../img/coins_connected.jpg&#39;</span><span class="p">)</span>
+<span class="ne">----&gt; </span><span class="mi">6</span> <span class="n">rows</span><span class="p">,</span> <span class="n">cols</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">shape</span><span class="p">[:</span><span class="mi">2</span><span class="p">]</span>
+<span class="g g-Whitespace">      </span><span class="mi">7</span> <span class="n">cv2</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="s1">&#39;original&#39;</span><span class="p">,</span> <span class="n">img</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">10</span> <span class="c1"># 동전 표면을 흐릿하게 피라미드평균시프트 적용</span>
+
+<span class="ne">AttributeError</span>: &#39;NoneType&#39; object has no attribute &#39;shape&#39;
 </pre></div>
 </div>
 </div>

@@ -791,16 +791,7 @@ y^{\prime}=&amp; y + d_{y}
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
-<span class="nn">Input In [2],</span> in <span class="ni">&lt;cell line: 1&gt;</span><span class="nt">()</span>
-<span class="ne">----&gt; </span><span class="mi">1</span> <span class="kn">import</span> <span class="nn">cv2</span>
-<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="n">img</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="s1">&#39;./img/cat-01.jpg&#39;</span><span class="p">)</span>
-
-<span class="ne">ModuleNotFoundError</span>: No module named &#39;cv2&#39;
-</pre></div>
-</div>
+<img alt="../_images/024-geometric-transform_3_0.png" src="../_images/024-geometric-transform_3_0.png" />
 </div>
 </div>
 </div>
@@ -1131,7 +1122,21 @@ x \\ y \\ 1
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/024-geometric-transform_14_0.png" src="../_images/024-geometric-transform_14_0.png" />
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
+<span class="nn">Input In [8],</span> in <span class="ni">&lt;cell line: 50&gt;</span><span class="nt">()</span>
+<span class="g g-Whitespace">     </span><span class="mi">47</span> <span class="n">mat_all</span> <span class="o">=</span> <span class="n">mat_identity</span> <span class="o">@</span> <span class="n">mat_reflect</span> <span class="o">@</span> <span class="n">mat_scale</span> <span class="o">@</span> <span class="n">mat_rotate</span> <span class="o">@</span> <span class="n">mat_shear</span>
+<span class="g g-Whitespace">     </span><span class="mi">49</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
+<span class="ne">---&gt; </span><span class="mi">50</span> <span class="n">img1</span> <span class="o">=</span> <span class="n">ndi</span><span class="o">.</span><span class="n">affine_transform</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">mat_identity</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">51</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">231</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">52</span> <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">img1</span><span class="p">)</span>
+
+<span class="ne">NameError</span>: name &#39;ndi&#39; is not defined
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;Figure size 1440x720 with 0 Axes&gt;
+</pre></div>
+</div>
 </div>
 </div>
 <div class="cell docutils container">

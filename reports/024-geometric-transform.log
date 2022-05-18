@@ -17,48 +17,101 @@ Traceback (most recent call last):
     raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
 nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
 ------------------
-import cv2
 import numpy as np
+import matplotlib.pyplot as plt
+from scipy import ndimage
+from skimage import io
+from skimage import color
+%matplotlib inline
 
-img = cv2.imread('./img/cat-01.jpg')
-img = img[...,::-1]
-rows, cols = img.shape[0:2]
+img = color.rgb2gray(io.imread('./img/cat-01.jpg'))
+w, h = img.shape
+theta, lambda1 = np.pi/6, 0.5
+mat_identity = np.array([
+    [1, 0, 0],
+    [0, 1, 0],
+    [0, 0, 1]
+])
+mat_reflect = np.array([
+    [1, 0, 0],
+    [0, -1, 0],
+    [0, 0, 1]
+]) @ np.array([
+    [1, 0, 0],
+    [0, 1, -h],
+    [0, 0, 1]
+])
+mat_scale = np.array([
+    [0.75, 0, 0],
+    [0, 1.25, 0],
+    [0, 0, 1]
+])
+mat_rotate = np.array([
+    [1, 0, w/2],
+    [0, 1, h/2],
+    [0, 0, 1]
+]) @ np.array([
+    [np.cos(theta), np.sin(theta), 0],
+    [np.sin(theta), -np.cos(theta), 0],
+    [0, 0, 1]
+]) @ np.array([
+    [1, 0, -w/2],
+    [0, 1, -h/2],
+    [0, 0, 1]
+])
+mat_shear = np.array([
+    [1, lambda1, 0],
+    [lambda1, 1, 0],
+    [0, 0, 1]])
+mat_all = mat_identity @ mat_reflect @ mat_scale @ mat_rotate @ mat_shear
 
-dx, dy = 100, 100
+plt.figure(figsize=(20, 10))
+img1 = ndi.affine_transform(img, mat_identity)
+plt.subplot(231)
+plt.imshow(img1)
+plt.axis('off')
+plt.title('Original image', size=20)
 
-mtrx = np.float32([
-    [1, 0, dx],
-    [0, 1, dy]
-])  
+img1 = ndimage.affine_transform(img1, mat_reflect) # offset=(0,h)
+plt.subplot(232)
+plt.imshow(img1)
+plt.axis('off')
+plt.title('First reflect', size=20)
 
-dst = cv2.warpAffine(img, mtrx, (cols+dx, rows+dy))
+img1 = ndimage.affine_transform(img1, mat_scale)
+plt.subplot(233)
+plt.imshow(img1)
+plt.axis('off')
+plt.title('Then scale', size=20)
 
-dst2 = cv2.warpAffine(
-    img, mtrx, (cols+dx, rows+dy), None, 
-    cv2.INTER_LINEAR, cv2.BORDER_CONSTANT, (255,0,0)
-)
+img1 = ndimage.affine_transform(img1, mat_rotate)
+plt.subplot(234)
+plt.imshow(img1)
+plt.axis('off')
+plt.title('Then rotate', size=20)
 
-dst3 = cv2.warpAffine(
-    img, mtrx, (cols+dx, rows+dy), None, 
-    cv2.INTER_LINEAR, cv2.BORDER_REFLECT
-)
+img1 = ndimage.affine_transform(img1, mat_shear)
+plt.subplot(235)
+plt.imshow(img1)
+plt.axis('off')
+plt.title('Then shear', size=20) 
 
-fig, axes = plt.subplots(nrows=2, ncols=2)
-axes[0, 0].imshow(img)
-axes[0, 1].imshow(dst)
-axes[1, 0].imshow(dst2)
-axes[1, 1].imshow(dst3)
-fig.tight_layout()
+plt.subplot(236)
+plt.imshow(ndimage.affine_transform(img, mat_all))
+plt.axis('off')
+plt.title('All at once', size=20) 
 plt.show()
 ------------------
 
 [1;31m---------------------------------------------------------------------------[0m
-[1;31mModuleNotFoundError[0m                       Traceback (most recent call last)
-Input [1;32mIn [2][0m, in [0;36m<cell line: 1>[1;34m()[0m
-[1;32m----> 1[0m [38;5;28;01mimport[39;00m [38;5;21;01mcv2[39;00m
-[0;32m      2[0m [38;5;28;01mimport[39;00m [38;5;21;01mnumpy[39;00m [38;5;28;01mas[39;00m [38;5;21;01mnp[39;00m
-[0;32m      4[0m img [38;5;241m=[39m cv2[38;5;241m.[39mimread([38;5;124m'[39m[38;5;124m./img/cat-01.jpg[39m[38;5;124m'[39m)
+[1;31mNameError[0m                                 Traceback (most recent call last)
+Input [1;32mIn [8][0m, in [0;36m<cell line: 50>[1;34m()[0m
+[0;32m     47[0m mat_all [38;5;241m=[39m mat_identity [38;5;241m@[39m mat_reflect [38;5;241m@[39m mat_scale [38;5;241m@[39m mat_rotate [38;5;241m@[39m mat_shear
+[0;32m     49[0m plt[38;5;241m.[39mfigure(figsize[38;5;241m=[39m([38;5;241m20[39m, [38;5;241m10[39m))
+[1;32m---> 50[0m img1 [38;5;241m=[39m [43mndi[49m[38;5;241m.[39maffine_transform(img, mat_identity)
+[0;32m     51[0m plt[38;5;241m.[39msubplot([38;5;241m231[39m)
+[0;32m     52[0m plt[38;5;241m.[39mimshow(img1)
 
-[1;31mModuleNotFoundError[0m: No module named 'cv2'
-ModuleNotFoundError: No module named 'cv2'
+[1;31mNameError[0m: name 'ndi' is not defined
+NameError: name 'ndi' is not defined
 

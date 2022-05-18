@@ -17,41 +17,28 @@ Traceback (most recent call last):
     raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
 nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
 ------------------
-import cv2
-import numpy as np
-import matplotlib.pyplot as plt
-
-img = cv2.imread('./img/cat-01.jpg')
-img = img[..., ::-1]
-
-kernel = np.array([
-    [0.04, 0.04, 0.04, 0.04, 0.04],
-    [0.04, 0.04, 0.04, 0.04, 0.04],
-    [0.04, 0.04, 0.04, 0.04, 0.04],
-    [0.04, 0.04, 0.04, 0.04, 0.04],
-    [0.04, 0.04, 0.04, 0.04, 0.04],
-])
-
-kernel = np.ones((5, 5)) / 5**2
-blured1 = cv2.filter2D(img, -1, kernel)
-blured2 = cv2.blur(img, (10, 10))
-
-
-fig, (ax1, ax2, ax3) = plt.subplots(ncols=3)
-ax1.imshow(img)
-ax2.imshow(blured1)
-ax3.imshow(blured2)
-fig.tight_layout()
+fig = plt.figure(figsize=(10, 10))
+ax1 = fig.add_subplot(2, 2, 1, projection='3d')
+ax2 = fig.add_subplot(2, 2, 2, projection='3d')
+ax3 = fig.add_subplot(2, 2, 3, projection='3d')
+ax4 = fig.add_subplot(2, 2, 4, projection='3d')
+    
+plot_freq_spec_3d(fp.fft2(im), ax1)
+plot_freq_spec_3d(fp.fft2(im1), ax2)
+plot_freq_spec_3d(fp.fft2(im2), ax3)
+plot_freq_spec_3d(fp.fft2(im3), ax4)
 plt.show()
 ------------------
 
 [1;31m---------------------------------------------------------------------------[0m
-[1;31mModuleNotFoundError[0m                       Traceback (most recent call last)
-Input [1;32mIn [1][0m, in [0;36m<cell line: 1>[1;34m()[0m
-[1;32m----> 1[0m [38;5;28;01mimport[39;00m [38;5;21;01mcv2[39;00m
-[0;32m      2[0m [38;5;28;01mimport[39;00m [38;5;21;01mnumpy[39;00m [38;5;28;01mas[39;00m [38;5;21;01mnp[39;00m
-[0;32m      3[0m [38;5;28;01mimport[39;00m [38;5;21;01mmatplotlib[39;00m[38;5;21;01m.[39;00m[38;5;21;01mpyplot[39;00m [38;5;28;01mas[39;00m [38;5;21;01mplt[39;00m
+[1;31mNameError[0m                                 Traceback (most recent call last)
+Input [1;32mIn [7][0m, in [0;36m<cell line: 7>[1;34m()[0m
+[0;32m      4[0m ax3 [38;5;241m=[39m fig[38;5;241m.[39madd_subplot([38;5;241m2[39m, [38;5;241m2[39m, [38;5;241m3[39m, projection[38;5;241m=[39m[38;5;124m'[39m[38;5;124m3d[39m[38;5;124m'[39m)
+[0;32m      5[0m ax4 [38;5;241m=[39m fig[38;5;241m.[39madd_subplot([38;5;241m2[39m, [38;5;241m2[39m, [38;5;241m4[39m, projection[38;5;241m=[39m[38;5;124m'[39m[38;5;124m3d[39m[38;5;124m'[39m)
+[1;32m----> 7[0m plot_freq_spec_3d([43mfp[49m[38;5;241m.[39mfft2(im), ax1)
+[0;32m      8[0m plot_freq_spec_3d(fp[38;5;241m.[39mfft2(im1), ax2)
+[0;32m      9[0m plot_freq_spec_3d(fp[38;5;241m.[39mfft2(im2), ax3)
 
-[1;31mModuleNotFoundError[0m: No module named 'cv2'
-ModuleNotFoundError: No module named 'cv2'
+[1;31mNameError[0m: name 'fp' is not defined
+NameError: name 'fp' is not defined
 

@@ -751,16 +751,11 @@ const thebe_selector_output = ".output, .cell_output"
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
-<span class="nn">Input In [1],</span> in <span class="ni">&lt;cell line: 1&gt;</span><span class="nt">()</span>
-<span class="ne">----&gt; </span><span class="mi">1</span> <span class="kn">import</span> <span class="nn">cv2</span>
-<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-
-<span class="ne">ModuleNotFoundError</span>: No module named &#39;cv2&#39;
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(256, 1)
+196692.0 (443, 444)
 </pre></div>
 </div>
+<img alt="../_images/022-histogram_1_1.png" src="../_images/022-histogram_1_1.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -1221,6 +1216,75 @@ const thebe_selector_output = ".output, .cell_output"
 <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">222</span><span class="p">),</span> <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">im_t</span><span class="p">),</span> <span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">),</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Template Image&#39;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">25</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">223</span><span class="p">),</span> <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">im1</span><span class="p">[</span><span class="o">...</span><span class="p">,:</span><span class="mi">3</span><span class="p">]),</span> <span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">),</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Output Image&#39;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">25</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">FileNotFoundError</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
+<span class="nn">Input In [8],</span> in <span class="ni">&lt;cell line: 28&gt;</span><span class="nt">()</span>
+<span class="g g-Whitespace">     </span><span class="mi">25</span>         <span class="n">c</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">26</span>     <span class="k">return</span> <span class="n">c</span>
+<span class="ne">---&gt; </span><span class="mi">28</span> <span class="n">im</span> <span class="o">=</span> <span class="n">imread</span><span class="p">(</span><span class="s1">&#39;images/goddess.png&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">29</span> <span class="n">im_t</span> <span class="o">=</span> <span class="n">imread</span><span class="p">(</span><span class="s1">&#39;images/leaves.png&#39;</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">30</span> <span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">im</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">im_t</span><span class="p">))</span>
+
+<span class="nn">File ~\miniconda3\envs\vision\lib\site-packages\skimage\io\_io.py:53,</span> in <span class="ni">imread</span><span class="nt">(fname, as_gray, plugin, **plugin_args)</span>
+<span class="g g-Whitespace">     </span><span class="mi">50</span>         <span class="n">plugin</span> <span class="o">=</span> <span class="s1">&#39;tifffile&#39;</span>
+<span class="g g-Whitespace">     </span><span class="mi">52</span> <span class="k">with</span> <span class="n">file_or_url_context</span><span class="p">(</span><span class="n">fname</span><span class="p">)</span> <span class="k">as</span> <span class="n">fname</span><span class="p">:</span>
+<span class="ne">---&gt; </span><span class="mi">53</span>     <span class="n">img</span> <span class="o">=</span> <span class="n">call_plugin</span><span class="p">(</span><span class="s1">&#39;imread&#39;</span><span class="p">,</span> <span class="n">fname</span><span class="p">,</span> <span class="n">plugin</span><span class="o">=</span><span class="n">plugin</span><span class="p">,</span> <span class="o">**</span><span class="n">plugin_args</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">55</span> <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="s1">&#39;ndim&#39;</span><span class="p">):</span>
+<span class="g g-Whitespace">     </span><span class="mi">56</span>     <span class="k">return</span> <span class="n">img</span>
+
+<span class="nn">File ~\miniconda3\envs\vision\lib\site-packages\skimage\io\manage_plugins.py:207,</span> in <span class="ni">call_plugin</span><span class="nt">(kind, *args, **kwargs)</span>
+<span class="g g-Whitespace">    </span><span class="mi">203</span>     <span class="k">except</span> <span class="ne">IndexError</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">204</span>         <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s1">&#39;Could not find the plugin &quot;</span><span class="si">%s</span><span class="s1">&quot; for </span><span class="si">%s</span><span class="s1">.&#39;</span> <span class="o">%</span>
+<span class="g g-Whitespace">    </span><span class="mi">205</span>                            <span class="p">(</span><span class="n">plugin</span><span class="p">,</span> <span class="n">kind</span><span class="p">))</span>
+<span class="ne">--&gt; </span><span class="mi">207</span> <span class="k">return</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+<span class="nn">File ~\miniconda3\envs\vision\lib\site-packages\skimage\io\_plugins\imageio_plugin.py:10,</span> in <span class="ni">imread</span><span class="nt">(*args, **kwargs)</span>
+<span class="g g-Whitespace">      </span><span class="mi">8</span> <span class="nd">@wraps</span><span class="p">(</span><span class="n">imageio_imread</span><span class="p">)</span>
+<span class="g g-Whitespace">      </span><span class="mi">9</span> <span class="k">def</span> <span class="nf">imread</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="ne">---&gt; </span><span class="mi">10</span>     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">imageio_imread</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">))</span>
+
+<span class="nn">File ~\miniconda3\envs\vision\lib\site-packages\imageio\core\functions.py:265,</span> in <span class="ni">imread</span><span class="nt">(uri, format, **kwargs)</span>
+<span class="g g-Whitespace">    </span><span class="mi">260</span>     <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
+<span class="g g-Whitespace">    </span><span class="mi">261</span>         <span class="s1">&#39;Invalid keyword argument &quot;mode&quot;, &#39;</span> <span class="s1">&#39;perhaps you mean &quot;pilmode&quot;?&#39;</span>
+<span class="g g-Whitespace">    </span><span class="mi">262</span>     <span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">264</span> <span class="c1"># Get reader and read first</span>
+<span class="ne">--&gt; </span><span class="mi">265</span> <span class="n">reader</span> <span class="o">=</span> <span class="n">read</span><span class="p">(</span><span class="n">uri</span><span class="p">,</span> <span class="nb">format</span><span class="p">,</span> <span class="s2">&quot;i&quot;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">266</span> <span class="k">with</span> <span class="n">reader</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">267</span>     <span class="k">return</span> <span class="n">reader</span><span class="o">.</span><span class="n">get_data</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="nn">File ~\miniconda3\envs\vision\lib\site-packages\imageio\core\functions.py:172,</span> in <span class="ni">get_reader</span><span class="nt">(uri, format, mode, **kwargs)</span>
+<span class="g g-Whitespace">    </span><span class="mi">149</span> <span class="sd">&quot;&quot;&quot; get_reader(uri, format=None, mode=&#39;?&#39;, **kwargs)</span>
+<span class="g g-Whitespace">    </span><span class="mi">150</span><span class="sd"> </span>
+<span class="g g-Whitespace">    </span><span class="mi">151</span><span class="sd"> Returns a :class:`.Reader` object which can be used to read data</span>
+<span class="sd">   (...)</span>
+<span class="g g-Whitespace">    </span><span class="mi">168</span><span class="sd">     to see what arguments are available for a particular format.</span>
+<span class="g g-Whitespace">    </span><span class="mi">169</span><span class="sd"> &quot;&quot;&quot;</span>
+<span class="g g-Whitespace">    </span><span class="mi">171</span> <span class="c1"># Create request object</span>
+<span class="ne">--&gt; </span><span class="mi">172</span> <span class="n">request</span> <span class="o">=</span> <span class="n">Request</span><span class="p">(</span><span class="n">uri</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span> <span class="o">+</span> <span class="n">mode</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">174</span> <span class="c1"># Get format</span>
+<span class="g g-Whitespace">    </span><span class="mi">175</span> <span class="k">if</span> <span class="nb">format</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+
+<span class="nn">File ~\miniconda3\envs\vision\lib\site-packages\imageio\core\request.py:124,</span> in <span class="ni">Request.__init__</span><span class="nt">(self, uri, mode, **kwargs)</span>
+<span class="g g-Whitespace">    </span><span class="mi">121</span>     <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Request requires mode[1] to be in &quot;iIvV?&quot;&#39;</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">123</span> <span class="c1"># Parse what was given</span>
+<span class="ne">--&gt; </span><span class="mi">124</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parse_uri</span><span class="p">(</span><span class="n">uri</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">126</span> <span class="c1"># Set extension</span>
+<span class="g g-Whitespace">    </span><span class="mi">127</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_filename</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+
+<span class="nn">File ~\miniconda3\envs\vision\lib\site-packages\imageio\core\request.py:260,</span> in <span class="ni">Request._parse_uri</span><span class="nt">(self, uri)</span>
+<span class="g g-Whitespace">    </span><span class="mi">257</span> <span class="k">if</span> <span class="n">is_read_request</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">258</span>     <span class="c1"># Reading: check that the file exists (but is allowed a dir)</span>
+<span class="g g-Whitespace">    </span><span class="mi">259</span>     <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">fn</span><span class="p">):</span>
+<span class="ne">--&gt; </span><span class="mi">260</span>         <span class="k">raise</span> <span class="ne">FileNotFoundError</span><span class="p">(</span><span class="s2">&quot;No such file: &#39;</span><span class="si">%s</span><span class="s2">&#39;&quot;</span> <span class="o">%</span> <span class="n">fn</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">261</span> <span class="k">else</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">262</span>     <span class="c1"># Writing: check that the directory to write to does exist</span>
+<span class="g g-Whitespace">    </span><span class="mi">263</span>     <span class="n">dn</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">fn</span><span class="p">)</span>
+
+<span class="ne">FileNotFoundError</span>: No such file: &#39;C:\Users\unerue\Documents\unerue.github.io\computer-vision\images\goddess.png&#39;
 </pre></div>
 </div>
 </div>

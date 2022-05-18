@@ -17,24 +17,38 @@ Traceback (most recent call last):
     raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
 nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
 ------------------
-import cv2
 import numpy as np
 import matplotlib.pyplot as plt
+from skimage import io, color
+%matplotlib inline
 
-image = cv2.imread('./img/cat-01.jpg', cv2.IMREAD_GRAYSCALE)
-image = cv2.threshold(image, 125, 255, cv2.THRESH_BINARY)[1]
-image = image.astype(np.uint8)
-plt.imshow(image, cmap='gray')
+image = io.imread('./img/cat-01.jpg')
+print(type(image))
+
+image1 = color.rgb2lab(image)
+image1[...,1] = image1[...,2] = 0
+image1 = color.lab2rgb(image1)
+
+fig, axes = plt.subplots(ncols=2)
+axes[0].imshow(im)
+axes[0].axis('off')
+axes[0].set_title('Original image')
+axes[1].imshow(im1)
+axes[1].axis('off')
+axes[1].set_title('Gray scale image')
+fig.tight_layout()
 plt.show()
 ------------------
 
 [1;31m---------------------------------------------------------------------------[0m
-[1;31mModuleNotFoundError[0m                       Traceback (most recent call last)
-Input [1;32mIn [1][0m, in [0;36m<cell line: 1>[1;34m()[0m
-[1;32m----> 1[0m [38;5;28;01mimport[39;00m [38;5;21;01mcv2[39;00m
-[0;32m      2[0m [38;5;28;01mimport[39;00m [38;5;21;01mnumpy[39;00m [38;5;28;01mas[39;00m [38;5;21;01mnp[39;00m
-[0;32m      3[0m [38;5;28;01mimport[39;00m [38;5;21;01mmatplotlib[39;00m[38;5;21;01m.[39;00m[38;5;21;01mpyplot[39;00m [38;5;28;01mas[39;00m [38;5;21;01mplt[39;00m
+[1;31mNameError[0m                                 Traceback (most recent call last)
+Input [1;32mIn [4][0m, in [0;36m<cell line: 14>[1;34m()[0m
+[0;32m     11[0m image1 [38;5;241m=[39m color[38;5;241m.[39mlab2rgb(image1)
+[0;32m     13[0m fig, axes [38;5;241m=[39m plt[38;5;241m.[39msubplots(ncols[38;5;241m=[39m[38;5;241m2[39m)
+[1;32m---> 14[0m axes[[38;5;241m0[39m][38;5;241m.[39mimshow([43mim[49m)
+[0;32m     15[0m axes[[38;5;241m0[39m][38;5;241m.[39maxis([38;5;124m'[39m[38;5;124moff[39m[38;5;124m'[39m)
+[0;32m     16[0m axes[[38;5;241m0[39m][38;5;241m.[39mset_title([38;5;124m'[39m[38;5;124mOriginal image[39m[38;5;124m'[39m)
 
-[1;31mModuleNotFoundError[0m: No module named 'cv2'
-ModuleNotFoundError: No module named 'cv2'
+[1;31mNameError[0m: name 'im' is not defined
+NameError: name 'im' is not defined
 

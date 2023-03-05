@@ -1,0 +1,67 @@
+Traceback (most recent call last):
+  File "C:\Users\unerue\miniconda3\envs\jupyterbook\lib\site-packages\jupyter_cache\executors\utils.py", line 58, in single_nb_execution
+    executenb(
+  File "C:\Users\unerue\miniconda3\envs\jupyterbook\lib\site-packages\nbclient\client.py", line 1204, in execute
+    return NotebookClient(nb=nb, resources=resources, km=km, **kwargs).execute()
+  File "C:\Users\unerue\miniconda3\envs\jupyterbook\lib\site-packages\nbclient\util.py", line 84, in wrapped
+    return just_run(coro(*args, **kwargs))
+  File "C:\Users\unerue\miniconda3\envs\jupyterbook\lib\site-packages\nbclient\util.py", line 62, in just_run
+    return loop.run_until_complete(coro)
+  File "C:\Users\unerue\miniconda3\envs\jupyterbook\lib\asyncio\base_events.py", line 647, in run_until_complete
+    return future.result()
+  File "C:\Users\unerue\miniconda3\envs\jupyterbook\lib\site-packages\nbclient\client.py", line 663, in async_execute
+    await self.async_execute_cell(
+  File "C:\Users\unerue\miniconda3\envs\jupyterbook\lib\site-packages\nbclient\client.py", line 965, in async_execute_cell
+    await self._check_raise_for_error(cell, cell_index, exec_reply)
+  File "C:\Users\unerue\miniconda3\envs\jupyterbook\lib\site-packages\nbclient\client.py", line 862, in _check_raise_for_error
+    raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
+nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
+------------------
+import cv2
+import numpy as np
+import matplotlib.pyplot as plt
+
+img = cv2.imread('./img/shapes.png')
+img2 = img.copy()
+
+imgray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+ret, imthres = cv2.threshold(imgray, 127, 255, cv2.THRESH_BINARY_INV)
+
+contour, hierarchy = cv2.findContours(
+    imthres, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE
+)
+
+contour2, hierarchy = cv2.findContours(
+    imthres, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE
+)
+
+print('도형의 갯수: %d(%d)'% (len(contour), len(contour2)))
+
+
+cv2.drawContours(img, contour, -1, (0,255,0), 4)
+cv2.drawContours(img2, contour2, -1, (0,255,0), 4)
+
+for i in contour:
+    for j in i:
+        cv2.circle(img, tuple(j[0]), 1, (255,0,0), -1) 
+
+for i in contour2:
+    for j in i:
+        cv2.circle(img2, tuple(j[0]), 1, (255,0,0), -1) 
+
+fig, (ax1, ax2) = plt.subplots(ncols=2, figsize=(10,5))
+ax1.imshow(img)
+ax2.imshow(img2)
+plt.show()
+------------------
+
+[1;31m---------------------------------------------------------------------------[0m
+[1;31mModuleNotFoundError[0m                       Traceback (most recent call last)
+Cell [1;32mIn[1], line 1[0m
+[1;32m----> 1[0m [38;5;28;01mimport[39;00m [38;5;21;01mcv2[39;00m
+[0;32m      2[0m [38;5;28;01mimport[39;00m [38;5;21;01mnumpy[39;00m [38;5;28;01mas[39;00m [38;5;21;01mnp[39;00m
+[0;32m      3[0m [38;5;28;01mimport[39;00m [38;5;21;01mmatplotlib[39;00m[38;5;21;01m.[39;00m[38;5;21;01mpyplot[39;00m [38;5;28;01mas[39;00m [38;5;21;01mplt[39;00m
+
+[1;31mModuleNotFoundError[0m: No module named 'cv2'
+ModuleNotFoundError: No module named 'cv2'
+

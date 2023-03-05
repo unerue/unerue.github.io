@@ -1,574 +1,684 @@
 
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
     <title>Evolution Strategy &#8212; 경영과학과 컴퓨터 비전</title>
-    
-  <link href="../../_static/css/theme.css" rel="stylesheet">
-  <link href="../../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+<link href="../../_static/styles/bootstrap.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=796348d33e8b1d947c94" rel="stylesheet">
 
-    
-  <link rel="stylesheet"
-    href="../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
-  <link rel="preload" as="font" type="font/woff2" crossorigin
-    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
-  <link rel="preload" as="font" type="font/woff2" crossorigin
-    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+  
+  <link href="../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2">
 
-    
-      
-
-    
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" />
+    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=4ec06e9971c5264fbd345897d5258098f11cc577" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
-    
-  <link rel="preload" as="script" href="../../_static/js/index.be7d3bbb2ef33a8344ce.js">
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=796348d33e8b1d947c94">
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=796348d33e8b1d947c94">
 
     <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
     <script src="../../_static/jquery.js"></script>
     <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../../_static/doctools.js"></script>
     <script src="../../_static/clipboard.min.js"></script>
     <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?digest=8bf782fb4ee92b3d3646425e50f299c4e1fd152d"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
     <script src="../../_static/togglebutton.js"></script>
-    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
-    <script src="../../_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js"></script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
 const thebe_selector = ".thebe,.cell"
 const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
     <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <script async="async" src="https://www.googletagmanager.com/gtag/js?id=UA-171260246-1"></script>
+    <script>
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){ dataLayer.push(arguments); }
+                gtag('js', new Date());
+                gtag('config', 'UA-171260246-1');
+            </script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'operations-research/etc/evolution-strategy';</script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="docsearch:language" content="None">
-    
-
-    <!-- Google Analytics -->
-    
-<script async="" src="https://www.google-analytics.com/analytics.js"></script>
-<script>
-                        window.ga = window.ga || function () {
-                            (ga.q = ga.q || []).push(arguments) };
-                        ga.l = +new Date;
-                        ga('create', 'UA-171260246-1', 'auto');
-                        ga('set', 'anonymizeIp', true);
-                        ga('send', 'pageview');
-                    </script>
-
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="docsearch:language" content="en">
   </head>
-  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
-    
-    <div class="container-fluid" id="banner"></div>
+  
+  
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="180" data-default-mode="">
 
-    
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
 
-    <div class="container-xl">
-      <div class="row">
-          
-<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
-    
-        <div class="navbar-brand-box">
-    <a class="navbar-brand text-wrap" href="../../index.html">
+  
+  <input type="checkbox" class="sidebar-toggle" name="__primary" id="__primary">
+  <label class="overlay overlay-primary" for="__primary"></label>
+
+  
+  <input type="checkbox" class="sidebar-toggle" name="__secondary" id="__secondary">
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
       
-      
-      
-      <h1 class="site-logo" id="site-title">경영과학과 컴퓨터 비전</h1>
-      
-    </a>
-</div><form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
-  <i class="icon fas fa-search"></i>
-  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
-</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
-    <div class="bd-toc-item active">
-        <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="../../index.html">
-   데이터 과학
-  </a>
- </li>
-</ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  Intermediate Python
- </span>
-</p>
-<ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="../../object-oriented/01-object-oriented.html">
-   객체 지향 프로그래밍
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../../object-oriented/02-design-pattern.html">
-   디자인 패턴
-  </a>
- </li>
-</ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  Computer Vision
- </span>
-</p>
-<ul class="nav bd-sidenav">
- <li class="toctree-l1 has-children">
-  <a class="reference internal" href="../../computer-vision/introduction.html">
-   시작하기 앞서
-  </a>
-  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
-  <label for="toctree-checkbox-1">
-   <i class="fas fa-chevron-down">
-   </i>
-  </label>
-  <ul>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../computer-vision/image-libraries.html">
-     영상 처리 라이브러리
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../computer-vision/numpy-matplotlib.html">
-     NumPy와 Matplotlib
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toctree-l1 has-children">
-  <a class="reference internal" href="../../computer-vision/classifier-1.html">
-   이미지 분류기(1)
-  </a>
-  <input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
-  <label for="toctree-checkbox-2">
-   <i class="fas fa-chevron-down">
-   </i>
-  </label>
-  <ul>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../computer-vision/020-image-processing.html">
-     2장 영상 처리
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../computer-vision/022-thresholding.html">
-     임계처리
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../computer-vision/022-histogram.html">
-     히스토그램
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../computer-vision/023-arithmetic-operation.html">
-     산술 연산
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../computer-vision/024-geometric-transform.html">
-     기하하적 변환
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../computer-vision/025-binarization.html">
-     이진화와 모폴로지
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../computer-vision/021-color-space.html">
-     색공간
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../computer-vision/030-filtering.html">
-     영상 필터
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../computer-vision/070-machine-learning.html">
-     7장 기계학습
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../computer-vision/classifier-sift.html">
-     SIFT (2004)
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../computer-vision/032-blurring.html">
-     Image Denoising with Denoising Autoencoder
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../computer-vision/classifier-hog.html">
-     HOG
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../computer-vision/classifier-lenet.html">
-     LeNet과 합성곱 신경망
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toctree-l1 has-children">
-  <a class="reference internal" href="../../computer-vision/classifier-2.html">
-   이미지 분류기(2)
-  </a>
-  <input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
-  <label for="toctree-checkbox-3">
-   <i class="fas fa-chevron-down">
-   </i>
-  </label>
-  <ul>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../computer-vision/classifier-alexnet.html">
-     AlexNet
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../computer-vision/classifier-zfnet.html">
-     ZFNet
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../computer-vision/classifier-nin.html">
-     Network in Network
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../computer-vision/classifier-vgg.html">
-     VGGNet
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../computer-vision/classifier-googlenet.html">
-     GoogLeNet
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../computer-vision/classifier-resnet.html">
-     ResNet
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../computer-vision/classifier-densenet.html">
-     DenseNet
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toctree-l1 has-children">
-  <a class="reference internal" href="../../computer-vision/image-segmentation.html">
-   영상 분할
-  </a>
-  <input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/>
-  <label for="toctree-checkbox-4">
-   <i class="fas fa-chevron-down">
-   </i>
-  </label>
-  <ul>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../computer-vision/semantic-fcn.html">
-     FCN
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../computer-vision/semantic-unet.html">
-     UNet
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../computer-vision/semantic-deeplab.html">
-     DeepLab
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toctree-l1 has-children">
-  <a class="reference internal" href="../../computer-vision/object-detection.html">
-   객체 탐지
-  </a>
-  <input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/>
-  <label for="toctree-checkbox-5">
-   <i class="fas fa-chevron-down">
-   </i>
-  </label>
-  <ul>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../computer-vision/object-rcnn.html">
-     R-CNN
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../computer-vision/object-sppnet.html">
-     SPPNet
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../computer-vision/object-fast-rcnn.html">
-     Fast R-CNN
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../computer-vision/object-faster-rcnn.html">
-     Faster R-CNN
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../computer-vision/object-ohem.html">
-     OHEM
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../computer-vision/object-yolov1.html">
-     YOLOv1
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../computer-vision/object-ssd.html">
-     SSD
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../computer-vision/object-fpn.html">
-     FPN
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../computer-vision/object-retinanet.html">
-     RetinaNet
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../computer-vision/object-yolov3.html">
-     YOLOv3
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toctree-l1 has-children">
-  <a class="reference internal" href="../../computer-vision/instance-segmentation.html">
-   개체 분할
-  </a>
-  <input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/>
-  <label for="toctree-checkbox-6">
-   <i class="fas fa-chevron-down">
-   </i>
-  </label>
-  <ul>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../computer-vision/instance-mask-rcnn.html">
-     Mask R-CNN
-    </a>
-   </li>
-  </ul>
- </li>
-</ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  Operations Research
- </span>
-</p>
-<ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="../000-introduction.html">
-   1장 시작하기 앞서
-  </a>
- </li>
- <li class="toctree-l1 has-children">
-  <a class="reference internal" href="../linear-programming/linear-programming.html">
-   선형 계획법
-  </a>
-  <input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/>
-  <label for="toctree-checkbox-7">
-   <i class="fas fa-chevron-down">
-   </i>
-  </label>
-  <ul>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../linear-programming/product-mix.html">
-     Product Mix Problem
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../linear-programming/production-planning.html">
-     생산계획문제
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../linear-programming/sensitivity-analysis.html">
-     민감도 분석
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../linear-programming/unbalanced-transportation.html">
-     Unbalanced Transportation Problem
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../linear-programming/vehicle-routing.html">
-     차량 경로 문제
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../linear-programming/workforce-scheduling.html">
-     Workforce Scheduling
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toctree-l1 has-children">
-  <a class="reference internal" href="../integer-programming/integer-programming.html">
-   정수 계획법
-  </a>
-  <input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/>
-  <label for="toctree-checkbox-8">
-   <i class="fas fa-chevron-down">
-   </i>
-  </label>
-  <ul>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../integer-programming/traveling-salesman.html">
-     Travelling Salesman Problem
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../integer-programming/knapsack.html">
-     Knapsack Problem
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../integer-programming/capital-budgeting.html">
-     Capital Budgeting Problem
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../integer-programming/plant.html">
-     Plant Location Problem
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../integer-programming/set-covering.html">
-     Set Covering Problem
-    </a>
-   </li>
-  </ul>
- </li>
-</ul>
-
+<form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
     </div>
-</nav> <!-- To handle the deprecated key -->
+  </div>
 
-<div class="navbar_extra_footer">
-  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
-</div>
-
-</div>
-
-
-          
-
-
-          
-<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+  
+  <nav class="bd-header navbar navbar-expand-lg bd-navbar" id="navbar-main"><div class="bd-header__inner bd-page-width">
+  <label class="sidebar-toggle primary-toggle" for="__primary">
+      <span class="fa-solid fa-bars"></span>
+  </label>
+  <div id="navbar-start">
     
-    <div class="topbar container-xl fixed-top">
-    <div class="topbar-contents row">
-        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
-        <div class="col pl-md-4 topbar-main">
-            
-            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
-                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
-                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
-                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
-                <i class="fas fa-bars"></i>
-                <i class="fas fa-arrow-left"></i>
-                <i class="fas fa-arrow-up"></i>
-            </button>
-            
-            
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
-            class="fas fa-download"></i></button>
+    
+  
 
-    <div class="dropdown-buttons">
-        <!-- ipynb file if we had a myst markdown file -->
+
+<a class="navbar-brand logo" href="../../index.html">
+
+  
+  
+  
+  
+  
+  
+  
+
+  
+  
+    <p class="title logo__title">경영과학과 컴퓨터 비전</p>
+  
+</a>
+    
+  </div>
+
+  
+  <div class="col-lg-9 navbar-header-items">
+    <div id="navbar-center" class="mr-auto">
+      
+      <div class="navbar-center-item">
+        <nav class="navbar-nav">
+    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
+        Site Navigation
+    </p>
+    <ul id="navbar-main-elements" class="navbar-nav">
         
-        <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../../_sources/operations-research/etc/evolution-strategy.ipynb"><button type="button"
-                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
-                data-placement="left">.ipynb</button></a>
-        <!-- Download PDF via print -->
-        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
-                onclick="printPdf(this)" data-toggle="tooltip" data-placement="left">.pdf</button>
-    </div>
-</div>
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../object-oriented/00-index.html">
+                        객체지향프로그래밍과 디자인패턴
+                      </a>
+                    </li>
+                
 
-            <!-- Source interaction buttons -->
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../object-oriented/01-object-oriented.html">
+                        객체 지향 프로그래밍
+                      </a>
+                    </li>
+                
 
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
-        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
-    <div class="dropdown-buttons sourcebuttons">
-        
-        <a class="issues-button"
-            href="https://github.com/unerue/unerue.github.io/issues/new?title=Issue%20on%20page%20%2Foperations-research/etc/evolution-strategy.html&body=Your%20issue%20content%20here."><button
-                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
-                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
-        
-    </div>
-</div>
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../object-oriented/02-design-pattern.html">
+                        디자인 패턴
+                      </a>
+                    </li>
+                
 
-            <!-- Full screen (wrap in <a> to have style consistency -->
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../computer-vision/introduction.html">
+                        시작하기 앞서
+                      </a>
+                    </li>
+                
 
-<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
-        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
-        title="Fullscreen mode"><i
-            class="fas fa-expand"></i></button></a>
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../computer-vision/classifier-1.html">
+                        이미지 분류기(1)
+                      </a>
+                    </li>
+                
+            <div class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    More
+                </button>
+                <div class="dropdown-menu">
+                    
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../computer-vision/classifier-2.html">
+                        이미지 분류기(2)
+                      </a>
+                    </li>
+                
 
-            <!-- Launch buttons -->
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../computer-vision/image-segmentation.html">
+                        영상 분할
+                      </a>
+                    </li>
+                
 
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
-        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
-    <div class="dropdown-buttons">
-        
-        <a class="binder-button" href="https://mybinder.org/v2/gh/unerue/unerue.github.io/master?urlpath=lab/tree/operations-research/etc/evolution-strategy.ipynb"><button type="button"
-                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
-                data-placement="left"><img class="binder-button-logo"
-                    src="../../_static/images/logo_binder.svg"
-                    alt="Interact on binder">Binder</button></a>
-        
-        
-        
-        
-    </div>
-</div>
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../computer-vision/object-detection.html">
+                        객체 탐지
+                      </a>
+                    </li>
+                
 
-        </div>
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../computer-vision/instance-segmentation.html">
+                        개체 분할
+                      </a>
+                    </li>
+                
 
-        <!-- Table of contents -->
-        <div class="d-none d-md-block col-md-2 bd-toc show noprint">
-            
-            <div class="tocsection onthispage pt-5 pb-3">
-                <i class="fas fa-list"></i> Contents
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../000-introduction.html">
+                        1장 시작하기 앞서
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../linear-programming/linear-programming.html">
+                        선형 계획법
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../integer-programming/integer-programming.html">
+                        정수 계획법
+                      </a>
+                    </li>
+                
+                </div>
             </div>
-            <nav id="bd-toc-nav" aria-label="Page">
+            
+    </ul>
+</nav>
+      </div>
+      
+    </div>
+
+    <div id="navbar-end">
+      
+        <div class="navbar-end-item navbar-persistent--container">
+          
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-toggle="tooltip">
+  <i class="fa-solid fa-magnifying-glass"></i>
+</button>
+        </div>
+      
+      
+      <div class="navbar-end-item">
+        <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+</button>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+      </ul>
+      </div>
+      
+    </div>
+  </div>
+
+
+  
+  
+    <div class="navbar-persistent--mobile">
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-toggle="tooltip">
+  <i class="fa-solid fa-magnifying-glass"></i>
+</button>
+    </div>
+  
+
+  
+  <label class="sidebar-toggle secondary-toggle" for="__secondary">
+      <span class="fa-solid fa-outdent"></span>
+  </label>
+  
+
+</div>
+  </nav>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+      
+      <div class="navbar-center-item">
+        <nav class="navbar-nav">
+    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
+        Site Navigation
+    </p>
+    <ul id="navbar-main-elements" class="navbar-nav">
+        
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../object-oriented/00-index.html">
+                        객체지향프로그래밍과 디자인패턴
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../object-oriented/01-object-oriented.html">
+                        객체 지향 프로그래밍
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../object-oriented/02-design-pattern.html">
+                        디자인 패턴
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../computer-vision/introduction.html">
+                        시작하기 앞서
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../computer-vision/classifier-1.html">
+                        이미지 분류기(1)
+                      </a>
+                    </li>
+                
+            <div class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    More
+                </button>
+                <div class="dropdown-menu">
+                    
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../computer-vision/classifier-2.html">
+                        이미지 분류기(2)
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../computer-vision/image-segmentation.html">
+                        영상 분할
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../computer-vision/object-detection.html">
+                        객체 탐지
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../computer-vision/instance-segmentation.html">
+                        개체 분할
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../000-introduction.html">
+                        1장 시작하기 앞서
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../linear-programming/linear-programming.html">
+                        선형 계획법
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../integer-programming/integer-programming.html">
+                        정수 계획법
+                      </a>
+                    </li>
+                
+                </div>
+            </div>
+            
+    </ul>
+</nav>
+      </div>
+      
+      </div>
+    
+
+    
+    
+    <div class="sidebar-header-items__end">
+      
+      <div class="navbar-end-item">
+        <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+</button>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+      </ul>
+      </div>
+      
+    </div>
+    
+  </div>
+
+  
+  <div class="sidebar-start-items sidebar-primary__section">
+    <div class="sidebar-start-items__item">
+  
+
+
+<a class="navbar-brand logo" href="../../index.html">
+
+  
+  
+  
+  
+  
+  
+  
+
+  
+  
+    <p class="title logo__title">경영과학과 컴퓨터 비전</p>
+  
+</a>
+    </div>
+    <div class="sidebar-start-items__item">
+<form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+    </div>
+    <div class="sidebar-start-items__item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../index.html">
+                    데이터 과학
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Intermediate Python</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../object-oriented/00-index.html">객체지향프로그래밍과 디자인패턴</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../object-oriented/01-object-oriented.html">객체 지향 프로그래밍</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../object-oriented/02-design-pattern.html">디자인 패턴</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Computer Vision</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../computer-vision/introduction.html">시작하기 앞서</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../computer-vision/image-libraries.html">영상 처리 라이브러리</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../computer-vision/numpy-matplotlib.html">NumPy와 Matplotlib</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../computer-vision/classifier-1.html">이미지 분류기(1)</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../computer-vision/020-image-processing.html">2장 영상 처리</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../computer-vision/022-thresholding.html">임계처리</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../computer-vision/022-histogram.html">히스토그램</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../computer-vision/023-arithmetic-operation.html">산술 연산</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../computer-vision/024-geometric-transform.html">기하하적 변환</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../computer-vision/025-binarization.html">이진화와 모폴로지</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../computer-vision/021-color-space.html">색공간</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../computer-vision/030-filtering.html">영상 필터</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../computer-vision/070-machine-learning.html">7장 기계학습</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../computer-vision/classifier-sift.html">SIFT (2004)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../computer-vision/032-blurring.html">Image Denoising with Denoising Autoencoder</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../computer-vision/classifier-hog.html">HOG</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../computer-vision/classifier-lenet.html">LeNet과 합성곱 신경망</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../computer-vision/classifier-2.html">이미지 분류기(2)</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../computer-vision/classifier-alexnet.html">AlexNet</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../computer-vision/classifier-zfnet.html">ZFNet</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../computer-vision/classifier-nin.html">Network in Network</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../computer-vision/classifier-vgg.html">VGGNet</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../computer-vision/classifier-googlenet.html">GoogLeNet</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../computer-vision/classifier-resnet.html">ResNet</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../computer-vision/classifier-densenet.html">DenseNet</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../computer-vision/image-segmentation.html">영상 분할</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../computer-vision/semantic-fcn.html">FCN</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../computer-vision/semantic-unet.html">UNet</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../computer-vision/semantic-deeplab.html">DeepLab</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../computer-vision/object-detection.html">객체 탐지</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-5"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../computer-vision/object-rcnn.html">R-CNN</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../computer-vision/object-sppnet.html">SPPNet</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../computer-vision/object-fast-rcnn.html">Fast R-CNN</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../computer-vision/object-faster-rcnn.html">Faster R-CNN</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../computer-vision/object-ohem.html">OHEM</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../computer-vision/object-yolov1.html">YOLOv1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../computer-vision/object-ssd.html">SSD</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../computer-vision/object-fpn.html">FPN</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../computer-vision/object-retinanet.html">RetinaNet</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../computer-vision/object-yolov3.html">YOLOv3</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../computer-vision/instance-segmentation.html">개체 분할</a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-6"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../computer-vision/instance-mask-rcnn.html">Mask R-CNN</a></li>
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Operations Research</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../000-introduction.html">1장 시작하기 앞서</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../linear-programming/linear-programming.html">선형 계획법</a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-7"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../linear-programming/product-mix.html">Product Mix Problem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../linear-programming/production-planning.html">생산계획문제</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../linear-programming/sensitivity-analysis.html">민감도 분석</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../linear-programming/unbalanced-transportation.html">Unbalanced Transportation Problem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../linear-programming/vehicle-routing.html">차량 경로 문제</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../linear-programming/workforce-scheduling.html">Workforce Scheduling</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../integer-programming/integer-programming.html">정수 계획법</a><input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-8"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../integer-programming/traveling-salesman.html">Travelling Salesman Problem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../integer-programming/knapsack.html">Knapsack Problem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../integer-programming/capital-budgeting.html">Capital Budgeting Problem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../integer-programming/plant.html">Plant Location Problem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../integer-programming/set-covering.html">Set Covering Problem</a></li>
+</ul>
+</li>
+</ul>
+
+    </div>
+</nav>
+    </div>
+  </div>
+  
+
+  
+  <div class="sidebar-end-items sidebar-primary__section">
+    <div class="sidebar-end-items__item">
+    </div>
+  </div>
+
+  
+  <div id="rtd-footer-container"></div>
+
+      </div>
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+        <div class="bd-content">
+          <div class="bd-article-container">
+            
+            <div class="bd-header-article">
+                
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        <label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" data-toggle="tooltip" data-placement="right" title="Toggle primary sidebar">
+            <span class="fa-solid fa-bars"></span>
+        </label>
+    </div>
+    <div class="header-article__right">
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+  </ul>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+<a href="https://github.com/unerue/unerue.github.io/issues/new?title=Issue%20on%20page%20%2Foperations-research/etc/evolution-strategy.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm"
+   data-toggle="tooltip"
+data-placement="bottom"
+title="Open an issue"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+
+</a>
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      <li><a href="../../_sources/operations-research/etc/evolution-strategy.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</a>
+      
+      <li>
+<button onclick="printPdf(this)"
+  class="btn btn-sm dropdown-item"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</a>
+      
+  </ul>
+</div>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary" data-toggle="tooltip" data-placement="left" title="Toggle secondary sidebar">
+            <span class="fa-solid fa-list"></span>
+        </label>
+    </div>
+</div>
+            </div>
+            
+            
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Evolution Strategy</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
  <li class="toc-h1 nav-item toc-entry">
   <a class="reference internal nav-link" href="#">
@@ -636,99 +746,19 @@ const thebe_selector_output = ".output, .cell_output"
         </div>
     </div>
 </div>
-    <div id="main-content" class="row">
-        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
-            <!-- Table of contents that is only displayed when printing the page -->
-            <div id="jb-print-docs-body" class="onlyprint">
-                <h1>Evolution Strategy</h1>
-                <!-- Table of contents -->
-                <div id="print-main-content">
-                    <div id="jb-print-toc">
-                        
-                        <div>
-                            <h2> Contents </h2>
-                        </div>
-                        <nav aria-label="Page">
-                            <ul class="visible nav section-nav flex-column">
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#">
-   Evolution Strategy
-  </a>
-  <ul class="visible nav section-nav flex-column">
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id1">
-     파이썬으로 구현하는 진화 전략
-    </a>
-    <ul class="nav section-nav flex-column">
-     <li class="toc-h3 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#es">
-       (1+1)-ES
-      </a>
-     </li>
-     <li class="toc-h3 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#mu-1-es">
-       (
-       <span class="math notranslate nohighlight">
-        \(\mu\)
-       </span>
-       +1)-ES
-      </a>
-      <ul class="nav section-nav flex-column">
-       <li class="toc-h4 nav-item toc-entry">
-        <a class="reference internal nav-link" href="#mu-lambda-es">
-         (
-         <span class="math notranslate nohighlight">
-          \(\mu\)
-         </span>
-         +
-         <span class="math notranslate nohighlight">
-          \(\lambda\)
-         </span>
-         )-ES
-        </a>
-       </li>
-       <li class="toc-h4 nav-item toc-entry">
-        <a class="reference internal nav-link" href="#id2">
-         (
-         <span class="math notranslate nohighlight">
-          \(\mu\)
-         </span>
-         ,
-         <span class="math notranslate nohighlight">
-          \(\lambda\)
-         </span>
-         )-ES
-        </a>
-       </li>
-      </ul>
-     </li>
-    </ul>
-   </li>
-  </ul>
- </li>
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id3">
-  </a>
- </li>
-</ul>
 
-                        </nav>
-                    </div>
-                </div>
-            </div>
-            
-              <div>
-                
-  <div class="tex2jax_ignore mathjax_ignore section" id="evolution-strategy">
-<h1>Evolution Strategy<a class="headerlink" href="#evolution-strategy" title="Permalink to this headline">¶</a></h1>
+            <article class="bd-article" role="main">
+              
+  <section class="tex2jax_ignore mathjax_ignore" id="evolution-strategy">
+<h1>Evolution Strategy<a class="headerlink" href="#evolution-strategy" title="Permalink to this heading">#</a></h1>
 <p style="text-indent: 1.5em"><b>진화 전략(evolution strategy, ES)</b>은 1964년에 처음 소개되었으며, 초기 연구는 Schwefel (1965)과 Rechenberg (1965)가 주도하였습니다. 유체 역학의 문제인 바람터널, 굽은 파이프 등의 모양 최적화 연구에서 관련 파라미터를 구하는 데 이들 값을 임의로 변화시키는 것에서 시작되었습니다. 파라미터를 임의로 변화시키는 것은 자연의 진화과정에서 돌연변이와 유사하다고 볼 수 있습니다.</p>
 <p style="text-indent: 1.5em">초기 진화 전략은 한 부모에서 돌연변이에 의해 하나의 변형된 하나의 자손을 생산하고 부모와 자손 중에서 더 좋은 개체를 다음 세대에 생존시켜 다시 자손을 생산하는 전략을 사용하였습니다. 따라서 복수해를 발생시켜 결합하는 교차연산은 없었습니다. 1970년대, 진화전략은 유전 알고리즘과 같이 복수의 개체로 구성된 해집단을 운영하는 형태로 발전하였습니다. 해집단에 있는 개체가 하나 또는 복수 개의 자손을 생산하여, 부모 개체와 자손 개체 모두에서 집단 크기만큼의 가장 좋은 개체를 확정적으로 선택하여 이들을 다음 세대의 부모로 선택되어 자손을 생성하며 진화시키는 과정을 반복합니다.</p>
 <p style="text-indent: 1.5em">진화 전략과 유전 알고리즘을 유사하지만, 다음 표 1과 같이 차이점을 가지고 있습니다. 진화 전략과 유전 알고리즘은 독립적으로 탄생했지만, 현재 해집단의 진화로부터 최적해를 찾는다는 점에서 유사합니다.</p>
 <div style="text-align: center; padding-top: 1em; padding-bottom: 1em;"><b>표 1 </b>진화 전략과 유전 알고리즘의 차이<br><img src="{{ site.url }}/images/figures/es-01.png" width="50%" /></div>
-<div class="section" id="id1">
-<h2>파이썬으로 구현하는 진화 전략<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="es">
-<h3>(1+1)-ES<a class="headerlink" href="#es" title="Permalink to this headline">¶</a></h3>
+<section id="id1">
+<h2>파이썬으로 구현하는 진화 전략<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h2>
+<section id="es">
+<h3>(1+1)-ES<a class="headerlink" href="#es" title="Permalink to this heading">#</a></h3>
 <p style="text-indent: 1.5em">처음 제안된 진화 전략은 앞에서 언급했듯이 하나의 부모개체를 돌연변이시켜 하나의 자손을 생산하고 생산된 자손개체가 문제가 갖는 제약을 만족하고 부모개체보다 더 좋으면 자손개체를 다음 세대의 부모개체로 선택하고 그렇지 않으면 부모개체를 그대로 다음 세대의 부모개체로 선택합니다. 이와 같이 한 부모에서 하나의 자손을 생산하고 이를 부모개체와 비교하여 더 좋은 개체를 선택하는 진화전략을 <b>(1+1)-ES</b>로 표현합니다. 이는 교차연산없이 돌연변이와 선택연산만 사용합니다.</p>
 <ul class="simple">
 <li><p><strong>STEP 1:</strong> <span class="math notranslate nohighlight">\(t \leftarrow 0\)</span>로 둔다.</p></li>
@@ -791,6 +821,18 @@ f(x)=x^2 \times \sin(x)^3
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">line</span> <span class="mi">1</span>
+<span class="ne">----&gt; </span><span class="mi">1</span> <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="k">class</span> <span class="nc">EvolutionStrategy</span><span class="p">:</span>
+<span class="g g-Whitespace">      </span><span class="mi">5</span>     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">lower_bound</span><span class="p">,</span> <span class="n">upper_bound</span><span class="p">,</span> <span class="n">max_iter</span><span class="p">):</span>
+
+<span class="ne">ModuleNotFoundError</span>: No module named &#39;numpy&#39;
+</pre></div>
+</div>
+</div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -802,9 +844,9 @@ f(x)=x^2 \times \sin(x)^3
 </div>
 <p style="text-indent: 1.5em"></p>
 <div style="text-align:center"><img src="{{ site.url }}/images/figures/es-01.gif"  width="50%" /><br><b>그림 1 </b>진화 전략 목적함수 최대화 과정</div><br>
-<div style="text-align:center"><img src="{{ site.url }}/images/figures/es-02.gif"  width="50%" /><br><b>그림 2 </b>최적해와 진화 전략의 해</div><br></div>
-<div class="section" id="mu-1-es">
-<h3>(<span class="math notranslate nohighlight">\(\mu\)</span>+1)-ES<a class="headerlink" href="#mu-1-es" title="Permalink to this headline">¶</a></h3>
+<div style="text-align:center"><img src="{{ site.url }}/images/figures/es-02.gif"  width="50%" /><br><b>그림 2 </b>최적해와 진화 전략의 해</div><br></section>
+<section id="mu-1-es">
+<h3>(<span class="math notranslate nohighlight">\(\mu\)</span>+1)-ES<a class="headerlink" href="#mu-1-es" title="Permalink to this heading">#</a></h3>
 <p style="text-indent: 1.5em"></p><div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">EvolutionStrategy</span><span class="p">:</span>
@@ -840,11 +882,11 @@ f(x)=x^2 \times \sin(x)^3
 </div>
 </div>
 </div>
-<div class="section" id="mu-lambda-es">
-<h4>(<span class="math notranslate nohighlight">\(\mu\)</span>+<span class="math notranslate nohighlight">\(\lambda\)</span>)-ES<a class="headerlink" href="#mu-lambda-es" title="Permalink to this headline">¶</a></h4>
-</div>
-<div class="section" id="id2">
-<h4>(<span class="math notranslate nohighlight">\(\mu\)</span>,<span class="math notranslate nohighlight">\(\lambda\)</span>)-ES<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h4>
+<section id="mu-lambda-es">
+<h4>(<span class="math notranslate nohighlight">\(\mu\)</span>+<span class="math notranslate nohighlight">\(\lambda\)</span>)-ES<a class="headerlink" href="#mu-lambda-es" title="Permalink to this heading">#</a></h4>
+</section>
+<section id="id2">
+<h4>(<span class="math notranslate nohighlight">\(\mu\)</span>,<span class="math notranslate nohighlight">\(\lambda\)</span>)-ES<a class="headerlink" href="#id2" title="Permalink to this heading">#</a></h4>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
@@ -855,7 +897,7 @@ f(x)=x^2 \times \sin(x)^3
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/evolution-strategy_18_0.png" src="../../_images/evolution-strategy_18_0.png" />
+<img alt="../../_images/4c76b92f1d7662cbe86c3c3b005326a087f71cb2172d91f35610389e75194234.png" src="../../_images/4c76b92f1d7662cbe86c3c3b005326a087f71cb2172d91f35610389e75194234.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -879,7 +921,7 @@ f(x)=x^2 \times \sin(x)^3
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/evolution-strategy_20_0.png" src="../../_images/evolution-strategy_20_0.png" />
+<img alt="../../_images/262ac646cfb454c5ee978fee47f2d2d505c25cf7c6dc0ec15dd6986463f1e58e.png" src="../../_images/262ac646cfb454c5ee978fee47f2d2d505c25cf7c6dc0ec15dd6986463f1e58e.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -890,11 +932,11 @@ f(x)=x^2 \times \sin(x)^3
 </div>
 <div class="cell_output docutils container">
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
-<span class="nn">Input In [7],</span> in <span class="ni">&lt;cell line: 1&gt;</span><span class="nt">()</span>
+<span class="ne">TypeError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
+<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">686</span><span class="o">-</span><span class="mi">460</span><span class="n">df615300c</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
 <span class="ne">----&gt; </span><span class="mi">1</span> <span class="n">SimpleEvolutionStrategy</span><span class="p">()</span><span class="o">.</span><span class="n">_fitness</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
 
-<span class="ne">NameError</span>: name &#39;SimpleEvolutionStrategy&#39; is not defined
+<span class="ne">TypeError</span>: _fitness() missing 1 required positional argument: &#39;x&#39;
 </pre></div>
 </div>
 </div>
@@ -905,7 +947,7 @@ f(x)=x^2 \times \sin(x)^3
 
 
 <span class="k">class</span> <span class="nc">SimpleEvolutionStrategy</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot; (1+1)-ES</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot; (1+1)-ES</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">lower_bound</span><span class="p">,</span> <span class="n">upper_bound</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">sigma</span> <span class="o">=</span> <span class="n">sigma</span>
@@ -968,7 +1010,7 @@ f(x)=x^2 \times \sin(x)^3
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/evolution-strategy_31_0.png" src="../../_images/evolution-strategy_31_0.png" />
+<img alt="../../_images/1866f7443b1ff0240b11b50c76c5ee4f2f47240f6eab0265a90a285b278a4f19.png" src="../../_images/1866f7443b1ff0240b11b50c76c5ee4f2f47240f6eab0265a90a285b278a4f19.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -992,22 +1034,22 @@ f(x)=x^2 \times \sin(x)^3
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/evolution-strategy_33_0.png" src="../../_images/evolution-strategy_33_0.png" />
+<img alt="../../_images/ff02aab09f7672cfd5e5a9c807d1bdfb97dee86ac4dd0ad94307c6c3a240f52d.png" src="../../_images/ff02aab09f7672cfd5e5a9c807d1bdfb97dee86ac4dd0ad94307c6c3a240f52d.png" />
 </div>
 </div>
-</div>
-</div>
-</div>
-</div>
-<div class="tex2jax_ignore mathjax_ignore section" id="id3">
-<h1><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h1>
+</section>
+</section>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id3">
+<h1><a class="headerlink" href="#id3" title="Permalink to this heading">#</a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
 
 <span class="k">class</span> <span class="nc">SimpleEvolutionStrategy</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot; (1+1)-ES</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot; (1+1)-ES</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fitness</span><span class="p">,</span> <span class="n">n_vars</span><span class="p">,</span> <span class="n">lower_bound</span><span class="p">,</span> <span class="n">upper_bound</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">fitness</span> <span class="o">=</span> <span class="n">fitness</span>
@@ -1118,7 +1160,7 @@ Done!
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/evolution-strategy_39_0.png" src="../../_images/evolution-strategy_39_0.png" />
+<img alt="../../_images/57de60af274d08279d07571502b15f1910d1d1f2ed54f42d97737e9386d3cc75.png" src="../../_images/57de60af274d08279d07571502b15f1910d1d1f2ed54f42d97737e9386d3cc75.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -1127,7 +1169,7 @@ Done!
 
 
 <span class="k">class</span> <span class="nc">EvolutionStrategy</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot; (mu+1)-ES</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot; (mu+1)-ES</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fitness</span><span class="p">,</span> <span class="n">pop_size</span><span class="p">,</span> <span class="n">n_vars</span><span class="p">,</span> <span class="n">lower_bound</span><span class="p">,</span> <span class="n">upper_bound</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">fitness</span> <span class="o">=</span> <span class="n">fitness</span>
@@ -1301,7 +1343,7 @@ Done!
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/evolution-strategy_46_0.png" src="../../_images/evolution-strategy_46_0.png" />
+<img alt="../../_images/a31f24fe9eb75bf46b0b51f72c676562fc2a613a896d73e292c7efcaee6b4428.png" src="../../_images/a31f24fe9eb75bf46b0b51f72c676562fc2a613a896d73e292c7efcaee6b4428.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -1338,7 +1380,7 @@ Done!
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/evolution-strategy_47_0.png" src="../../_images/evolution-strategy_47_0.png" />
+<img alt="../../_images/4c80a90e3142527264cee163f3c617c02075a812bb08f6338adcea424ae4b235.png" src="../../_images/4c80a90e3142527264cee163f3c617c02075a812bb08f6338adcea424ae4b235.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -1347,7 +1389,7 @@ Done!
 
 
 <span class="k">class</span> <span class="nc">EvolutionStrategy</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot; (mu+1)-ES</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot; (mu+1)-ES</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fitness</span><span class="p">,</span> <span class="n">pop_size</span><span class="p">,</span> <span class="n">n_vars</span><span class="p">,</span> <span class="n">lower_bound</span><span class="p">,</span> <span class="n">upper_bound</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">fitness</span> <span class="o">=</span> <span class="n">fitness</span>
@@ -1439,7 +1481,7 @@ Done!
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">cost_func</span><span class="p">(</span><span class="n">theta0</span><span class="p">,</span> <span class="n">theta1</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;The cost function, J(theta0, theta1) describing the goodness of fit.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;The cost function, J(theta0, theta1) describing the goodness of fit.&quot;&quot;&quot;</span>
     <span class="n">theta0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">atleast_3d</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">theta0</span><span class="p">))</span>
     <span class="n">theta1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">atleast_3d</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">theta1</span><span class="p">))</span>
     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">average</span><span class="p">((</span><span class="n">y</span> <span class="o">-</span> <span class="n">hypothesis</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">theta0</span><span class="p">,</span> <span class="n">theta1</span><span class="p">))</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span>
@@ -1450,7 +1492,7 @@ Done!
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">hypothesis</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">theta0</span><span class="p">,</span> <span class="n">theta1</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Our &quot;hypothesis function&quot;, a straight line.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Our &quot;hypothesis function&quot;, a straight line.&quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">theta0</span> <span class="o">+</span> <span class="n">theta1</span> <span class="o">*</span> <span class="n">x</span>
 </pre></div>
 </div>
@@ -1519,13 +1561,13 @@ Done!
 <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">40</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">)</span>
 
 <span class="k">def</span> <span class="nf">cost_func</span><span class="p">(</span><span class="n">theta0</span><span class="p">,</span> <span class="n">theta1</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;The cost function, J(theta0, theta1) describing the goodness of fit.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;The cost function, J(theta0, theta1) describing the goodness of fit.&quot;&quot;&quot;</span>
     <span class="n">theta0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">atleast_3d</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">theta0</span><span class="p">))</span>
     <span class="n">theta1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">atleast_3d</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">theta1</span><span class="p">))</span>
     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">average</span><span class="p">((</span><span class="n">y</span> <span class="o">-</span> <span class="n">hypothesis</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">theta0</span><span class="p">,</span> <span class="n">theta1</span><span class="p">))</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span>
 
 <span class="k">def</span> <span class="nf">hypothesis</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">theta0</span><span class="p">,</span> <span class="n">theta1</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Our &quot;hypothesis function&quot;, a straight line.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Our &quot;hypothesis function&quot;, a straight line.&quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">theta0</span> <span class="o">+</span> <span class="n">theta1</span> <span class="o">*</span> <span class="n">x</span>
 
 <span class="c1"># First construct a grid of (theta0, theta1) parameter pairs and their</span>
@@ -1590,7 +1632,7 @@ Done!
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/evolution-strategy_63_0.png" src="../../_images/evolution-strategy_63_0.png" />
+<img alt="../../_images/b4c0c0123c40e7117a79a5dbe25a2786cfe358ebbf165b3f31423dcd20aaf668.png" src="../../_images/b4c0c0123c40e7117a79a5dbe25a2786cfe358ebbf165b3f31423dcd20aaf668.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -1927,7 +1969,7 @@ w = [-0.81155275  1.17504986]
 
 
 <span class="k">class</span> <span class="nc">EvolutionStrategy</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot; (mu+1)-ES</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot; (mu+1)-ES</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pop_size</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">lower_bound</span><span class="p">,</span> <span class="n">upper_bound</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">pop_size</span> <span class="o">=</span> <span class="n">pop_size</span>
@@ -2013,7 +2055,7 @@ w = [-0.81155275  1.17504986]
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/evolution-strategy_102_0.png" src="../../_images/evolution-strategy_102_0.png" />
+<img alt="../../_images/6e760dbc3e3df89e7432f88e88ec5089b61e2e04d76fc04748b08bb9961f7b88.png" src="../../_images/6e760dbc3e3df89e7432f88e88ec5089b61e2e04d76fc04748b08bb9961f7b88.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -2260,7 +2302,7 @@ AttributeError: &#39;PathCollection&#39; object has no attribute &#39;set_data&#
 <span class="ne">RuntimeError</span>: Requested MovieWriter (ffmpeg) not available
 </pre></div>
 </div>
-<img alt="../../_images/evolution-strategy_112_2.png" src="../../_images/evolution-strategy_112_2.png" />
+<img alt="../../_images/d52b2ae04841cb5b4cd0362e2b1f88b786b46bc951f24bacc7c7f8880d65bddd.png" src="../../_images/d52b2ae04841cb5b4cd0362e2b1f88b786b46bc951f24bacc7c7f8880d65bddd.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -2382,10 +2424,10 @@ AttributeError: &#39;PathCollection&#39; object has no attribute &#39;set_data&#
 <span class="ne">RuntimeError</span>: Requested MovieWriter (ffmpeg) not available
 </pre></div>
 </div>
-<img alt="../../_images/evolution-strategy_117_1.png" src="../../_images/evolution-strategy_117_1.png" />
+<img alt="../../_images/564d66373fbff0c5eb84a4392291ff8b37b84d4bdc7ea83a220e6657bc2bd178.png" src="../../_images/564d66373fbff0c5eb84a4392291ff8b37b84d4bdc7ea83a220e6657bc2bd178.png" />
 </div>
 </div>
-</div>
+</section>
 
     <script type="text/x-thebe-config">
     {
@@ -2399,7 +2441,7 @@ AttributeError: &#39;PathCollection&#39; object has no attribute &#39;set_data&#
             mode: "python"
         },
         kernelOptions: {
-            kernelName: "python3",
+            name: "python3",
             path: "./operations-research\etc"
         },
         predefinedOutput: true
@@ -2407,30 +2449,146 @@ AttributeError: &#39;PathCollection&#39; object has no attribute &#39;set_data&#
     </script>
     <script>kernelName = 'python3'</script>
 
-              </div>
-              
+            </article>
             
+
+            
+            
+            <footer class="bd-footer-article">
                 <!-- Previous / next buttons -->
 <div class='prev-next-area'>
 </div>
+            </footer>
             
-        </div>
-    </div>
-    <footer class="footer">
-  <p>
-    
-      By Kyung-Su Kang<br/>
-    
-        &copy; Copyright 2021.<br/>
-  </p>
-</footer>
-</main>
-
-
-      </div>
-    </div>
+          </div>
+          
+          
+          
+            <div class="bd-sidebar-secondary bd-toc">
+              
+<div class="toc-item">
   
-  <script src="../../_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+<div class="tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+</div>
+<nav id="bd-toc-nav" class="page-toc">
+    <ul class="visible nav section-nav flex-column">
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#">
+   Evolution Strategy
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id1">
+     파이썬으로 구현하는 진화 전략
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#es">
+       (1+1)-ES
+      </a>
+     </li>
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#mu-1-es">
+       (
+       <span class="math notranslate nohighlight">
+        \(\mu\)
+       </span>
+       +1)-ES
+      </a>
+      <ul class="nav section-nav flex-column">
+       <li class="toc-h4 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#mu-lambda-es">
+         (
+         <span class="math notranslate nohighlight">
+          \(\mu\)
+         </span>
+         +
+         <span class="math notranslate nohighlight">
+          \(\lambda\)
+         </span>
+         )-ES
+        </a>
+       </li>
+       <li class="toc-h4 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#id2">
+         (
+         <span class="math notranslate nohighlight">
+          \(\mu\)
+         </span>
+         ,
+         <span class="math notranslate nohighlight">
+          \(\lambda\)
+         </span>
+         )-ES
+        </a>
+       </li>
+      </ul>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id3">
+  </a>
+ </li>
+</ul>
+
+</nav>
+</div>
+
+            </div>
+          
+          
+        </div>
+        <footer class="bd-footer-content">
+          <div class="bd-footer-content__inner">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Kyung-Su Kang
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+<p class="copyright">
+
+    &copy; Copyright 2021.<br>
+
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    <p class="last-updated">
+Last updated on None.<br>
+</p>
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </div>
+        </footer>
+        
+
+      </main>
+    </div>
+  </div>
+
+  
+    
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=796348d33e8b1d947c94"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=796348d33e8b1d947c94"></script>
 
   </body>
 </html>

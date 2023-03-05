@@ -1,572 +1,682 @@
 
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
     <title>Tabu Search &#8212; 경영과학과 컴퓨터 비전</title>
-    
-  <link href="../../_static/css/theme.css" rel="stylesheet">
-  <link href="../../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+<link href="../../_static/styles/bootstrap.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=796348d33e8b1d947c94" rel="stylesheet">
 
-    
-  <link rel="stylesheet"
-    href="../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
-  <link rel="preload" as="font" type="font/woff2" crossorigin
-    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
-  <link rel="preload" as="font" type="font/woff2" crossorigin
-    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+  
+  <link href="../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2">
 
-    
-      
-
-    
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" />
+    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=4ec06e9971c5264fbd345897d5258098f11cc577" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
-    
-  <link rel="preload" as="script" href="../../_static/js/index.be7d3bbb2ef33a8344ce.js">
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=796348d33e8b1d947c94">
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=796348d33e8b1d947c94">
 
     <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
     <script src="../../_static/jquery.js"></script>
     <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../../_static/doctools.js"></script>
     <script src="../../_static/clipboard.min.js"></script>
     <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?digest=8bf782fb4ee92b3d3646425e50f299c4e1fd152d"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
     <script src="../../_static/togglebutton.js"></script>
-    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
-    <script src="../../_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js"></script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
 const thebe_selector = ".thebe,.cell"
 const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
     <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <script async="async" src="https://www.googletagmanager.com/gtag/js?id=UA-171260246-1"></script>
+    <script>
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){ dataLayer.push(arguments); }
+                gtag('js', new Date());
+                gtag('config', 'UA-171260246-1');
+            </script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'operations-research/etc/introduction-tabu-search';</script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="docsearch:language" content="None">
-    
-
-    <!-- Google Analytics -->
-    
-<script async="" src="https://www.google-analytics.com/analytics.js"></script>
-<script>
-                        window.ga = window.ga || function () {
-                            (ga.q = ga.q || []).push(arguments) };
-                        ga.l = +new Date;
-                        ga('create', 'UA-171260246-1', 'auto');
-                        ga('set', 'anonymizeIp', true);
-                        ga('send', 'pageview');
-                    </script>
-
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="docsearch:language" content="en">
   </head>
-  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
-    
-    <div class="container-fluid" id="banner"></div>
+  
+  
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="180" data-default-mode="">
 
-    
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
 
-    <div class="container-xl">
-      <div class="row">
-          
-<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
-    
-        <div class="navbar-brand-box">
-    <a class="navbar-brand text-wrap" href="../../index.html">
+  
+  <input type="checkbox" class="sidebar-toggle" name="__primary" id="__primary">
+  <label class="overlay overlay-primary" for="__primary"></label>
+
+  
+  <input type="checkbox" class="sidebar-toggle" name="__secondary" id="__secondary">
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
       
-      
-      
-      <h1 class="site-logo" id="site-title">경영과학과 컴퓨터 비전</h1>
-      
-    </a>
-</div><form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
-  <i class="icon fas fa-search"></i>
-  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
-</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
-    <div class="bd-toc-item active">
-        <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="../../index.html">
-   데이터 과학
-  </a>
- </li>
-</ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  Intermediate Python
- </span>
-</p>
-<ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="../../object-oriented/01-object-oriented.html">
-   객체 지향 프로그래밍
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../../object-oriented/02-design-pattern.html">
-   디자인 패턴
-  </a>
- </li>
-</ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  Computer Vision
- </span>
-</p>
-<ul class="nav bd-sidenav">
- <li class="toctree-l1 has-children">
-  <a class="reference internal" href="../../computer-vision/introduction.html">
-   시작하기 앞서
-  </a>
-  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
-  <label for="toctree-checkbox-1">
-   <i class="fas fa-chevron-down">
-   </i>
-  </label>
-  <ul>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../computer-vision/image-libraries.html">
-     영상 처리 라이브러리
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../computer-vision/numpy-matplotlib.html">
-     NumPy와 Matplotlib
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toctree-l1 has-children">
-  <a class="reference internal" href="../../computer-vision/classifier-1.html">
-   이미지 분류기(1)
-  </a>
-  <input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
-  <label for="toctree-checkbox-2">
-   <i class="fas fa-chevron-down">
-   </i>
-  </label>
-  <ul>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../computer-vision/020-image-processing.html">
-     2장 영상 처리
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../computer-vision/022-thresholding.html">
-     임계처리
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../computer-vision/022-histogram.html">
-     히스토그램
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../computer-vision/023-arithmetic-operation.html">
-     산술 연산
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../computer-vision/024-geometric-transform.html">
-     기하하적 변환
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../computer-vision/025-binarization.html">
-     이진화와 모폴로지
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../computer-vision/021-color-space.html">
-     색공간
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../computer-vision/030-filtering.html">
-     영상 필터
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../computer-vision/070-machine-learning.html">
-     7장 기계학습
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../computer-vision/classifier-sift.html">
-     SIFT (2004)
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../computer-vision/032-blurring.html">
-     Image Denoising with Denoising Autoencoder
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../computer-vision/classifier-hog.html">
-     HOG
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../computer-vision/classifier-lenet.html">
-     LeNet과 합성곱 신경망
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toctree-l1 has-children">
-  <a class="reference internal" href="../../computer-vision/classifier-2.html">
-   이미지 분류기(2)
-  </a>
-  <input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
-  <label for="toctree-checkbox-3">
-   <i class="fas fa-chevron-down">
-   </i>
-  </label>
-  <ul>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../computer-vision/classifier-alexnet.html">
-     AlexNet
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../computer-vision/classifier-zfnet.html">
-     ZFNet
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../computer-vision/classifier-nin.html">
-     Network in Network
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../computer-vision/classifier-vgg.html">
-     VGGNet
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../computer-vision/classifier-googlenet.html">
-     GoogLeNet
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../computer-vision/classifier-resnet.html">
-     ResNet
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../computer-vision/classifier-densenet.html">
-     DenseNet
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toctree-l1 has-children">
-  <a class="reference internal" href="../../computer-vision/image-segmentation.html">
-   영상 분할
-  </a>
-  <input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/>
-  <label for="toctree-checkbox-4">
-   <i class="fas fa-chevron-down">
-   </i>
-  </label>
-  <ul>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../computer-vision/semantic-fcn.html">
-     FCN
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../computer-vision/semantic-unet.html">
-     UNet
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../computer-vision/semantic-deeplab.html">
-     DeepLab
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toctree-l1 has-children">
-  <a class="reference internal" href="../../computer-vision/object-detection.html">
-   객체 탐지
-  </a>
-  <input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/>
-  <label for="toctree-checkbox-5">
-   <i class="fas fa-chevron-down">
-   </i>
-  </label>
-  <ul>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../computer-vision/object-rcnn.html">
-     R-CNN
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../computer-vision/object-sppnet.html">
-     SPPNet
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../computer-vision/object-fast-rcnn.html">
-     Fast R-CNN
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../computer-vision/object-faster-rcnn.html">
-     Faster R-CNN
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../computer-vision/object-ohem.html">
-     OHEM
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../computer-vision/object-yolov1.html">
-     YOLOv1
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../computer-vision/object-ssd.html">
-     SSD
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../computer-vision/object-fpn.html">
-     FPN
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../computer-vision/object-retinanet.html">
-     RetinaNet
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../computer-vision/object-yolov3.html">
-     YOLOv3
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toctree-l1 has-children">
-  <a class="reference internal" href="../../computer-vision/instance-segmentation.html">
-   개체 분할
-  </a>
-  <input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/>
-  <label for="toctree-checkbox-6">
-   <i class="fas fa-chevron-down">
-   </i>
-  </label>
-  <ul>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../computer-vision/instance-mask-rcnn.html">
-     Mask R-CNN
-    </a>
-   </li>
-  </ul>
- </li>
-</ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  Operations Research
- </span>
-</p>
-<ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="../000-introduction.html">
-   1장 시작하기 앞서
-  </a>
- </li>
- <li class="toctree-l1 has-children">
-  <a class="reference internal" href="../linear-programming/linear-programming.html">
-   선형 계획법
-  </a>
-  <input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/>
-  <label for="toctree-checkbox-7">
-   <i class="fas fa-chevron-down">
-   </i>
-  </label>
-  <ul>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../linear-programming/product-mix.html">
-     Product Mix Problem
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../linear-programming/production-planning.html">
-     생산계획문제
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../linear-programming/sensitivity-analysis.html">
-     민감도 분석
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../linear-programming/unbalanced-transportation.html">
-     Unbalanced Transportation Problem
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../linear-programming/vehicle-routing.html">
-     차량 경로 문제
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../linear-programming/workforce-scheduling.html">
-     Workforce Scheduling
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toctree-l1 has-children">
-  <a class="reference internal" href="../integer-programming/integer-programming.html">
-   정수 계획법
-  </a>
-  <input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/>
-  <label for="toctree-checkbox-8">
-   <i class="fas fa-chevron-down">
-   </i>
-  </label>
-  <ul>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../integer-programming/traveling-salesman.html">
-     Travelling Salesman Problem
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../integer-programming/knapsack.html">
-     Knapsack Problem
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../integer-programming/capital-budgeting.html">
-     Capital Budgeting Problem
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../integer-programming/plant.html">
-     Plant Location Problem
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../integer-programming/set-covering.html">
-     Set Covering Problem
-    </a>
-   </li>
-  </ul>
- </li>
-</ul>
-
+<form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
     </div>
-</nav> <!-- To handle the deprecated key -->
+  </div>
 
-<div class="navbar_extra_footer">
-  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
-</div>
-
-</div>
-
-
-          
-
-
-          
-<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+  
+  <nav class="bd-header navbar navbar-expand-lg bd-navbar" id="navbar-main"><div class="bd-header__inner bd-page-width">
+  <label class="sidebar-toggle primary-toggle" for="__primary">
+      <span class="fa-solid fa-bars"></span>
+  </label>
+  <div id="navbar-start">
     
-    <div class="topbar container-xl fixed-top">
-    <div class="topbar-contents row">
-        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
-        <div class="col pl-md-4 topbar-main">
-            
-            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
-                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
-                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
-                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
-                <i class="fas fa-bars"></i>
-                <i class="fas fa-arrow-left"></i>
-                <i class="fas fa-arrow-up"></i>
-            </button>
-            
-            
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
-            class="fas fa-download"></i></button>
+    
+  
 
-    <div class="dropdown-buttons">
-        <!-- ipynb file if we had a myst markdown file -->
+
+<a class="navbar-brand logo" href="../../index.html">
+
+  
+  
+  
+  
+  
+  
+  
+
+  
+  
+    <p class="title logo__title">경영과학과 컴퓨터 비전</p>
+  
+</a>
+    
+  </div>
+
+  
+  <div class="col-lg-9 navbar-header-items">
+    <div id="navbar-center" class="mr-auto">
+      
+      <div class="navbar-center-item">
+        <nav class="navbar-nav">
+    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
+        Site Navigation
+    </p>
+    <ul id="navbar-main-elements" class="navbar-nav">
         
-        <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../../_sources/operations-research/etc/introduction-tabu-search.ipynb"><button type="button"
-                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
-                data-placement="left">.ipynb</button></a>
-        <!-- Download PDF via print -->
-        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
-                onclick="printPdf(this)" data-toggle="tooltip" data-placement="left">.pdf</button>
-    </div>
-</div>
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../object-oriented/00-index.html">
+                        객체지향프로그래밍과 디자인패턴
+                      </a>
+                    </li>
+                
 
-            <!-- Source interaction buttons -->
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../object-oriented/01-object-oriented.html">
+                        객체 지향 프로그래밍
+                      </a>
+                    </li>
+                
 
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
-        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
-    <div class="dropdown-buttons sourcebuttons">
-        
-        <a class="issues-button"
-            href="https://github.com/unerue/unerue.github.io/issues/new?title=Issue%20on%20page%20%2Foperations-research/etc/introduction-tabu-search.html&body=Your%20issue%20content%20here."><button
-                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
-                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
-        
-    </div>
-</div>
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../object-oriented/02-design-pattern.html">
+                        디자인 패턴
+                      </a>
+                    </li>
+                
 
-            <!-- Full screen (wrap in <a> to have style consistency -->
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../computer-vision/introduction.html">
+                        시작하기 앞서
+                      </a>
+                    </li>
+                
 
-<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
-        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
-        title="Fullscreen mode"><i
-            class="fas fa-expand"></i></button></a>
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../computer-vision/classifier-1.html">
+                        이미지 분류기(1)
+                      </a>
+                    </li>
+                
+            <div class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    More
+                </button>
+                <div class="dropdown-menu">
+                    
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../computer-vision/classifier-2.html">
+                        이미지 분류기(2)
+                      </a>
+                    </li>
+                
 
-            <!-- Launch buttons -->
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../computer-vision/image-segmentation.html">
+                        영상 분할
+                      </a>
+                    </li>
+                
 
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
-        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
-    <div class="dropdown-buttons">
-        
-        <a class="binder-button" href="https://mybinder.org/v2/gh/unerue/unerue.github.io/master?urlpath=lab/tree/operations-research/etc/introduction-tabu-search.ipynb"><button type="button"
-                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
-                data-placement="left"><img class="binder-button-logo"
-                    src="../../_static/images/logo_binder.svg"
-                    alt="Interact on binder">Binder</button></a>
-        
-        
-        
-        
-    </div>
-</div>
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../computer-vision/object-detection.html">
+                        객체 탐지
+                      </a>
+                    </li>
+                
 
-        </div>
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../computer-vision/instance-segmentation.html">
+                        개체 분할
+                      </a>
+                    </li>
+                
 
-        <!-- Table of contents -->
-        <div class="d-none d-md-block col-md-2 bd-toc show noprint">
-            
-            <div class="tocsection onthispage pt-5 pb-3">
-                <i class="fas fa-list"></i> Contents
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../000-introduction.html">
+                        1장 시작하기 앞서
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../linear-programming/linear-programming.html">
+                        선형 계획법
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../integer-programming/integer-programming.html">
+                        정수 계획법
+                      </a>
+                    </li>
+                
+                </div>
             </div>
-            <nav id="bd-toc-nav" aria-label="Page">
+            
+    </ul>
+</nav>
+      </div>
+      
+    </div>
+
+    <div id="navbar-end">
+      
+        <div class="navbar-end-item navbar-persistent--container">
+          
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-toggle="tooltip">
+  <i class="fa-solid fa-magnifying-glass"></i>
+</button>
+        </div>
+      
+      
+      <div class="navbar-end-item">
+        <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+</button>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+      </ul>
+      </div>
+      
+    </div>
+  </div>
+
+
+  
+  
+    <div class="navbar-persistent--mobile">
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-toggle="tooltip">
+  <i class="fa-solid fa-magnifying-glass"></i>
+</button>
+    </div>
+  
+
+  
+  <label class="sidebar-toggle secondary-toggle" for="__secondary">
+      <span class="fa-solid fa-outdent"></span>
+  </label>
+  
+
+</div>
+  </nav>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+      
+      <div class="navbar-center-item">
+        <nav class="navbar-nav">
+    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
+        Site Navigation
+    </p>
+    <ul id="navbar-main-elements" class="navbar-nav">
+        
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../object-oriented/00-index.html">
+                        객체지향프로그래밍과 디자인패턴
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../object-oriented/01-object-oriented.html">
+                        객체 지향 프로그래밍
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../object-oriented/02-design-pattern.html">
+                        디자인 패턴
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../computer-vision/introduction.html">
+                        시작하기 앞서
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../computer-vision/classifier-1.html">
+                        이미지 분류기(1)
+                      </a>
+                    </li>
+                
+            <div class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    More
+                </button>
+                <div class="dropdown-menu">
+                    
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../computer-vision/classifier-2.html">
+                        이미지 분류기(2)
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../computer-vision/image-segmentation.html">
+                        영상 분할
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../computer-vision/object-detection.html">
+                        객체 탐지
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../computer-vision/instance-segmentation.html">
+                        개체 분할
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../000-introduction.html">
+                        1장 시작하기 앞서
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../linear-programming/linear-programming.html">
+                        선형 계획법
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../integer-programming/integer-programming.html">
+                        정수 계획법
+                      </a>
+                    </li>
+                
+                </div>
+            </div>
+            
+    </ul>
+</nav>
+      </div>
+      
+      </div>
+    
+
+    
+    
+    <div class="sidebar-header-items__end">
+      
+      <div class="navbar-end-item">
+        <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+</button>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+      </ul>
+      </div>
+      
+    </div>
+    
+  </div>
+
+  
+  <div class="sidebar-start-items sidebar-primary__section">
+    <div class="sidebar-start-items__item">
+  
+
+
+<a class="navbar-brand logo" href="../../index.html">
+
+  
+  
+  
+  
+  
+  
+  
+
+  
+  
+    <p class="title logo__title">경영과학과 컴퓨터 비전</p>
+  
+</a>
+    </div>
+    <div class="sidebar-start-items__item">
+<form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+    </div>
+    <div class="sidebar-start-items__item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../index.html">
+                    데이터 과학
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Intermediate Python</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../object-oriented/00-index.html">객체지향프로그래밍과 디자인패턴</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../object-oriented/01-object-oriented.html">객체 지향 프로그래밍</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../object-oriented/02-design-pattern.html">디자인 패턴</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Computer Vision</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../computer-vision/introduction.html">시작하기 앞서</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../computer-vision/image-libraries.html">영상 처리 라이브러리</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../computer-vision/numpy-matplotlib.html">NumPy와 Matplotlib</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../computer-vision/classifier-1.html">이미지 분류기(1)</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../computer-vision/020-image-processing.html">2장 영상 처리</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../computer-vision/022-thresholding.html">임계처리</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../computer-vision/022-histogram.html">히스토그램</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../computer-vision/023-arithmetic-operation.html">산술 연산</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../computer-vision/024-geometric-transform.html">기하하적 변환</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../computer-vision/025-binarization.html">이진화와 모폴로지</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../computer-vision/021-color-space.html">색공간</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../computer-vision/030-filtering.html">영상 필터</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../computer-vision/070-machine-learning.html">7장 기계학습</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../computer-vision/classifier-sift.html">SIFT (2004)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../computer-vision/032-blurring.html">Image Denoising with Denoising Autoencoder</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../computer-vision/classifier-hog.html">HOG</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../computer-vision/classifier-lenet.html">LeNet과 합성곱 신경망</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../computer-vision/classifier-2.html">이미지 분류기(2)</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../computer-vision/classifier-alexnet.html">AlexNet</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../computer-vision/classifier-zfnet.html">ZFNet</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../computer-vision/classifier-nin.html">Network in Network</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../computer-vision/classifier-vgg.html">VGGNet</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../computer-vision/classifier-googlenet.html">GoogLeNet</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../computer-vision/classifier-resnet.html">ResNet</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../computer-vision/classifier-densenet.html">DenseNet</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../computer-vision/image-segmentation.html">영상 분할</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../computer-vision/semantic-fcn.html">FCN</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../computer-vision/semantic-unet.html">UNet</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../computer-vision/semantic-deeplab.html">DeepLab</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../computer-vision/object-detection.html">객체 탐지</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-5"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../computer-vision/object-rcnn.html">R-CNN</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../computer-vision/object-sppnet.html">SPPNet</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../computer-vision/object-fast-rcnn.html">Fast R-CNN</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../computer-vision/object-faster-rcnn.html">Faster R-CNN</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../computer-vision/object-ohem.html">OHEM</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../computer-vision/object-yolov1.html">YOLOv1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../computer-vision/object-ssd.html">SSD</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../computer-vision/object-fpn.html">FPN</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../computer-vision/object-retinanet.html">RetinaNet</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../computer-vision/object-yolov3.html">YOLOv3</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../computer-vision/instance-segmentation.html">개체 분할</a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-6"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../computer-vision/instance-mask-rcnn.html">Mask R-CNN</a></li>
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Operations Research</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../000-introduction.html">1장 시작하기 앞서</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../linear-programming/linear-programming.html">선형 계획법</a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-7"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../linear-programming/product-mix.html">Product Mix Problem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../linear-programming/production-planning.html">생산계획문제</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../linear-programming/sensitivity-analysis.html">민감도 분석</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../linear-programming/unbalanced-transportation.html">Unbalanced Transportation Problem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../linear-programming/vehicle-routing.html">차량 경로 문제</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../linear-programming/workforce-scheduling.html">Workforce Scheduling</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../integer-programming/integer-programming.html">정수 계획법</a><input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-8"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../integer-programming/traveling-salesman.html">Travelling Salesman Problem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../integer-programming/knapsack.html">Knapsack Problem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../integer-programming/capital-budgeting.html">Capital Budgeting Problem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../integer-programming/plant.html">Plant Location Problem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../integer-programming/set-covering.html">Set Covering Problem</a></li>
+</ul>
+</li>
+</ul>
+
+    </div>
+</nav>
+    </div>
+  </div>
+  
+
+  
+  <div class="sidebar-end-items sidebar-primary__section">
+    <div class="sidebar-end-items__item">
+    </div>
+  </div>
+
+  
+  <div id="rtd-footer-container"></div>
+
+      </div>
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+        <div class="bd-content">
+          <div class="bd-article-container">
+            
+            <div class="bd-header-article">
+                
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        <label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" data-toggle="tooltip" data-placement="right" title="Toggle primary sidebar">
+            <span class="fa-solid fa-bars"></span>
+        </label>
+    </div>
+    <div class="header-article__right">
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+  </ul>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+<a href="https://github.com/unerue/unerue.github.io/issues/new?title=Issue%20on%20page%20%2Foperations-research/etc/introduction-tabu-search.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm"
+   data-toggle="tooltip"
+data-placement="bottom"
+title="Open an issue"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+
+</a>
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      <li><a href="../../_sources/operations-research/etc/introduction-tabu-search.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</a>
+      
+      <li>
+<button onclick="printPdf(this)"
+  class="btn btn-sm dropdown-item"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</a>
+      
+  </ul>
+</div>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary" data-toggle="tooltip" data-placement="left" title="Toggle secondary sidebar">
+            <span class="fa-solid fa-list"></span>
+        </label>
+    </div>
+</div>
+            </div>
+            
+            
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Tabu Search</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#id1">
@@ -628,94 +738,20 @@ const thebe_selector_output = ".output, .cell_output"
         </div>
     </div>
 </div>
-    <div id="main-content" class="row">
-        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
-            <!-- Table of contents that is only displayed when printing the page -->
-            <div id="jb-print-docs-body" class="onlyprint">
-                <h1>Tabu Search</h1>
-                <!-- Table of contents -->
-                <div id="print-main-content">
-                    <div id="jb-print-toc">
-                        
-                        <div>
-                            <h2> Contents </h2>
-                        </div>
-                        <nav aria-label="Page">
-                            <ul class="visible nav section-nav flex-column">
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id1">
-   타부 서치의 구조
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id2">
-     이웃해 탐색 전략
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id3">
-     타부목록
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id4">
-     타부 속성
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id5">
-     열망수준
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id6">
-   타부 서치의 절차
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id7">
-   파이썬으로 구현하는 타부 서치
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id8">
-     이웃해 탐색
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id9">
-     타부 목록 평가 및 갱신
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id10">
-   참고문헌
-  </a>
- </li>
-</ul>
 
-                        </nav>
-                    </div>
-                </div>
-            </div>
-            
-              <div>
-                
-  <div class="section" id="tabu-search">
-<h1>Tabu Search<a class="headerlink" href="#tabu-search" title="Permalink to this headline">¶</a></h1>
+            <article class="bd-article" role="main">
+              
+  <section id="tabu-search">
+<h1>Tabu Search<a class="headerlink" href="#tabu-search" title="Permalink to this heading">#</a></h1>
 <p style="text-indent: 1.5em"><b>타부 서치(tabu search, TS)</b>는 Glover가 1986년에 인간의 기억과정을 모방하여 개발한 메타휴리스틱입니다. Tabu (taboo)는 남태평양 통가(Tonga) 원주민이 사용하는 신성한 것에 대해 금기라는 단어에서 유래되었습니다. TS는 기존 메타 휴리스틱스를 종합적으로 구성한 것으로 유전 알고리즘처럼 가능해 집합 $X$를 고정하지만, 새로운 해를 만들 때 타부 조건이라는 기억을 유지해서 앞서 고려했던 열등한 해를 고려하지 않고 열망조건이라는 기억장치를 생성하여 우수한 해의 등장 가능성을 높입니다. 또한, 기존의 형태에서 다양화(diversification)와 집중화(intensification)를 고려하여 다양한 확장이 가능합니다.</p>
 <p style="text-indent: 1.5em">타부 서치는 과거의 탐색 정보를 기억(memory)하여 해의 이동을 제한하거나 이동 방향을 결정합니다. 대표적인 기억으로 단기기억(short term memory)과 장기기억(long term memory)이 있습니다. 단기기억은 최근 일정기간 동안 방문한 해의 이동 정보를 기억하며 해의 순환을 막고 탐색 영역을 확장합니다. 이를 최근기반기억(recency-based memory)이라고 하며, 이동에 관한 기억 정보는 방문한 완전해(entire solution)의 형태가 아니라 이동의 조건을 나타내는 속성(attribute)으로 나타냅니다. 단기기억에 의해 금지된 이동을 타부 이동(tabu move)이라 합니다. 반면 장기기억은 처음부터 현재까지 해의 이동에 관한 정보가 저장되며 이 정보는 해의 탐색 빈도로 나타냅니다. 이를 빈도기반 기억(frequency-based memory)이라 합니다. 해의 탐색 빈도는 속성을 기준으로 계산되며 시작에서 지금까지의 이동에서 각 속성을 갖는 이동이 몇 회 발생한 지를 기억합니다. 장기기억은 탐색 빈도가 낮은 이동 속성을 파악하여 이들 속성을 갖는 이동으로 현재해를 유도하는 데 사용됩니다.타부 서치는 다양한 조합 최적화 문제에 효율적으로 작동됩니다.</p>
 <p style="text-indent: 1.5em">목적함수 $f(x)$를 최소화하는 최적화 문제에서 결정변수 $x$는 모든 제약조건을 만족하는 가능해 집합 $X$의 원소 $x \in X$입니다. 이웃탐색 방법은 하나의 해에서 특정 조건에 따라 이웃에 있는 다른 해로 옮겨가며 이 과정을 종료조건이 만족될 때까지 반복합니다. 여기서 $x \in X$는 자신의 이웃 $N(x) \subset X$를 갖고 해 $x$의 탐색적 운영에 의해 이웃해 $x^{\prime} \in N(x)$에 도달합니다. 이를 해의 이동(move)이라 부릅니다.</p>
-<div class="section" id="id1">
-<h2>타부 서치의 구조<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<section id="id1">
+<h2>타부 서치의 구조<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h2>
 <p style="text-indent: 1.5em">타부 서치의 구조(structure of tabu search)는 해의 탐색 과정을 일정 기간 기억해서 최근 방문한 해의 재방문을 막고 해가 개선되지 않더라도 이웃에서 가장 좋은 해로의 이동을 허용하여 지역 탐색을 벗어나게 합니다. TS의 주요 요소와 파라미터는 현재해에서 이웃해를 생성하는 방법(이웃 구조), 금지된 이동(tabu move)에 관한 속성인 타부 속성(tabu attribute), 금지된 이동 속성을 기록한 목록인 타부 목록(tabu list), 각 타부 이동을 기억하는 기간과 관련되는 타부목록의 크기, 그리고 타부 이동이지만 이동을 허용하는 조건인 열망수준(aspiration level) 등이 있습니다.</p>
 <p style="text-indent: 1.5em">초기해를 구하여 현재해로 두고 현재해의 이웃에서 이웃해를 생성하고 평가합니다. 이웃해 집합에서 타부이동이고 열망수준을 만족하지 못하는 이웃해를 삭제하고 이웃해 집합에서 가장 좋은 해를 현재해로 갱신합니다. 해의 이동과 관련된 속성으로 타부 목록을 갱신하고 종료조건이 만족될때까지 반복합니다.</p>
-<div class="section" id="id2">
-<h3>이웃해 탐색 전략<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<section id="id2">
+<h3>이웃해 탐색 전략<a class="headerlink" href="#id2" title="Permalink to this heading">#</a></h3>
 <p style="text-indent: 1.5em">단일해 기반의 메타휴리스틱인 타부 서치는 현재해의 이웃에서 후보해를 탐색하고 이동합니다. 이웃 후보해는 이웃 구조에 의해 생성되며 효율적인 해 공간을 탐색하기 위해 적절한 이웃 구조가 필요합니다. 이웃 구조는 현재해의 지역 변화(local transformation)으로 정의할 수 있으며 하나의 이웃 구조만을 사용할 필요는 없습니다. 복수의 여러 이웃 구조를 동시에 사용할 수도 있고, 실행 도중 그 구조를 변경할 수도 있습니다.</p>
 <p style="text-indent: 1.5em">타부 서치의 설계에서 이웃 구조와 함께 이웃의 크기도 고려되어야 하는데 조합 최적화 문제에서 이웃 크기는 이웃에 있는 후보해의 수입니다. 조합 문제에서 문제의 크기에 따라 이웃해의 수가 지수적으로 증가하는 경우가 흔히 발생합니다. 따라서 이웃해 탐색 전략(search strategy of neighbor solution)은 매우 다양하고 이웃 크기가 큰 경우에는 탐색 속도와 해의 품질 측면에서 그 크기를 효과적으로 축소할 수 있는 전략이 필요하고 이웃의 부분집합으로 이웃 후보해를 축소하는 전략을 후보목록전략(candidate list strategy)이라고 합니다.</p>
 <p style="text-indent: 1.5em">먼저, 해의 표현은 하나의 가능해로 출발지를 출발하여 도시 2-5-1-4-3의 순으로 거쳐 본사로 돌아오는 경로 $[2, 5, 1, 4, 3]$의 순열로 표현합니다. 여기서 $i$번째 원소값 $j$는 $i$번째 거치는 도시 $j$를 나타냅니다. 이웃 탐색하는 방법은 여러 방법이 존재하는데 임의의 두 도시의 위치를 교환하는 교환(swap) 이동, 한 도시를 다른 위치에 두는 삽입(insertion) 이동, 인접하는 두 도시의 위치를 바꾸는 인접 교환(adjacent swap) 이동, 특정 부분 경로의 순서를 꺼꾸로 하는 역순(inversion) 이동 등 각 이동에 의해 생성되는 해들의 각 형태의 이웃 구조로 정의할 수 있습니다.</p>
@@ -726,25 +762,25 @@ const thebe_selector_output = ".output, .cell_output"
     <li><b>역순 이동(inversion):</b> 임의의 부분 경로를 선택하여 역순으로 변화시키는 이동입니다.</li>
 </ul>
 <div style="text-align:center"><img src="images/figures/ts-01.png"  width="50%" /><br><b>그림 1 </b>다양한 이웃해 탐색 전략</div><br>
-</div>
-<div class="section" id="id3">
-<h3>타부목록<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="id3">
+<h3>타부목록<a class="headerlink" href="#id3" title="Permalink to this heading">#</a></h3>
 <p style="text-indent: 1.5em">타부 목록(tabu list)은 이동이 금지되는 최근 해의 이동에 관한 특정 속성을 저장하는 목록인 타부 정보를 기억하는 것입니다. 이때 단기기억에 저장된 최근 이동과 같은 조건(속성)을 갖는 이웃해로의 금지된 이동을 타부이동이라 하며, 이를 규정하는 조건을 타부 속성(tabue attribute)이라고 합니다. 따라서 타부 목록은 타부 속성을 저장하는 목록이며, 타부 서치에서 흔히 현재해의 이동에 관한 정보는 완전해로 기록하지 않고 이동의 특성을 나타낼 수 있는 속성으로 기록합니다.</p>
 <p style="text-indent: 1.5em">타부 목록의 가장 간단한 형태는 최근 $n$회 방문한 해들의 이동 속성을 차례대로 저장하는 것으로 타부 목록에 저장되는 최근 연속된 해의 이동에 관한 속성의 수 $n$을 타부 목록 크기(size of tabu list)라 부릅니다. 타부 서치에서 해의 순환은 최소한 타부 목록 크기의 이동 동안은 방지됩니다. 그리고 타무 목록에는 항상 최근 $n$회의 이동 속성이 기록되므로 각 타부 속성은 $n$기간 동안 목록에 머무르게 됩니다. 이 기간을 타부 기간이라 부르며 이는 타무 목록 크기와 같습니다.</p>
 <p style="text-indent: 1.5em">타부 목록은 선입선출 방식으로 새로운 타부속성이 들어오면 가장 먼저 들어온 타부 속성이 목록에서 빠져나가는 방식으로 운영됩니다. 타부 목록의 크기가 크면 이웃의 여러 이동을 금지하여 이동 제약이 많아 탐색이 다양화됩니다. 그러나 이웃 탐색을 약화시켜 좋은 해를 찾지 못할 수도 있습니다. 반면 타부 목록의 크기가 작으면 타부 제약이 약해져 이웃 탐색이 강회되나 다양화가 약화되고 순환이 발생할 가능성이 높아집니다.</p>
-</div>
-<div class="section" id="id4">
-<h3>타부 속성<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="id4">
+<h3>타부 속성<a class="headerlink" href="#id4" title="Permalink to this heading">#</a></h3>
 <p style="text-indent: 1.5em">타부 목록에 저장되어 타부 이동을 규정하는 타부 속성(tabu attribute)은 이동 방법에 따라 다르게 표현된다. 그리고 속성의 폭에 따라 이웃 크기가 달라지고 이동 궤적이 변합니다. 따라서 타부 속성은 문제의 복잡도에 따라 적절한 수준으로 설정해야 합니다. 교환 이웃 구조에서 교환하는 두 도시를 속성으로 갖는 경우 다음 세 경우로 볼 수잇다습니다. 두 도시의 순서와 위치를 고려하지 않은 속성, 두 도시의 순서만을 고려하는 속성, 교환하는 두 도시와 그 위치를 모두 고려하는 속성입니다. 이들 속성은 차례로 이동 제약을 약화시킵니다. 이들 타부속성 중에서 첫 번째가 이동 제약이 가장 강하고 마지막이 가장 약합니다.</p> 
 <p style="text-indent: 1.5em">예를 들면, 타부 속성이 $[5,4]$이면 현재해가 $[2, 5, 1, 4, 3]$이나 $[2, 4, 5, 1, 3]$인 경우 두해 에서 모두 $5$와 $5$의 교환이동은 타부 이동이 됩니다. 두 번째 경우에는 타부 속성에 $[5,4]$이면 $[2, 5, 1, 4, 3]$의 경우는 $5$와 $4$의 교환 이동이 금지되고 $[2, 4, 5, 1,3]$의 경우 $[4, 5]$의 교환이동이 허용됩니다. 삽입이동에서 $[2, 5, 1, 4, 3]$에서 $1$번 도시를 선택하여 두번째 위치로 산입하였을때 이때 삽입도시와 삽입되기 전의 위치 $(1,3)$을 지정할수있습니다. 앞의 경우 타부기간 동안 도시 $1$의 삽입을 금지하고 후자의 경우는 도시 $1$이 세번째 위치로 삽입되는 이동을 금지합니다.</p>
-</div>
-<div class="section" id="id5">
-<h3>열망수준<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="id5">
+<h3>열망수준<a class="headerlink" href="#id5" title="Permalink to this heading">#</a></h3>
 <p style="text-indent: 1.5em">열망수준(aspiration level)은 현재해에서 더 좋은 해를 나타나는 타부이동이면 이동을 허락하는 기준을 뜻합니다.</p>
-</div>
-</div>
-<div class="section" id="id6">
-<h2>타부 서치의 절차<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+<section id="id6">
+<h2>타부 서치의 절차<a class="headerlink" href="#id6" title="Permalink to this heading">#</a></h2>
 <p style="text-indent: 1.5em">타부 서치의 절차(procedure of tabu search)는 다음과 같습니다.</p>
 <ul style="list-style-type: none;">
   <li><b>STEP 1: </b></li>
@@ -766,9 +802,9 @@ const thebe_selector_output = ".output, .cell_output"
       <li>만약 종료기준을 만족하면 종료하고 그렇지 않으면 <b>STEP 2</b>로 돌아간다.</li>
     </ol>
 </ul>
-</div>
-<div class="section" id="id7">
-<h2>파이썬으로 구현하는 타부 서치<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="id7">
+<h2>파이썬으로 구현하는 타부 서치<a class="headerlink" href="#id7" title="Permalink to this heading">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">metaheuristics.problems</span> <span class="kn">import</span> <span class="n">TravelingSalesman</span>
@@ -781,7 +817,7 @@ const thebe_selector_output = ".output, .cell_output"
 <div class="cell_output docutils container">
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
-<span class="nn">Input In [1],</span> in <span class="ni">&lt;cell line: 1&gt;</span><span class="nt">()</span>
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">line</span> <span class="mi">1</span>
 <span class="ne">----&gt; </span><span class="mi">1</span> <span class="kn">from</span> <span class="nn">metaheuristics.problems</span> <span class="kn">import</span> <span class="n">TravelingSalesman</span>
 <span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="n">cities</span> <span class="o">=</span> <span class="n">TravelingSalesman</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">42</span><span class="p">)</span><span class="o">.</span><span class="n">generate</span><span class="p">()</span>
 <span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="n">cities</span>
@@ -791,8 +827,8 @@ const thebe_selector_output = ".output, .cell_output"
 </div>
 </div>
 </div>
-<div class="section" id="id8">
-<h3>이웃해 탐색<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h3>
+<section id="id8">
+<h3>이웃해 탐색<a class="headerlink" href="#id8" title="Permalink to this heading">#</a></h3>
 <p style="text-indent: 1.5em">이웃해를 탐색하기 위한 방법으로 <a href="https://en.wikipedia.org/wiki/2-opt">2-opt</a>를 사용하였고, 시뮬레이티드 어닐링에서 사용했던 함수에 추가로 타부값을 반환합니다. 타부값은 2-opt에 사용된 인덱스의 위치쌍의 <code>tuple</code>입니다. 그리고 이웃해를 적당한 크기만큼 생성합니다.</p><div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">two_opt</span><span class="p">(</span><span class="n">solution</span><span class="p">):</span>
@@ -826,16 +862,16 @@ const thebe_selector_output = ".output, .cell_output"
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="id9">
-<h3>타부 목록 평가 및 갱신<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="id9">
+<h3>타부 목록 평가 및 갱신<a class="headerlink" href="#id9" title="Permalink to this heading">#</a></h3>
 <p style="text-indent: 1.5em">생성된 이동 집합은 <code>n_neighbors</code>만큼 생성되며, 이를 먼저 타부 목록과 비교하고 열망수준보다 더 좋은 값을 가지면 이동 집합에 그대로 두며, 그렇지 않으면 삭제합니다. 그리고 이동 집합의 전체 적합도 값을 평가하고 가장 좋은 적합도 값을 가진 해를 현재해로 선택합니다. 그리고 타부 목록을 갱신합니다. 타부 목록을 갱신하는 방법은 타부 목록이 지정된 길이보다 작으면 그대로 저장하고, 타부 목록의 길이가 지정된 길이보다 크거나 같을 때, 리스트 첫 번째 원소를 제거하고 마지막 위치에 추가합니다. 이는 사람의 기억력처럼 오래된 기억을 사라지고 가장 최근에 경험했던 기억을 가져갑니다.</p><div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
 
 <span class="k">class</span> <span class="nc">TabuSearch</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Tabu Search</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Tabu Search</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cities</span><span class="p">,</span> <span class="n">n_neighbors</span><span class="p">,</span> <span class="n">tabu_length</span><span class="p">,</span> <span class="n">max_iter</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">cities</span> <span class="o">=</span> <span class="n">cities</span>
@@ -988,18 +1024,18 @@ const thebe_selector_output = ".output, .cell_output"
 </div>
 <div style="text-align: center; padding-top: 1em; padding-bottom: 1em;"><img src="images/figures/sa-02.png" width="50%" /><br><b>그림 2 </b>타부 서치</div>
 <p style="text-indent: 1.5em"><b>그림 2</b>와 같이 타부 서치는 현재해보다 더 좋지 않은 해로의 이동을 허락하기 때문에 현재해가 이전 해보다 더 나쁠 수도 있습니다. 이는 타부 서치가 지역 최적해를 벗어나 다른 지역으로 탐색을 할 수 있는 능력을 나타냅니다.</p>
-</div>
-</div>
-<div class="section" id="id10">
-<h2>참고문헌<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h2>
-<ol class="simple">
+</section>
+</section>
+<section id="id10">
+<h2>참고문헌<a class="headerlink" href="#id10" title="Permalink to this heading">#</a></h2>
+<ol class="arabic simple">
 <li><p>Cover: <a class="reference external" href="https://pixabay.com/illustrations/brain-nervous-anatomy-medical-1921600/">https://pixabay.com/illustrations/brain-nervous-anatomy-medical-1921600/</a></p></li>
 <li><p>Hillier, F. S. &amp; Lieberman, G. J. (2013). <em>Introduction to Operations Research</em>. McGraw-Hill Science, Engineering &amp; Mathematics.</p></li>
 <li><p>Luke, S. (2013). <em>Essentials of Metaheuristics</em>.</p></li>
 <li><p>김여근 (2017). <em>메타휴리스틱스</em>. 전남대학교출판부.</p></li>
 </ol>
-</div>
-</div>
+</section>
+</section>
 
     <script type="text/x-thebe-config">
     {
@@ -1013,7 +1049,7 @@ const thebe_selector_output = ".output, .cell_output"
             mode: "python"
         },
         kernelOptions: {
-            kernelName: "python3",
+            name: "python3",
             path: "./operations-research\etc"
         },
         predefinedOutput: true
@@ -1021,30 +1057,140 @@ const thebe_selector_output = ".output, .cell_output"
     </script>
     <script>kernelName = 'python3'</script>
 
-              </div>
-              
+            </article>
             
+
+            
+            
+            <footer class="bd-footer-article">
                 <!-- Previous / next buttons -->
 <div class='prev-next-area'>
 </div>
+            </footer>
             
-        </div>
-    </div>
-    <footer class="footer">
-  <p>
-    
-      By Kyung-Su Kang<br/>
-    
-        &copy; Copyright 2021.<br/>
-  </p>
-</footer>
-</main>
-
-
-      </div>
-    </div>
+          </div>
+          
+          
+          
+            <div class="bd-sidebar-secondary bd-toc">
+              
+<div class="toc-item">
   
-  <script src="../../_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+<div class="tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+</div>
+<nav id="bd-toc-nav" class="page-toc">
+    <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id1">
+   타부 서치의 구조
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id2">
+     이웃해 탐색 전략
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id3">
+     타부목록
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id4">
+     타부 속성
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id5">
+     열망수준
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id6">
+   타부 서치의 절차
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id7">
+   파이썬으로 구현하는 타부 서치
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id8">
+     이웃해 탐색
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id9">
+     타부 목록 평가 및 갱신
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id10">
+   참고문헌
+  </a>
+ </li>
+</ul>
+
+</nav>
+</div>
+
+            </div>
+          
+          
+        </div>
+        <footer class="bd-footer-content">
+          <div class="bd-footer-content__inner">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Kyung-Su Kang
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+<p class="copyright">
+
+    &copy; Copyright 2021.<br>
+
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    <p class="last-updated">
+Last updated on None.<br>
+</p>
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </div>
+        </footer>
+        
+
+      </main>
+    </div>
+  </div>
+
+  
+    
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=796348d33e8b1d947c94"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=796348d33e8b1d947c94"></script>
 
   </body>
 </html>

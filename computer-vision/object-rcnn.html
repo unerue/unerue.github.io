@@ -1,576 +1,686 @@
 
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
     <title>R-CNN &#8212; 경영과학과 컴퓨터 비전</title>
-    
-  <link href="../_static/css/theme.css" rel="stylesheet">
-  <link href="../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+<link href="../_static/styles/bootstrap.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=796348d33e8b1d947c94" rel="stylesheet">
 
-    
-  <link rel="stylesheet"
-    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
-  <link rel="preload" as="font" type="font/woff2" crossorigin
-    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
-  <link rel="preload" as="font" type="font/woff2" crossorigin
-    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+  
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2">
 
-    
-      
-
-    
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=4ec06e9971c5264fbd345897d5258098f11cc577" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
-    
-  <link rel="preload" as="script" href="../_static/js/index.be7d3bbb2ef33a8344ce.js">
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=796348d33e8b1d947c94">
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=796348d33e8b1d947c94">
 
     <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../_static/doctools.js"></script>
     <script src="../_static/clipboard.min.js"></script>
     <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=8bf782fb4ee92b3d3646425e50f299c4e1fd152d"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
     <script src="../_static/togglebutton.js"></script>
-    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
-    <script src="../_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js"></script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
 const thebe_selector = ".thebe,.cell"
 const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
     <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script async="async" src="https://www.googletagmanager.com/gtag/js?id=UA-171260246-1"></script>
+    <script>
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){ dataLayer.push(arguments); }
+                gtag('js', new Date());
+                gtag('config', 'UA-171260246-1');
+            </script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'computer-vision/object-rcnn';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="SPPNet" href="object-sppnet.html" />
     <link rel="prev" title="객체 탐지" href="object-detection.html" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="docsearch:language" content="None">
-    
-
-    <!-- Google Analytics -->
-    
-<script async="" src="https://www.google-analytics.com/analytics.js"></script>
-<script>
-                        window.ga = window.ga || function () {
-                            (ga.q = ga.q || []).push(arguments) };
-                        ga.l = +new Date;
-                        ga('create', 'UA-171260246-1', 'auto');
-                        ga('set', 'anonymizeIp', true);
-                        ga('send', 'pageview');
-                    </script>
-
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="docsearch:language" content="en">
   </head>
-  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
-    
-    <div class="container-fluid" id="banner"></div>
+  
+  
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="180" data-default-mode="">
 
-    
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
 
-    <div class="container-xl">
-      <div class="row">
-          
-<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
-    
-        <div class="navbar-brand-box">
-    <a class="navbar-brand text-wrap" href="../index.html">
+  
+  <input type="checkbox" class="sidebar-toggle" name="__primary" id="__primary">
+  <label class="overlay overlay-primary" for="__primary"></label>
+
+  
+  <input type="checkbox" class="sidebar-toggle" name="__secondary" id="__secondary">
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
       
-      
-      
-      <h1 class="site-logo" id="site-title">경영과학과 컴퓨터 비전</h1>
-      
-    </a>
-</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
-  <i class="icon fas fa-search"></i>
-  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
-</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
-    <div class="bd-toc-item active">
-        <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="../index.html">
-   데이터 과학
-  </a>
- </li>
-</ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  Intermediate Python
- </span>
-</p>
-<ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="../object-oriented/01-object-oriented.html">
-   객체 지향 프로그래밍
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../object-oriented/02-design-pattern.html">
-   디자인 패턴
-  </a>
- </li>
-</ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  Computer Vision
- </span>
-</p>
-<ul class="current nav bd-sidenav">
- <li class="toctree-l1 has-children">
-  <a class="reference internal" href="introduction.html">
-   시작하기 앞서
-  </a>
-  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
-  <label for="toctree-checkbox-1">
-   <i class="fas fa-chevron-down">
-   </i>
-  </label>
-  <ul>
-   <li class="toctree-l2">
-    <a class="reference internal" href="image-libraries.html">
-     영상 처리 라이브러리
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="numpy-matplotlib.html">
-     NumPy와 Matplotlib
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toctree-l1 has-children">
-  <a class="reference internal" href="classifier-1.html">
-   이미지 분류기(1)
-  </a>
-  <input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
-  <label for="toctree-checkbox-2">
-   <i class="fas fa-chevron-down">
-   </i>
-  </label>
-  <ul>
-   <li class="toctree-l2">
-    <a class="reference internal" href="020-image-processing.html">
-     2장 영상 처리
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="022-thresholding.html">
-     임계처리
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="022-histogram.html">
-     히스토그램
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="023-arithmetic-operation.html">
-     산술 연산
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="024-geometric-transform.html">
-     기하하적 변환
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="025-binarization.html">
-     이진화와 모폴로지
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="021-color-space.html">
-     색공간
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="030-filtering.html">
-     영상 필터
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="070-machine-learning.html">
-     7장 기계학습
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="classifier-sift.html">
-     SIFT (2004)
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="032-blurring.html">
-     Image Denoising with Denoising Autoencoder
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="classifier-hog.html">
-     HOG
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="classifier-lenet.html">
-     LeNet과 합성곱 신경망
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toctree-l1 has-children">
-  <a class="reference internal" href="classifier-2.html">
-   이미지 분류기(2)
-  </a>
-  <input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
-  <label for="toctree-checkbox-3">
-   <i class="fas fa-chevron-down">
-   </i>
-  </label>
-  <ul>
-   <li class="toctree-l2">
-    <a class="reference internal" href="classifier-alexnet.html">
-     AlexNet
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="classifier-zfnet.html">
-     ZFNet
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="classifier-nin.html">
-     Network in Network
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="classifier-vgg.html">
-     VGGNet
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="classifier-googlenet.html">
-     GoogLeNet
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="classifier-resnet.html">
-     ResNet
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="classifier-densenet.html">
-     DenseNet
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toctree-l1 has-children">
-  <a class="reference internal" href="image-segmentation.html">
-   영상 분할
-  </a>
-  <input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/>
-  <label for="toctree-checkbox-4">
-   <i class="fas fa-chevron-down">
-   </i>
-  </label>
-  <ul>
-   <li class="toctree-l2">
-    <a class="reference internal" href="semantic-fcn.html">
-     FCN
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="semantic-unet.html">
-     UNet
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="semantic-deeplab.html">
-     DeepLab
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toctree-l1 current active has-children">
-  <a class="reference internal" href="object-detection.html">
-   객체 탐지
-  </a>
-  <input checked="" class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/>
-  <label for="toctree-checkbox-5">
-   <i class="fas fa-chevron-down">
-   </i>
-  </label>
-  <ul class="current">
-   <li class="toctree-l2 current active">
-    <a class="current reference internal" href="#">
-     R-CNN
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="object-sppnet.html">
-     SPPNet
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="object-fast-rcnn.html">
-     Fast R-CNN
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="object-faster-rcnn.html">
-     Faster R-CNN
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="object-ohem.html">
-     OHEM
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="object-yolov1.html">
-     YOLOv1
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="object-ssd.html">
-     SSD
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="object-fpn.html">
-     FPN
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="object-retinanet.html">
-     RetinaNet
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="object-yolov3.html">
-     YOLOv3
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toctree-l1 has-children">
-  <a class="reference internal" href="instance-segmentation.html">
-   개체 분할
-  </a>
-  <input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/>
-  <label for="toctree-checkbox-6">
-   <i class="fas fa-chevron-down">
-   </i>
-  </label>
-  <ul>
-   <li class="toctree-l2">
-    <a class="reference internal" href="instance-mask-rcnn.html">
-     Mask R-CNN
-    </a>
-   </li>
-  </ul>
- </li>
-</ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  Operations Research
- </span>
-</p>
-<ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="../operations-research/000-introduction.html">
-   1장 시작하기 앞서
-  </a>
- </li>
- <li class="toctree-l1 has-children">
-  <a class="reference internal" href="../operations-research/linear-programming/linear-programming.html">
-   선형 계획법
-  </a>
-  <input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/>
-  <label for="toctree-checkbox-7">
-   <i class="fas fa-chevron-down">
-   </i>
-  </label>
-  <ul>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../operations-research/linear-programming/product-mix.html">
-     Product Mix Problem
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../operations-research/linear-programming/production-planning.html">
-     생산계획문제
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../operations-research/linear-programming/sensitivity-analysis.html">
-     민감도 분석
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../operations-research/linear-programming/unbalanced-transportation.html">
-     Unbalanced Transportation Problem
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../operations-research/linear-programming/vehicle-routing.html">
-     차량 경로 문제
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../operations-research/linear-programming/workforce-scheduling.html">
-     Workforce Scheduling
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toctree-l1 has-children">
-  <a class="reference internal" href="../operations-research/integer-programming/integer-programming.html">
-   정수 계획법
-  </a>
-  <input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/>
-  <label for="toctree-checkbox-8">
-   <i class="fas fa-chevron-down">
-   </i>
-  </label>
-  <ul>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../operations-research/integer-programming/traveling-salesman.html">
-     Travelling Salesman Problem
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../operations-research/integer-programming/knapsack.html">
-     Knapsack Problem
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../operations-research/integer-programming/capital-budgeting.html">
-     Capital Budgeting Problem
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../operations-research/integer-programming/plant.html">
-     Plant Location Problem
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../operations-research/integer-programming/set-covering.html">
-     Set Covering Problem
-    </a>
-   </li>
-  </ul>
- </li>
-</ul>
-
+<form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
     </div>
-</nav> <!-- To handle the deprecated key -->
+  </div>
 
-<div class="navbar_extra_footer">
-  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
-</div>
-
-</div>
-
-
-          
-
-
-          
-<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+  
+  <nav class="bd-header navbar navbar-expand-lg bd-navbar" id="navbar-main"><div class="bd-header__inner bd-page-width">
+  <label class="sidebar-toggle primary-toggle" for="__primary">
+      <span class="fa-solid fa-bars"></span>
+  </label>
+  <div id="navbar-start">
     
-    <div class="topbar container-xl fixed-top">
-    <div class="topbar-contents row">
-        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
-        <div class="col pl-md-4 topbar-main">
-            
-            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
-                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
-                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
-                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
-                <i class="fas fa-bars"></i>
-                <i class="fas fa-arrow-left"></i>
-                <i class="fas fa-arrow-up"></i>
-            </button>
-            
-            
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
-            class="fas fa-download"></i></button>
+    
+  
 
-    <div class="dropdown-buttons">
-        <!-- ipynb file if we had a myst markdown file -->
+
+<a class="navbar-brand logo" href="../index.html">
+
+  
+  
+  
+  
+  
+  
+  
+
+  
+  
+    <p class="title logo__title">경영과학과 컴퓨터 비전</p>
+  
+</a>
+    
+  </div>
+
+  
+  <div class="col-lg-9 navbar-header-items">
+    <div id="navbar-center" class="mr-auto">
+      
+      <div class="navbar-center-item">
+        <nav class="navbar-nav">
+    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
+        Site Navigation
+    </p>
+    <ul id="navbar-main-elements" class="navbar-nav">
         
-        <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../_sources/computer-vision/object-rcnn.ipynb"><button type="button"
-                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
-                data-placement="left">.ipynb</button></a>
-        <!-- Download PDF via print -->
-        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
-                onclick="printPdf(this)" data-toggle="tooltip" data-placement="left">.pdf</button>
-    </div>
-</div>
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../object-oriented/00-index.html">
+                        객체지향프로그래밍과 디자인패턴
+                      </a>
+                    </li>
+                
 
-            <!-- Source interaction buttons -->
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../object-oriented/01-object-oriented.html">
+                        객체 지향 프로그래밍
+                      </a>
+                    </li>
+                
 
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
-        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
-    <div class="dropdown-buttons sourcebuttons">
-        
-        <a class="issues-button"
-            href="https://github.com/unerue/unerue.github.io/issues/new?title=Issue%20on%20page%20%2Fcomputer-vision/object-rcnn.html&body=Your%20issue%20content%20here."><button
-                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
-                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
-        
-    </div>
-</div>
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../object-oriented/02-design-pattern.html">
+                        디자인 패턴
+                      </a>
+                    </li>
+                
 
-            <!-- Full screen (wrap in <a> to have style consistency -->
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="introduction.html">
+                        시작하기 앞서
+                      </a>
+                    </li>
+                
 
-<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
-        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
-        title="Fullscreen mode"><i
-            class="fas fa-expand"></i></button></a>
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="classifier-1.html">
+                        이미지 분류기(1)
+                      </a>
+                    </li>
+                
+            <div class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    More
+                </button>
+                <div class="dropdown-menu">
+                    
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="classifier-2.html">
+                        이미지 분류기(2)
+                      </a>
+                    </li>
+                
 
-            <!-- Launch buttons -->
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="image-segmentation.html">
+                        영상 분할
+                      </a>
+                    </li>
+                
 
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
-        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
-    <div class="dropdown-buttons">
-        
-        <a class="binder-button" href="https://mybinder.org/v2/gh/unerue/unerue.github.io/master?urlpath=lab/tree/computer-vision/object-rcnn.ipynb"><button type="button"
-                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
-                data-placement="left"><img class="binder-button-logo"
-                    src="../_static/images/logo_binder.svg"
-                    alt="Interact on binder">Binder</button></a>
-        
-        
-        
-        
-    </div>
-</div>
+                    <li class="nav-item current active">
+                      <a class="nav-link nav-internal" href="object-detection.html">
+                        객체 탐지
+                      </a>
+                    </li>
+                
 
-        </div>
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="instance-segmentation.html">
+                        개체 분할
+                      </a>
+                    </li>
+                
 
-        <!-- Table of contents -->
-        <div class="d-none d-md-block col-md-2 bd-toc show noprint">
-            
-            <div class="tocsection onthispage pt-5 pb-3">
-                <i class="fas fa-list"></i> Contents
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../operations-research/000-introduction.html">
+                        1장 시작하기 앞서
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../operations-research/linear-programming/linear-programming.html">
+                        선형 계획법
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../operations-research/integer-programming/integer-programming.html">
+                        정수 계획법
+                      </a>
+                    </li>
+                
+                </div>
             </div>
-            <nav id="bd-toc-nav" aria-label="Page">
+            
+    </ul>
+</nav>
+      </div>
+      
+    </div>
+
+    <div id="navbar-end">
+      
+        <div class="navbar-end-item navbar-persistent--container">
+          
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-toggle="tooltip">
+  <i class="fa-solid fa-magnifying-glass"></i>
+</button>
+        </div>
+      
+      
+      <div class="navbar-end-item">
+        <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+</button>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+      </ul>
+      </div>
+      
+    </div>
+  </div>
+
+
+  
+  
+    <div class="navbar-persistent--mobile">
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-toggle="tooltip">
+  <i class="fa-solid fa-magnifying-glass"></i>
+</button>
+    </div>
+  
+
+  
+  <label class="sidebar-toggle secondary-toggle" for="__secondary">
+      <span class="fa-solid fa-outdent"></span>
+  </label>
+  
+
+</div>
+  </nav>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+      
+      <div class="navbar-center-item">
+        <nav class="navbar-nav">
+    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
+        Site Navigation
+    </p>
+    <ul id="navbar-main-elements" class="navbar-nav">
+        
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../object-oriented/00-index.html">
+                        객체지향프로그래밍과 디자인패턴
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../object-oriented/01-object-oriented.html">
+                        객체 지향 프로그래밍
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../object-oriented/02-design-pattern.html">
+                        디자인 패턴
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="introduction.html">
+                        시작하기 앞서
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="classifier-1.html">
+                        이미지 분류기(1)
+                      </a>
+                    </li>
+                
+            <div class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    More
+                </button>
+                <div class="dropdown-menu">
+                    
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="classifier-2.html">
+                        이미지 분류기(2)
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="image-segmentation.html">
+                        영상 분할
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item current active">
+                      <a class="nav-link nav-internal" href="object-detection.html">
+                        객체 탐지
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="instance-segmentation.html">
+                        개체 분할
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../operations-research/000-introduction.html">
+                        1장 시작하기 앞서
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../operations-research/linear-programming/linear-programming.html">
+                        선형 계획법
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../operations-research/integer-programming/integer-programming.html">
+                        정수 계획법
+                      </a>
+                    </li>
+                
+                </div>
+            </div>
+            
+    </ul>
+</nav>
+      </div>
+      
+      </div>
+    
+
+    
+    
+    <div class="sidebar-header-items__end">
+      
+      <div class="navbar-end-item">
+        <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+</button>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+      </ul>
+      </div>
+      
+    </div>
+    
+  </div>
+
+  
+  <div class="sidebar-start-items sidebar-primary__section">
+    <div class="sidebar-start-items__item">
+  
+
+
+<a class="navbar-brand logo" href="../index.html">
+
+  
+  
+  
+  
+  
+  
+  
+
+  
+  
+    <p class="title logo__title">경영과학과 컴퓨터 비전</p>
+  
+</a>
+    </div>
+    <div class="sidebar-start-items__item">
+<form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+    </div>
+    <div class="sidebar-start-items__item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../index.html">
+                    데이터 과학
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Intermediate Python</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../object-oriented/00-index.html">객체지향프로그래밍과 디자인패턴</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../object-oriented/01-object-oriented.html">객체 지향 프로그래밍</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../object-oriented/02-design-pattern.html">디자인 패턴</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Computer Vision</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="introduction.html">시작하기 앞서</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="image-libraries.html">영상 처리 라이브러리</a></li>
+<li class="toctree-l2"><a class="reference internal" href="numpy-matplotlib.html">NumPy와 Matplotlib</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="classifier-1.html">이미지 분류기(1)</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="020-image-processing.html">2장 영상 처리</a></li>
+<li class="toctree-l2"><a class="reference internal" href="022-thresholding.html">임계처리</a></li>
+<li class="toctree-l2"><a class="reference internal" href="022-histogram.html">히스토그램</a></li>
+<li class="toctree-l2"><a class="reference internal" href="023-arithmetic-operation.html">산술 연산</a></li>
+<li class="toctree-l2"><a class="reference internal" href="024-geometric-transform.html">기하하적 변환</a></li>
+<li class="toctree-l2"><a class="reference internal" href="025-binarization.html">이진화와 모폴로지</a></li>
+<li class="toctree-l2"><a class="reference internal" href="021-color-space.html">색공간</a></li>
+<li class="toctree-l2"><a class="reference internal" href="030-filtering.html">영상 필터</a></li>
+<li class="toctree-l2"><a class="reference internal" href="070-machine-learning.html">7장 기계학습</a></li>
+<li class="toctree-l2"><a class="reference internal" href="classifier-sift.html">SIFT (2004)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="032-blurring.html">Image Denoising with Denoising Autoencoder</a></li>
+<li class="toctree-l2"><a class="reference internal" href="classifier-hog.html">HOG</a></li>
+<li class="toctree-l2"><a class="reference internal" href="classifier-lenet.html">LeNet과 합성곱 신경망</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="classifier-2.html">이미지 분류기(2)</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="classifier-alexnet.html">AlexNet</a></li>
+<li class="toctree-l2"><a class="reference internal" href="classifier-zfnet.html">ZFNet</a></li>
+<li class="toctree-l2"><a class="reference internal" href="classifier-nin.html">Network in Network</a></li>
+<li class="toctree-l2"><a class="reference internal" href="classifier-vgg.html">VGGNet</a></li>
+<li class="toctree-l2"><a class="reference internal" href="classifier-googlenet.html">GoogLeNet</a></li>
+<li class="toctree-l2"><a class="reference internal" href="classifier-resnet.html">ResNet</a></li>
+<li class="toctree-l2"><a class="reference internal" href="classifier-densenet.html">DenseNet</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="image-segmentation.html">영상 분할</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="semantic-fcn.html">FCN</a></li>
+<li class="toctree-l2"><a class="reference internal" href="semantic-unet.html">UNet</a></li>
+<li class="toctree-l2"><a class="reference internal" href="semantic-deeplab.html">DeepLab</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="object-detection.html">객체 탐지</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-5"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">R-CNN</a></li>
+<li class="toctree-l2"><a class="reference internal" href="object-sppnet.html">SPPNet</a></li>
+<li class="toctree-l2"><a class="reference internal" href="object-fast-rcnn.html">Fast R-CNN</a></li>
+<li class="toctree-l2"><a class="reference internal" href="object-faster-rcnn.html">Faster R-CNN</a></li>
+<li class="toctree-l2"><a class="reference internal" href="object-ohem.html">OHEM</a></li>
+<li class="toctree-l2"><a class="reference internal" href="object-yolov1.html">YOLOv1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="object-ssd.html">SSD</a></li>
+<li class="toctree-l2"><a class="reference internal" href="object-fpn.html">FPN</a></li>
+<li class="toctree-l2"><a class="reference internal" href="object-retinanet.html">RetinaNet</a></li>
+<li class="toctree-l2"><a class="reference internal" href="object-yolov3.html">YOLOv3</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="instance-segmentation.html">개체 분할</a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-6"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="instance-mask-rcnn.html">Mask R-CNN</a></li>
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Operations Research</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../operations-research/000-introduction.html">1장 시작하기 앞서</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../operations-research/linear-programming/linear-programming.html">선형 계획법</a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-7"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../operations-research/linear-programming/product-mix.html">Product Mix Problem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../operations-research/linear-programming/production-planning.html">생산계획문제</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../operations-research/linear-programming/sensitivity-analysis.html">민감도 분석</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../operations-research/linear-programming/unbalanced-transportation.html">Unbalanced Transportation Problem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../operations-research/linear-programming/vehicle-routing.html">차량 경로 문제</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../operations-research/linear-programming/workforce-scheduling.html">Workforce Scheduling</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../operations-research/integer-programming/integer-programming.html">정수 계획법</a><input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-8"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../operations-research/integer-programming/traveling-salesman.html">Travelling Salesman Problem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../operations-research/integer-programming/knapsack.html">Knapsack Problem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../operations-research/integer-programming/capital-budgeting.html">Capital Budgeting Problem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../operations-research/integer-programming/plant.html">Plant Location Problem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../operations-research/integer-programming/set-covering.html">Set Covering Problem</a></li>
+</ul>
+</li>
+</ul>
+
+    </div>
+</nav>
+    </div>
+  </div>
+  
+
+  
+  <div class="sidebar-end-items sidebar-primary__section">
+    <div class="sidebar-end-items__item">
+    </div>
+  </div>
+
+  
+  <div id="rtd-footer-container"></div>
+
+      </div>
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+        <div class="bd-content">
+          <div class="bd-article-container">
+            
+            <div class="bd-header-article">
+                
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        <label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" data-toggle="tooltip" data-placement="right" title="Toggle primary sidebar">
+            <span class="fa-solid fa-bars"></span>
+        </label>
+    </div>
+    <div class="header-article__right">
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+  </ul>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+<a href="https://github.com/unerue/unerue.github.io/issues/new?title=Issue%20on%20page%20%2Fcomputer-vision/object-rcnn.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm"
+   data-toggle="tooltip"
+data-placement="bottom"
+title="Open an issue"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+
+</a>
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      <li><a href="../_sources/computer-vision/object-rcnn.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</a>
+      
+      <li>
+<button onclick="printPdf(this)"
+  class="btn btn-sm dropdown-item"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</a>
+      
+  </ul>
+</div>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary" data-toggle="tooltip" data-placement="left" title="Toggle secondary sidebar">
+            <span class="fa-solid fa-list"></span>
+        </label>
+    </div>
+</div>
+            </div>
+            
+            
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>R-CNN</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#selective-search">
@@ -610,68 +720,16 @@ const thebe_selector_output = ".output, .cell_output"
         </div>
     </div>
 </div>
-    <div id="main-content" class="row">
-        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
-            <!-- Table of contents that is only displayed when printing the page -->
-            <div id="jb-print-docs-body" class="onlyprint">
-                <h1>R-CNN</h1>
-                <!-- Table of contents -->
-                <div id="print-main-content">
-                    <div id="jb-print-toc">
-                        
-                        <div>
-                            <h2> Contents </h2>
-                        </div>
-                        <nav aria-label="Page">
-                            <ul class="visible nav section-nav flex-column">
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#selective-search">
-   Selective Search
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#intersection-of-union">
-   Intersection of union
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#linear-support-vector-machines">
-   Linear support vector machines
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#hard-negative-mining">
-     Hard negative mining
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#bounding-box-regressor">
-   Bounding box regressor
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#non-maximum-suppression">
-   Non maximum suppression
-  </a>
- </li>
-</ul>
 
-                        </nav>
-                    </div>
-                </div>
-            </div>
-            
-              <div>
-                
-  <div class="tex2jax_ignore mathjax_ignore section" id="r-cnn">
-<h1>R-CNN<a class="headerlink" href="#r-cnn" title="Permalink to this headline">¶</a></h1>
+            <article class="bd-article" role="main">
+              
+  <section class="tex2jax_ignore mathjax_ignore" id="r-cnn">
+<h1>R-CNN<a class="headerlink" href="#r-cnn" title="Permalink to this heading">#</a></h1>
 <p>Rich feature hierarchies for accurate object detection and semantic segmentation</p>
 <div>
     <img src="https://unerue.synology.me/course/computer-vision/rcnn1.png" style="height: 240px;" />
-</div><div class="section" id="selective-search">
-<h2>Selective Search<a class="headerlink" href="#selective-search" title="Permalink to this headline">¶</a></h2>
+</div><section id="selective-search">
+<h2>Selective Search<a class="headerlink" href="#selective-search" title="Permalink to this heading">#</a></h2>
 <p>색상, 질감, 영역크기 등을 이용해 non-objective segmentation을 수행한다. 이 작업을 통해 좌측 제일 하단 그림과 같이 많은 small segmented areas들을 얻을 수 있다. Bottom-up 방식으로 small segemented areas들을 합쳐서 더 큰 segemented areas들을 만든다. (2)의 작업을 반복하여 최종적으로 2000개의 region proposal을 생성한다. 2000장의 region proposals를 얻게 되면 warp를 통해 이미지를 227x227로 사이즈를 통합시켜준다.(CNN arichitecture는 고정된 227x227 pixel size의 입력을 요구한다.)</p>
 <div class="math notranslate nohighlight">
 \[S_{\text{color}}(r_i,r_j)=\sum_{k=1}^{n}\min{(c_i^k,c_j^k)}\]</div>
@@ -692,7 +750,7 @@ const thebe_selector_output = ".output, .cell_output"
 
 
 <span class="k">def</span> <span class="nf">_generate_segments</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">scale</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">min_size</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Segment smallest regions by the algorithm of Felzenswalb and Huttenlocher</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Segment smallest regions by the algorithm of Felzenswalb and Huttenlocher</span>
 <span class="sd">    </span>
 <span class="sd">    Args:</span>
 <span class="sd">        image: an original image</span>
@@ -710,22 +768,22 @@ const thebe_selector_output = ".output, .cell_output"
 
 
 <span class="k">def</span> <span class="nf">_similarity_color</span><span class="p">(</span><span class="n">r1</span><span class="p">,</span> <span class="n">r2</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Calculate the sum of histogram intersection of colour&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Calculate the sum of histogram intersection of colour&quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="nb">sum</span><span class="p">([</span><span class="nb">min</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span> <span class="k">for</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">r1</span><span class="p">[</span><span class="s2">&quot;hist_c&quot;</span><span class="p">],</span> <span class="n">r2</span><span class="p">[</span><span class="s2">&quot;hist_c&quot;</span><span class="p">])])</span>
 
 
 <span class="k">def</span> <span class="nf">_similarity_texture</span><span class="p">(</span><span class="n">r1</span><span class="p">,</span> <span class="n">r2</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Calculate the sum of histogram intersection of texture&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Calculate the sum of histogram intersection of texture&quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="nb">sum</span><span class="p">([</span><span class="nb">min</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span> <span class="k">for</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">r1</span><span class="p">[</span><span class="s2">&quot;hist_t&quot;</span><span class="p">],</span> <span class="n">r2</span><span class="p">[</span><span class="s2">&quot;hist_t&quot;</span><span class="p">])])</span>
 
 
 <span class="k">def</span> <span class="nf">_similarity_size</span><span class="p">(</span><span class="n">r1</span><span class="p">,</span> <span class="n">r2</span><span class="p">,</span> <span class="n">imsize</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Calculate the size similarity over the image&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Calculate the size similarity over the image&quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="mf">1.0</span> <span class="o">-</span> <span class="p">(</span><span class="n">r1</span><span class="p">[</span><span class="s2">&quot;size&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="n">r2</span><span class="p">[</span><span class="s2">&quot;size&quot;</span><span class="p">])</span> <span class="o">/</span> <span class="n">imsize</span>
 
 
 <span class="k">def</span> <span class="nf">_similarity_fill</span><span class="p">(</span><span class="n">r1</span><span class="p">,</span> <span class="n">r2</span><span class="p">,</span> <span class="n">imsize</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Calculate the fill similarity over the image&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Calculate the fill similarity over the image&quot;&quot;&quot;</span>
     <span class="n">bbsize</span> <span class="o">=</span> <span class="p">(</span>
         <span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">r1</span><span class="p">[</span><span class="s2">&quot;max_x&quot;</span><span class="p">],</span> <span class="n">r2</span><span class="p">[</span><span class="s2">&quot;max_x&quot;</span><span class="p">])</span> <span class="o">-</span> <span class="nb">min</span><span class="p">(</span><span class="n">r1</span><span class="p">[</span><span class="s2">&quot;min_x&quot;</span><span class="p">],</span> <span class="n">r2</span><span class="p">[</span><span class="s2">&quot;min_x&quot;</span><span class="p">]))</span>
         <span class="o">*</span> <span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">r1</span><span class="p">[</span><span class="s2">&quot;max_y&quot;</span><span class="p">],</span> <span class="n">r2</span><span class="p">[</span><span class="s2">&quot;max_y&quot;</span><span class="p">])</span> <span class="o">-</span> <span class="nb">min</span><span class="p">(</span><span class="n">r1</span><span class="p">[</span><span class="s2">&quot;min_y&quot;</span><span class="p">],</span> <span class="n">r2</span><span class="p">[</span><span class="s2">&quot;min_y&quot;</span><span class="p">]))</span>
@@ -741,7 +799,7 @@ const thebe_selector_output = ".output, .cell_output"
 
 
 <span class="k">def</span> <span class="nf">_calc_colour_hist</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">num_channels</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">25</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Calculate colour histogram for each region the size of output </span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Calculate colour histogram for each region the size of output </span>
 <span class="sd">    histogram will be BINS * COLOUR_CHANNELS(3) number of bins is 25 </span>
 <span class="sd">    as same as [uijlings_ijcv2013_draft.pdf] extract HSV</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -760,7 +818,7 @@ const thebe_selector_output = ".output, .cell_output"
 
 
 <span class="k">def</span> <span class="nf">_calc_texture_gradient</span><span class="p">(</span><span class="n">image</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        calculate texture gradient for entire image</span>
 <span class="sd">        The original SelectiveSearch algorithm proposed Gaussian derivative</span>
 <span class="sd">        for 8 orientations, but we use LBP instead.</span>
@@ -776,7 +834,7 @@ const thebe_selector_output = ".output, .cell_output"
 
 
 <span class="k">def</span> <span class="nf">_calc_texture_hist</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">num_channels</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        calculate texture histogram for each region</span>
 <span class="sd">        calculate the histogram of gradient for each colours</span>
 <span class="sd">        the size of output histogram will be</span>
@@ -875,7 +933,7 @@ const thebe_selector_output = ".output, .cell_output"
 
 
 <span class="k">class</span> <span class="nc">SelectiveSearch</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Selective Search</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Selective Search</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        im_orig : ndarray</span>
@@ -969,6 +1027,18 @@ const thebe_selector_output = ".output, .cell_output"
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">line</span> <span class="mi">1</span>
+<span class="ne">----&gt; </span><span class="mi">1</span> <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="kn">from</span> <span class="nn">matplotlib.patches</span> <span class="kn">import</span> <span class="n">Rectangle</span>
+
+<span class="ne">ModuleNotFoundError</span>: No module named &#39;numpy&#39;
+</pre></div>
+</div>
+</div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1009,7 +1079,7 @@ const thebe_selector_output = ".output, .cell_output"
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/object-rcnn_5_0.png" src="../_images/object-rcnn_5_0.png" />
+<img alt="../_images/0855736db6f05f14bb82a0a88aa81a61face83ddb1eae191d25bb9a7da64aadc.png" src="../_images/0855736db6f05f14bb82a0a88aa81a61face83ddb1eae191d25bb9a7da64aadc.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -1031,24 +1101,24 @@ const thebe_selector_output = ".output, .cell_output"
 <p>2000장의 region proposals와 ground-truth box의 IoU(Intersection of Union)을 비교하여 IoU가 0.5보다 큰 경우 positive samples, 0.5보다 작은 경우 negative samples로 나눈다. 이렇게 sample을 나눴을 때, ground truth만 positive sample로 정의할때 보다 30배 많은 학습데이터를 얻을 수 있다. 많은 데이터를 통해 overfitting을 방지한다. Positive sample는 객체가 포함되어 있는 sample을 의미하고, negative sample은 객체가 포함되지 않은 배경 sample을 의미한다. 이렇게 나눈 후 positive sample 32개 + negative sample 96개 = 128개의 이미지로 이루어진 하나의 미니 배치를 만든다.
 이렇게 생성된 배치들을 이용해 fine-tuning을 진행한다. fine-tuning을 하기 위해서 기존의 pre-trained된 AlexNet의 마지막 softmax layer를 수정해서 N+1 way classification을 수행하게 한다. 이때, N은 R-CNN에서 사용하는 dataset의 객체들의 종류의 개수이고, 1을 더해준 이유는 배경인지 판단하기 위해서이다. SGD를 통해 N+1 way classification을 수행하면서 학습된 CNN 구조는 domain-specific fine-tuning을 이룬다.
 마지막의 N+1 way classification을 위해 수정한 softmax layer는 R-CNN 모델 사용시 사용하지 않는다. 왜냐하면 softmax layer는 fine-tuning을 위해 사용한 것이고, 원래 R-CNN에서 CNN 구조의 목표는 4096-dimensional feature vector를 추출하는 것이기 때문이다.</p>
-</div>
-<div class="section" id="intersection-of-union">
-<h2>Intersection of union<a class="headerlink" href="#intersection-of-union" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="intersection-of-union">
+<h2>Intersection of union<a class="headerlink" href="#intersection-of-union" title="Permalink to this heading">#</a></h2>
 <p>Intersection of union(IoU)는 교집합 영역 넓이 / 합집합 영역 넓이</p>
-</div>
-<div class="section" id="linear-support-vector-machines">
-<h2>Linear support vector machines<a class="headerlink" href="#linear-support-vector-machines" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="linear-support-vector-machines">
+<h2>Linear support vector machines<a class="headerlink" href="#linear-support-vector-machines" title="Permalink to this heading">#</a></h2>
 <p>Linear support vector machines(SVMs)은 2000장의 region proposals에서 fine-tuning때와는 다르게 ground truth box만을 positive sample, IoU 값이 0.3보다 작은 것은 negative sample로 지정한다. 이때, IoU값이 0.3보다 큰 경우 무시한다. 이때 0.3은 gird search를 통해 찾은 값이다. 이후는 fine-tuning과 마찬가지로 positive sample 32개 + negative sample 96개 = 128개의 미니배치를 구성한 후 fine-tuning된 AlexNet에 입력하여 4096 dimensional feature vector를 추출한다. 추출된 벡터를 이용해 linear SVMs를 학습한다. SVM은 2진 분류를 수행하므로 분류하려는 객체의 종류만큼 SVM이 필요하다. 학습이 한 차례 끝난 후, hard negative mining 기법을 적용하여 재학습을 수행한다.</p>
 <p>R-CNN에서는 단순히 N-way softmax layer를 통해 분류를 진행하지 않고, SVMs를 이용해 분류를 한다. 이는 SVM을 사용했을 때 성능이 더 좋기 때문이다. 성능 차이의 이유를 논문의 저자들은 positive sample을 정의할 때 SVM을 학습시킬 때 더 엄밀하게 정의한다는 점과 SVM이 hard negative를 이용해 학습하기 때문이라고 서술했다.</p>
 <p>linear SVM에서는 output으로 class와 confidence score를 반환한다.</p>
-<div class="section" id="hard-negative-mining">
-<h3>Hard negative mining<a class="headerlink" href="#hard-negative-mining" title="Permalink to this headline">¶</a></h3>
+<section id="hard-negative-mining">
+<h3>Hard negative mining<a class="headerlink" href="#hard-negative-mining" title="Permalink to this heading">#</a></h3>
 <p>이미지에서 사람을 탐지하는 경우 사람은 positive sample이 되고, 그 외의 배경은 negative sample이 된다. 이때, 모델이 bounding box를 배경이라고 예측하고 실제로 배경인 경우 true negative sample라고 한다. 반면에 모델이 사람이라고 예측했지만, 실제로 배경인 경우 false positive sample에 해당한다.</p>
 <p>객체 탐지 시, positive sample보다 negative sample이 더 많은 클래스 불균형 때문에 모델은 주로 false positive 오류를 주로 범하게 된다. 이러한 문제를 해결하기 위해 처음 linear SVMs를 학습시킬 때의 false positive sample들을 epoch마다 학습 데이터에 추가하여 학습을 진행한다. 이를 통해 모델이 강건해지고, false positive 오류가 줄어든다.</p>
-</div>
-</div>
-<div class="section" id="bounding-box-regressor">
-<h2>Bounding box regressor<a class="headerlink" href="#bounding-box-regressor" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+<section id="bounding-box-regressor">
+<h2>Bounding box regressor<a class="headerlink" href="#bounding-box-regressor" title="Permalink to this heading">#</a></h2>
 <p>selective search 알고리즘을 통해 얻은 객체의 위치는 부정확할 수 있다. 이런 문제를 해결하기 위해 객체의 위치를 조절해주는 Bounding box regressor가 있다.</p>
 <p><span class="math notranslate nohighlight">\(N\)</span>개의 학습데이터쌍(training pair)인 <span class="math notranslate nohighlight">\(\{(P^{i}, G^{i})\}_{i=1,...,N}\)</span>에 대해 <span class="math notranslate nohighlight">\(P^{i}=(P^{i}_{x}, P^{i}_{y}, P^{i}_{w}, P^{i}_{h})\)</span>는 해당 지역(region)에 대한 추정값으로 각 지역 중심의 좌표 <span class="math notranslate nohighlight">\(x\)</span>, <span class="math notranslate nohighlight">\(y\)</span>와 너비(width, <span class="math notranslate nohighlight">\(w\)</span>), 높이(height, <span class="math notranslate nohighlight">\(h\)</span>)를 나타내고, 이에 대응되게 <span class="math notranslate nohighlight">\(G^{i}=(G^{i}_{x},G^{i}_{y},G^{i}_{w},G^{i}_{h})\)</span>은 해당 지역(region)에 대한 정답(ground truth)이다.</p>
 <div class="math notranslate nohighlight">
@@ -1057,9 +1127,9 @@ const thebe_selector_output = ".output, .cell_output"
 \[
 t_{x}=(G_{x}-P_{x})/P_{w}
 \]</div>
-</div>
-<div class="section" id="non-maximum-suppression">
-<h2>Non maximum suppression<a class="headerlink" href="#non-maximum-suppression" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="non-maximum-suppression">
+<h2>Non maximum suppression<a class="headerlink" href="#non-maximum-suppression" title="Permalink to this heading">#</a></h2>
 <p>R-CNN을 통해 얻게 되는 2000개의 bounding box를 전부 다 표시할 경우우 하나의 객체에 대해 지나치게 많은 bounding box가 겹칠 수 있다. 따라서 가장 적합한 bounding box를 선택하는 Non maximum supression 알고리즘을 적용한다.</p>
 <p>bounding box별로 지정한 confidence scroe threshold 이하의 box를 제거한다.
 남은 bounding box를 confidence score에 따라 내림차순으로 정렬한다. 그 다음 confidence score가 높은 순의 bounding box부터 다른 box와의 IoU값을 조사하여 IoU threshold 이상인 box를 모두 제거한다.
@@ -1160,7 +1230,7 @@ t_{x}=(G_{x}-P_{x})/P_{w}
 <div class="cell_output docutils container">
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
-<span class="nn">Input In [4],</span> in <span class="ni">&lt;cell line: 3&gt;</span><span class="nt">()</span>
+<span class="nn">Input In [3],</span> in <span class="ni">&lt;cell line: 3&gt;</span><span class="nt">()</span>
 <span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="kn">import</span> <span class="nn">torch</span>
 <span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="kn">from</span> <span class="nn">torchvision.ops</span> <span class="kn">import</span> <span class="n">nms</span><span class="p">,</span> <span class="n">box_iou</span>
 <span class="ne">----&gt; </span><span class="mi">3</span> <span class="kn">from</span> <span class="nn">sklearn.svm</span> <span class="kn">import</span> <span class="n">LinearSVC</span>
@@ -1200,8 +1270,8 @@ t_{x}=(G_{x}-P_{x})/P_{w}
 </div>
 </div>
 </div>
-</div>
-</div>
+</section>
+</section>
 
     <script type="text/x-thebe-config">
     {
@@ -1215,7 +1285,7 @@ t_{x}=(G_{x}-P_{x})/P_{w}
             mode: "python"
         },
         kernelOptions: {
-            kernelName: "python3",
+            name: "python3",
             path: "./computer-vision"
         },
         predefinedOutput: true
@@ -1223,44 +1293,132 @@ t_{x}=(G_{x}-P_{x})/P_{w}
     </script>
     <script>kernelName = 'python3'</script>
 
-              </div>
-              
+            </article>
             
+
+            
+            
+            <footer class="bd-footer-article">
                 <!-- Previous / next buttons -->
-<div class='prev-next-area'> 
-    <a class='left-prev' id="prev-link" href="object-detection.html" title="previous page">
-        <i class="fas fa-angle-left"></i>
-        <div class="prev-next-info">
-            <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title">객체 탐지</p>
-        </div>
-    </a>
-    <a class='right-next' id="next-link" href="object-sppnet.html" title="next page">
-    <div class="prev-next-info">
-        <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">SPPNet</p>
-    </div>
-    <i class="fas fa-angle-right"></i>
-    </a>
-</div>
-            
-        </div>
-    </div>
-    <footer class="footer">
-  <p>
-    
-      By Kyung-Su Kang<br/>
-    
-        &copy; Copyright 2021.<br/>
-  </p>
-</footer>
-</main>
-
-
+<div class='prev-next-area'>
+  <a class='left-prev' id="prev-link" href="object-detection.html" title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+          <p class="prev-next-subtitle">previous</p>
+          <p class="prev-next-title">객체 탐지</p>
       </div>
-    </div>
+  </a>
+  <a class='right-next' id="next-link" href="object-sppnet.html" title="next page">
+  <div class="prev-next-info">
+      <p class="prev-next-subtitle">next</p>
+      <p class="prev-next-title">SPPNet</p>
+  </div>
+  <i class="fa-solid fa-angle-right"></i>
+  </a>
+</div>
+            </footer>
+            
+          </div>
+          
+          
+          
+            <div class="bd-sidebar-secondary bd-toc">
+              
+<div class="toc-item">
   
-  <script src="../_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+<div class="tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+</div>
+<nav id="bd-toc-nav" class="page-toc">
+    <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#selective-search">
+   Selective Search
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#intersection-of-union">
+   Intersection of union
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#linear-support-vector-machines">
+   Linear support vector machines
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#hard-negative-mining">
+     Hard negative mining
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#bounding-box-regressor">
+   Bounding box regressor
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#non-maximum-suppression">
+   Non maximum suppression
+  </a>
+ </li>
+</ul>
+
+</nav>
+</div>
+
+            </div>
+          
+          
+        </div>
+        <footer class="bd-footer-content">
+          <div class="bd-footer-content__inner">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Kyung-Su Kang
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+<p class="copyright">
+
+    &copy; Copyright 2021.<br>
+
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    <p class="last-updated">
+Last updated on None.<br>
+</p>
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </div>
+        </footer>
+        
+
+      </main>
+    </div>
+  </div>
+
+  
+    
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=796348d33e8b1d947c94"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=796348d33e8b1d947c94"></script>
 
   </body>
 </html>

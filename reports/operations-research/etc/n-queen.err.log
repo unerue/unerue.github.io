@@ -1,0 +1,116 @@
+Traceback (most recent call last):
+  File "C:\Users\unerue\miniconda3\envs\jupyterbook\lib\site-packages\jupyter_cache\executors\utils.py", line 58, in single_nb_execution
+    executenb(
+  File "C:\Users\unerue\miniconda3\envs\jupyterbook\lib\site-packages\nbclient\client.py", line 1204, in execute
+    return NotebookClient(nb=nb, resources=resources, km=km, **kwargs).execute()
+  File "C:\Users\unerue\miniconda3\envs\jupyterbook\lib\site-packages\nbclient\util.py", line 84, in wrapped
+    return just_run(coro(*args, **kwargs))
+  File "C:\Users\unerue\miniconda3\envs\jupyterbook\lib\site-packages\nbclient\util.py", line 62, in just_run
+    return loop.run_until_complete(coro)
+  File "C:\Users\unerue\miniconda3\envs\jupyterbook\lib\asyncio\base_events.py", line 647, in run_until_complete
+    return future.result()
+  File "C:\Users\unerue\miniconda3\envs\jupyterbook\lib\site-packages\nbclient\client.py", line 663, in async_execute
+    await self.async_execute_cell(
+  File "C:\Users\unerue\miniconda3\envs\jupyterbook\lib\site-packages\nbclient\client.py", line 965, in async_execute_cell
+    await self._check_raise_for_error(cell, cell_index, exec_reply)
+  File "C:\Users\unerue\miniconda3\envs\jupyterbook\lib\site-packages\nbclient\client.py", line 862, in _check_raise_for_error
+    raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
+nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
+------------------
+import genetic
+
+
+def get_fitness(genes, size):
+    board = Board(genes, size)
+    rowsWithQueens = set()
+    colsWithQueens = set()
+    northEastDiagonalsWithQueens = set()
+    southEastDiagonalsWithQueens = set()
+    for row in range(size):
+        for col in range(size):
+            if board.get(row, col) == 'Q':
+                rowsWithQueens.add(row)
+                colsWithQueens.add(col)
+                northEastDiagonalsWithQueens.add(row + col)
+                southEastDiagonalsWithQueens.add(size - 1 - row + col)
+    total = size - len(rowsWithQueens) \
+            + size - len(colsWithQueens) \
+            + size - len(northEastDiagonalsWithQueens) \
+            + size - len(southEastDiagonalsWithQueens)
+    return Fitness(total)
+
+
+def display(candidate, startTime, size):
+    timeDiff = datetime.datetime.now() - startTime
+    board = Board(candidate.Genes, size)
+    board.print()
+    print("{}\t- {}\t{}".format(
+        ' '.join(map(str, candidate.Genes)),
+        candidate.Fitness,
+        timeDiff))
+
+
+class EightQueensTests(unittest.TestCase):
+    def test(self, size=8):
+        geneset = [i for i in range(size)]
+        startTime = datetime.datetime.now()
+
+        def fnDisplay(candidate):
+            display(candidate, startTime, size)
+
+        def fnGetFitness(genes):
+            return get_fitness(genes, size)
+
+        optimalFitness = Fitness(0)
+        best = genetic.get_best(fnGetFitness, 2 * size, optimalFitness,
+                                geneset, fnDisplay)
+        self.assertTrue(not optimalFitness > best.Fitness)
+
+    def test_benchmark(self):
+        genetic.Benchmark.run(lambda: self.test(20))
+
+
+class Board:
+    def __init__(self, genes, size):
+        board = [['.'] * size for _ in range(size)]
+        for index in range(0, len(genes), 2):
+            row = genes[index]
+            column = genes[index + 1]
+            board[column][row] = 'Q'
+        self._board = board
+
+    def get(self, row, column):
+        return self._board[column][row]
+
+    def print(self):
+        # 0,0 prints in bottom left corner
+        for i in reversed(range(len(self._board))):
+            print(' '.join(self._board[i]))
+
+
+class Fitness:
+    def __init__(self, total):
+        self.Total = total
+
+    def __gt__(self, other):
+        return self.Total < other.Total
+
+    def __str__(self):
+        return "{}".format(self.Total)
+
+
+if __name__ == '__main__':
+    unittest.main()
+
+------------------
+
+[1;31m---------------------------------------------------------------------------[0m
+[1;31mModuleNotFoundError[0m                       Traceback (most recent call last)
+Cell [1;32mIn[16], line 1[0m
+[1;32m----> 1[0m [38;5;28;01mimport[39;00m [38;5;21;01mgenetic[39;00m
+[0;32m      4[0m [38;5;28;01mdef[39;00m [38;5;21mget_fitness[39m(genes, size):
+[0;32m      5[0m     board [38;5;241m=[39m Board(genes, size)
+
+[1;31mModuleNotFoundError[0m: No module named 'genetic'
+ModuleNotFoundError: No module named 'genetic'
+

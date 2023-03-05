@@ -1,572 +1,682 @@
 
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
     <title>경영과학 &#8212; 경영과학과 컴퓨터 비전</title>
-    
-  <link href="../../_static/css/theme.css" rel="stylesheet">
-  <link href="../../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+<link href="../../_static/styles/bootstrap.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=796348d33e8b1d947c94" rel="stylesheet">
 
-    
-  <link rel="stylesheet"
-    href="../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
-  <link rel="preload" as="font" type="font/woff2" crossorigin
-    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
-  <link rel="preload" as="font" type="font/woff2" crossorigin
-    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+  
+  <link href="../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2">
 
-    
-      
-
-    
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" />
+    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=4ec06e9971c5264fbd345897d5258098f11cc577" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
-    
-  <link rel="preload" as="script" href="../../_static/js/index.be7d3bbb2ef33a8344ce.js">
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=796348d33e8b1d947c94">
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=796348d33e8b1d947c94">
 
     <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
     <script src="../../_static/jquery.js"></script>
     <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../../_static/doctools.js"></script>
     <script src="../../_static/clipboard.min.js"></script>
     <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?digest=8bf782fb4ee92b3d3646425e50f299c4e1fd152d"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
     <script src="../../_static/togglebutton.js"></script>
-    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
-    <script src="../../_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js"></script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
 const thebe_selector = ".thebe,.cell"
 const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
     <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <script async="async" src="https://www.googletagmanager.com/gtag/js?id=UA-171260246-1"></script>
+    <script>
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){ dataLayer.push(arguments); }
+                gtag('js', new Date());
+                gtag('config', 'UA-171260246-1');
+            </script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'operations-research/etc/introduction-operations-research';</script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="docsearch:language" content="None">
-    
-
-    <!-- Google Analytics -->
-    
-<script async="" src="https://www.google-analytics.com/analytics.js"></script>
-<script>
-                        window.ga = window.ga || function () {
-                            (ga.q = ga.q || []).push(arguments) };
-                        ga.l = +new Date;
-                        ga('create', 'UA-171260246-1', 'auto');
-                        ga('set', 'anonymizeIp', true);
-                        ga('send', 'pageview');
-                    </script>
-
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="docsearch:language" content="en">
   </head>
-  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
-    
-    <div class="container-fluid" id="banner"></div>
+  
+  
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="180" data-default-mode="">
 
-    
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
 
-    <div class="container-xl">
-      <div class="row">
-          
-<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
-    
-        <div class="navbar-brand-box">
-    <a class="navbar-brand text-wrap" href="../../index.html">
+  
+  <input type="checkbox" class="sidebar-toggle" name="__primary" id="__primary">
+  <label class="overlay overlay-primary" for="__primary"></label>
+
+  
+  <input type="checkbox" class="sidebar-toggle" name="__secondary" id="__secondary">
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
       
-      
-      
-      <h1 class="site-logo" id="site-title">경영과학과 컴퓨터 비전</h1>
-      
-    </a>
-</div><form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
-  <i class="icon fas fa-search"></i>
-  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
-</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
-    <div class="bd-toc-item active">
-        <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="../../index.html">
-   데이터 과학
-  </a>
- </li>
-</ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  Intermediate Python
- </span>
-</p>
-<ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="../../object-oriented/01-object-oriented.html">
-   객체 지향 프로그래밍
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../../object-oriented/02-design-pattern.html">
-   디자인 패턴
-  </a>
- </li>
-</ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  Computer Vision
- </span>
-</p>
-<ul class="nav bd-sidenav">
- <li class="toctree-l1 has-children">
-  <a class="reference internal" href="../../computer-vision/introduction.html">
-   시작하기 앞서
-  </a>
-  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
-  <label for="toctree-checkbox-1">
-   <i class="fas fa-chevron-down">
-   </i>
-  </label>
-  <ul>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../computer-vision/image-libraries.html">
-     영상 처리 라이브러리
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../computer-vision/numpy-matplotlib.html">
-     NumPy와 Matplotlib
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toctree-l1 has-children">
-  <a class="reference internal" href="../../computer-vision/classifier-1.html">
-   이미지 분류기(1)
-  </a>
-  <input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
-  <label for="toctree-checkbox-2">
-   <i class="fas fa-chevron-down">
-   </i>
-  </label>
-  <ul>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../computer-vision/020-image-processing.html">
-     2장 영상 처리
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../computer-vision/022-thresholding.html">
-     임계처리
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../computer-vision/022-histogram.html">
-     히스토그램
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../computer-vision/023-arithmetic-operation.html">
-     산술 연산
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../computer-vision/024-geometric-transform.html">
-     기하하적 변환
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../computer-vision/025-binarization.html">
-     이진화와 모폴로지
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../computer-vision/021-color-space.html">
-     색공간
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../computer-vision/030-filtering.html">
-     영상 필터
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../computer-vision/070-machine-learning.html">
-     7장 기계학습
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../computer-vision/classifier-sift.html">
-     SIFT (2004)
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../computer-vision/032-blurring.html">
-     Image Denoising with Denoising Autoencoder
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../computer-vision/classifier-hog.html">
-     HOG
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../computer-vision/classifier-lenet.html">
-     LeNet과 합성곱 신경망
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toctree-l1 has-children">
-  <a class="reference internal" href="../../computer-vision/classifier-2.html">
-   이미지 분류기(2)
-  </a>
-  <input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
-  <label for="toctree-checkbox-3">
-   <i class="fas fa-chevron-down">
-   </i>
-  </label>
-  <ul>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../computer-vision/classifier-alexnet.html">
-     AlexNet
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../computer-vision/classifier-zfnet.html">
-     ZFNet
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../computer-vision/classifier-nin.html">
-     Network in Network
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../computer-vision/classifier-vgg.html">
-     VGGNet
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../computer-vision/classifier-googlenet.html">
-     GoogLeNet
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../computer-vision/classifier-resnet.html">
-     ResNet
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../computer-vision/classifier-densenet.html">
-     DenseNet
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toctree-l1 has-children">
-  <a class="reference internal" href="../../computer-vision/image-segmentation.html">
-   영상 분할
-  </a>
-  <input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/>
-  <label for="toctree-checkbox-4">
-   <i class="fas fa-chevron-down">
-   </i>
-  </label>
-  <ul>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../computer-vision/semantic-fcn.html">
-     FCN
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../computer-vision/semantic-unet.html">
-     UNet
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../computer-vision/semantic-deeplab.html">
-     DeepLab
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toctree-l1 has-children">
-  <a class="reference internal" href="../../computer-vision/object-detection.html">
-   객체 탐지
-  </a>
-  <input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/>
-  <label for="toctree-checkbox-5">
-   <i class="fas fa-chevron-down">
-   </i>
-  </label>
-  <ul>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../computer-vision/object-rcnn.html">
-     R-CNN
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../computer-vision/object-sppnet.html">
-     SPPNet
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../computer-vision/object-fast-rcnn.html">
-     Fast R-CNN
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../computer-vision/object-faster-rcnn.html">
-     Faster R-CNN
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../computer-vision/object-ohem.html">
-     OHEM
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../computer-vision/object-yolov1.html">
-     YOLOv1
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../computer-vision/object-ssd.html">
-     SSD
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../computer-vision/object-fpn.html">
-     FPN
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../computer-vision/object-retinanet.html">
-     RetinaNet
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../computer-vision/object-yolov3.html">
-     YOLOv3
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toctree-l1 has-children">
-  <a class="reference internal" href="../../computer-vision/instance-segmentation.html">
-   개체 분할
-  </a>
-  <input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/>
-  <label for="toctree-checkbox-6">
-   <i class="fas fa-chevron-down">
-   </i>
-  </label>
-  <ul>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../computer-vision/instance-mask-rcnn.html">
-     Mask R-CNN
-    </a>
-   </li>
-  </ul>
- </li>
-</ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  Operations Research
- </span>
-</p>
-<ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="../000-introduction.html">
-   1장 시작하기 앞서
-  </a>
- </li>
- <li class="toctree-l1 has-children">
-  <a class="reference internal" href="../linear-programming/linear-programming.html">
-   선형 계획법
-  </a>
-  <input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/>
-  <label for="toctree-checkbox-7">
-   <i class="fas fa-chevron-down">
-   </i>
-  </label>
-  <ul>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../linear-programming/product-mix.html">
-     Product Mix Problem
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../linear-programming/production-planning.html">
-     생산계획문제
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../linear-programming/sensitivity-analysis.html">
-     민감도 분석
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../linear-programming/unbalanced-transportation.html">
-     Unbalanced Transportation Problem
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../linear-programming/vehicle-routing.html">
-     차량 경로 문제
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../linear-programming/workforce-scheduling.html">
-     Workforce Scheduling
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toctree-l1 has-children">
-  <a class="reference internal" href="../integer-programming/integer-programming.html">
-   정수 계획법
-  </a>
-  <input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/>
-  <label for="toctree-checkbox-8">
-   <i class="fas fa-chevron-down">
-   </i>
-  </label>
-  <ul>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../integer-programming/traveling-salesman.html">
-     Travelling Salesman Problem
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../integer-programming/knapsack.html">
-     Knapsack Problem
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../integer-programming/capital-budgeting.html">
-     Capital Budgeting Problem
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../integer-programming/plant.html">
-     Plant Location Problem
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../integer-programming/set-covering.html">
-     Set Covering Problem
-    </a>
-   </li>
-  </ul>
- </li>
-</ul>
-
+<form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
     </div>
-</nav> <!-- To handle the deprecated key -->
+  </div>
 
-<div class="navbar_extra_footer">
-  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
-</div>
-
-</div>
-
-
-          
-
-
-          
-<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+  
+  <nav class="bd-header navbar navbar-expand-lg bd-navbar" id="navbar-main"><div class="bd-header__inner bd-page-width">
+  <label class="sidebar-toggle primary-toggle" for="__primary">
+      <span class="fa-solid fa-bars"></span>
+  </label>
+  <div id="navbar-start">
     
-    <div class="topbar container-xl fixed-top">
-    <div class="topbar-contents row">
-        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
-        <div class="col pl-md-4 topbar-main">
-            
-            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
-                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
-                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
-                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
-                <i class="fas fa-bars"></i>
-                <i class="fas fa-arrow-left"></i>
-                <i class="fas fa-arrow-up"></i>
-            </button>
-            
-            
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
-            class="fas fa-download"></i></button>
+    
+  
 
-    <div class="dropdown-buttons">
-        <!-- ipynb file if we had a myst markdown file -->
+
+<a class="navbar-brand logo" href="../../index.html">
+
+  
+  
+  
+  
+  
+  
+  
+
+  
+  
+    <p class="title logo__title">경영과학과 컴퓨터 비전</p>
+  
+</a>
+    
+  </div>
+
+  
+  <div class="col-lg-9 navbar-header-items">
+    <div id="navbar-center" class="mr-auto">
+      
+      <div class="navbar-center-item">
+        <nav class="navbar-nav">
+    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
+        Site Navigation
+    </p>
+    <ul id="navbar-main-elements" class="navbar-nav">
         
-        <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../../_sources/operations-research/etc/introduction-operations-research.ipynb"><button type="button"
-                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
-                data-placement="left">.ipynb</button></a>
-        <!-- Download PDF via print -->
-        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
-                onclick="printPdf(this)" data-toggle="tooltip" data-placement="left">.pdf</button>
-    </div>
-</div>
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../object-oriented/00-index.html">
+                        객체지향프로그래밍과 디자인패턴
+                      </a>
+                    </li>
+                
 
-            <!-- Source interaction buttons -->
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../object-oriented/01-object-oriented.html">
+                        객체 지향 프로그래밍
+                      </a>
+                    </li>
+                
 
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
-        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
-    <div class="dropdown-buttons sourcebuttons">
-        
-        <a class="issues-button"
-            href="https://github.com/unerue/unerue.github.io/issues/new?title=Issue%20on%20page%20%2Foperations-research/etc/introduction-operations-research.html&body=Your%20issue%20content%20here."><button
-                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
-                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
-        
-    </div>
-</div>
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../object-oriented/02-design-pattern.html">
+                        디자인 패턴
+                      </a>
+                    </li>
+                
 
-            <!-- Full screen (wrap in <a> to have style consistency -->
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../computer-vision/introduction.html">
+                        시작하기 앞서
+                      </a>
+                    </li>
+                
 
-<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
-        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
-        title="Fullscreen mode"><i
-            class="fas fa-expand"></i></button></a>
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../computer-vision/classifier-1.html">
+                        이미지 분류기(1)
+                      </a>
+                    </li>
+                
+            <div class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    More
+                </button>
+                <div class="dropdown-menu">
+                    
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../computer-vision/classifier-2.html">
+                        이미지 분류기(2)
+                      </a>
+                    </li>
+                
 
-            <!-- Launch buttons -->
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../computer-vision/image-segmentation.html">
+                        영상 분할
+                      </a>
+                    </li>
+                
 
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
-        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
-    <div class="dropdown-buttons">
-        
-        <a class="binder-button" href="https://mybinder.org/v2/gh/unerue/unerue.github.io/master?urlpath=lab/tree/operations-research/etc/introduction-operations-research.ipynb"><button type="button"
-                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
-                data-placement="left"><img class="binder-button-logo"
-                    src="../../_static/images/logo_binder.svg"
-                    alt="Interact on binder">Binder</button></a>
-        
-        
-        
-        
-    </div>
-</div>
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../computer-vision/object-detection.html">
+                        객체 탐지
+                      </a>
+                    </li>
+                
 
-        </div>
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../computer-vision/instance-segmentation.html">
+                        개체 분할
+                      </a>
+                    </li>
+                
 
-        <!-- Table of contents -->
-        <div class="d-none d-md-block col-md-2 bd-toc show noprint">
-            
-            <div class="tocsection onthispage pt-5 pb-3">
-                <i class="fas fa-list"></i> Contents
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../000-introduction.html">
+                        1장 시작하기 앞서
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../linear-programming/linear-programming.html">
+                        선형 계획법
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../integer-programming/integer-programming.html">
+                        정수 계획법
+                      </a>
+                    </li>
+                
+                </div>
             </div>
-            <nav id="bd-toc-nav" aria-label="Page">
+            
+    </ul>
+</nav>
+      </div>
+      
+    </div>
+
+    <div id="navbar-end">
+      
+        <div class="navbar-end-item navbar-persistent--container">
+          
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-toggle="tooltip">
+  <i class="fa-solid fa-magnifying-glass"></i>
+</button>
+        </div>
+      
+      
+      <div class="navbar-end-item">
+        <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+</button>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+      </ul>
+      </div>
+      
+    </div>
+  </div>
+
+
+  
+  
+    <div class="navbar-persistent--mobile">
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-toggle="tooltip">
+  <i class="fa-solid fa-magnifying-glass"></i>
+</button>
+    </div>
+  
+
+  
+  <label class="sidebar-toggle secondary-toggle" for="__secondary">
+      <span class="fa-solid fa-outdent"></span>
+  </label>
+  
+
+</div>
+  </nav>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+      
+      <div class="navbar-center-item">
+        <nav class="navbar-nav">
+    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
+        Site Navigation
+    </p>
+    <ul id="navbar-main-elements" class="navbar-nav">
+        
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../object-oriented/00-index.html">
+                        객체지향프로그래밍과 디자인패턴
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../object-oriented/01-object-oriented.html">
+                        객체 지향 프로그래밍
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../object-oriented/02-design-pattern.html">
+                        디자인 패턴
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../computer-vision/introduction.html">
+                        시작하기 앞서
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../computer-vision/classifier-1.html">
+                        이미지 분류기(1)
+                      </a>
+                    </li>
+                
+            <div class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    More
+                </button>
+                <div class="dropdown-menu">
+                    
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../computer-vision/classifier-2.html">
+                        이미지 분류기(2)
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../computer-vision/image-segmentation.html">
+                        영상 분할
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../computer-vision/object-detection.html">
+                        객체 탐지
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../computer-vision/instance-segmentation.html">
+                        개체 분할
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../000-introduction.html">
+                        1장 시작하기 앞서
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../linear-programming/linear-programming.html">
+                        선형 계획법
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../integer-programming/integer-programming.html">
+                        정수 계획법
+                      </a>
+                    </li>
+                
+                </div>
+            </div>
+            
+    </ul>
+</nav>
+      </div>
+      
+      </div>
+    
+
+    
+    
+    <div class="sidebar-header-items__end">
+      
+      <div class="navbar-end-item">
+        <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+</button>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+      </ul>
+      </div>
+      
+    </div>
+    
+  </div>
+
+  
+  <div class="sidebar-start-items sidebar-primary__section">
+    <div class="sidebar-start-items__item">
+  
+
+
+<a class="navbar-brand logo" href="../../index.html">
+
+  
+  
+  
+  
+  
+  
+  
+
+  
+  
+    <p class="title logo__title">경영과학과 컴퓨터 비전</p>
+  
+</a>
+    </div>
+    <div class="sidebar-start-items__item">
+<form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+    </div>
+    <div class="sidebar-start-items__item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../index.html">
+                    데이터 과학
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Intermediate Python</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../object-oriented/00-index.html">객체지향프로그래밍과 디자인패턴</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../object-oriented/01-object-oriented.html">객체 지향 프로그래밍</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../object-oriented/02-design-pattern.html">디자인 패턴</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Computer Vision</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../computer-vision/introduction.html">시작하기 앞서</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../computer-vision/image-libraries.html">영상 처리 라이브러리</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../computer-vision/numpy-matplotlib.html">NumPy와 Matplotlib</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../computer-vision/classifier-1.html">이미지 분류기(1)</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../computer-vision/020-image-processing.html">2장 영상 처리</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../computer-vision/022-thresholding.html">임계처리</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../computer-vision/022-histogram.html">히스토그램</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../computer-vision/023-arithmetic-operation.html">산술 연산</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../computer-vision/024-geometric-transform.html">기하하적 변환</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../computer-vision/025-binarization.html">이진화와 모폴로지</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../computer-vision/021-color-space.html">색공간</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../computer-vision/030-filtering.html">영상 필터</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../computer-vision/070-machine-learning.html">7장 기계학습</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../computer-vision/classifier-sift.html">SIFT (2004)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../computer-vision/032-blurring.html">Image Denoising with Denoising Autoencoder</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../computer-vision/classifier-hog.html">HOG</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../computer-vision/classifier-lenet.html">LeNet과 합성곱 신경망</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../computer-vision/classifier-2.html">이미지 분류기(2)</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../computer-vision/classifier-alexnet.html">AlexNet</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../computer-vision/classifier-zfnet.html">ZFNet</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../computer-vision/classifier-nin.html">Network in Network</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../computer-vision/classifier-vgg.html">VGGNet</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../computer-vision/classifier-googlenet.html">GoogLeNet</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../computer-vision/classifier-resnet.html">ResNet</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../computer-vision/classifier-densenet.html">DenseNet</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../computer-vision/image-segmentation.html">영상 분할</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../computer-vision/semantic-fcn.html">FCN</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../computer-vision/semantic-unet.html">UNet</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../computer-vision/semantic-deeplab.html">DeepLab</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../computer-vision/object-detection.html">객체 탐지</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-5"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../computer-vision/object-rcnn.html">R-CNN</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../computer-vision/object-sppnet.html">SPPNet</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../computer-vision/object-fast-rcnn.html">Fast R-CNN</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../computer-vision/object-faster-rcnn.html">Faster R-CNN</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../computer-vision/object-ohem.html">OHEM</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../computer-vision/object-yolov1.html">YOLOv1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../computer-vision/object-ssd.html">SSD</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../computer-vision/object-fpn.html">FPN</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../computer-vision/object-retinanet.html">RetinaNet</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../computer-vision/object-yolov3.html">YOLOv3</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../computer-vision/instance-segmentation.html">개체 분할</a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-6"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../computer-vision/instance-mask-rcnn.html">Mask R-CNN</a></li>
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Operations Research</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../000-introduction.html">1장 시작하기 앞서</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../linear-programming/linear-programming.html">선형 계획법</a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-7"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../linear-programming/product-mix.html">Product Mix Problem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../linear-programming/production-planning.html">생산계획문제</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../linear-programming/sensitivity-analysis.html">민감도 분석</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../linear-programming/unbalanced-transportation.html">Unbalanced Transportation Problem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../linear-programming/vehicle-routing.html">차량 경로 문제</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../linear-programming/workforce-scheduling.html">Workforce Scheduling</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../integer-programming/integer-programming.html">정수 계획법</a><input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-8"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../integer-programming/traveling-salesman.html">Travelling Salesman Problem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../integer-programming/knapsack.html">Knapsack Problem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../integer-programming/capital-budgeting.html">Capital Budgeting Problem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../integer-programming/plant.html">Plant Location Problem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../integer-programming/set-covering.html">Set Covering Problem</a></li>
+</ul>
+</li>
+</ul>
+
+    </div>
+</nav>
+    </div>
+  </div>
+  
+
+  
+  <div class="sidebar-end-items sidebar-primary__section">
+    <div class="sidebar-end-items__item">
+    </div>
+  </div>
+
+  
+  <div id="rtd-footer-container"></div>
+
+      </div>
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+        <div class="bd-content">
+          <div class="bd-article-container">
+            
+            <div class="bd-header-article">
+                
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        <label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" data-toggle="tooltip" data-placement="right" title="Toggle primary sidebar">
+            <span class="fa-solid fa-bars"></span>
+        </label>
+    </div>
+    <div class="header-article__right">
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+  </ul>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+<a href="https://github.com/unerue/unerue.github.io/issues/new?title=Issue%20on%20page%20%2Foperations-research/etc/introduction-operations-research.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm"
+   data-toggle="tooltip"
+data-placement="bottom"
+title="Open an issue"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+
+</a>
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      <li><a href="../../_sources/operations-research/etc/introduction-operations-research.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</a>
+      
+      <li>
+<button onclick="printPdf(this)"
+  class="btn btn-sm dropdown-item"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</a>
+      
+  </ul>
+</div>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary" data-toggle="tooltip" data-placement="left" title="Toggle secondary sidebar">
+            <span class="fa-solid fa-list"></span>
+        </label>
+    </div>
+</div>
+            </div>
+            
+            
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>경영과학</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
  <li class="toc-h1 nav-item toc-entry">
   <a class="reference internal nav-link" href="#">
@@ -594,20 +704,118 @@ const thebe_selector_output = ".output, .cell_output"
         </div>
     </div>
 </div>
-    <div id="main-content" class="row">
-        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
-            <!-- Table of contents that is only displayed when printing the page -->
-            <div id="jb-print-docs-body" class="onlyprint">
-                <h1>경영과학</h1>
-                <!-- Table of contents -->
-                <div id="print-main-content">
-                    <div id="jb-print-toc">
-                        
-                        <div>
-                            <h2> Contents </h2>
-                        </div>
-                        <nav aria-label="Page">
-                            <ul class="visible nav section-nav flex-column">
+
+            <article class="bd-article" role="main">
+              
+  <section id="id1">
+<h1>경영과학<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h1>
+<p>경영과학(OR/MS)은 운영연구(operations research) 또는 management science로 불리며 의사결정에 하기위해 수학적 모델, 통계학, 알고리즘 등을 사용하여 복잡한 실세계 시스템을 분석하고 적용하여 효율적인 운용이나 의사결정 등에 활용한다.
+기 위해 사용되며, 성능을 향상시키고 최적화시키기 위한 목적으로 사용된다. 경영과학은 응용수학,</p>
+<p>의사결정이란 어떤 문제를 해결할 수 있는 많은 대안들(alternatives) 중에서 최선의 대안을 선택하는 과정이다. 1978년 노벨 경제학상 수장자인 사이몬(Herbert A. Simon)은 경영을 의사결정과정(decision making process)이라고 정의하였다 .따라서 경영학은 의사결정과정에 관하여 연구하는 학문이라고 할 수 있다.</p>
+<p>잠깐 언급한 operations은 군사작전을 뜻한다. 내용이 MS(management science)와 같기 때문에 우리말로 경영과학이라고 하고 보통 OR/MS로 혼용한다. OR은 2차 세계대전 중에
+2차 대전 초기부터 영국과 미국의 군사전문가, 공학자 및 과학자들이 ‘Blackett’s Cirus’라는 팀을 구성하여 레이더의 효율적 운용방법, 대잠수함작전, 상선 호위함대 배치 문제 등 군사문제를 연구한 것이 오늘날의 OR이다. 2차 세계대전 후 개발된 많은 수리적 모형과 응용방법들이 기업이나 정부와 같은 일반 조직사회에 적용되면서 OR이라는 학문분야가 정립되었다.</p>
+<p>영군군은 독일군의 전투기 공격을 방어하기 위하여 당시 사용할 수있는 모든 과학기술을 총동원하여 레이더(radar)를 개발하고 설치하였다. 이때 개발계획의 연구 책임자였던 H. Tizard는 노벨물리학상을 수상한 P. M. S. Brackett, 노벨생리학을 수상한 A. V. Hill 등 그밖에 수학자등 각 방면의 인재들로 구성된 팀을 만들어 성능이 우수한 레이더를 개발하였고 더불어 레이더의 운용방법에 관한 연구를 수행하여 독일군의 폴란드 침공이 시작된 1939년에 영국 국내에 20여 개소의 레이더 기지를 건설하였다. 당시 팀 구성원이었던  A. P. Rowe이 이와 같은 연구방법의 중요성을 인식하고 Operational research라 명명하였고, 레이더 개발뿐만아니라 고사포의 운영방법이나 잠수함의 공격방법 등 많은 군사적 연구를 수행하였다.
+이에 미국으로 전해져 1941년 미국에서 과학연구개발국 산하 조직인 AMP(applied mathematical panel) 내 OR팀이 결성되어 1942년 미국 육군에 OR분석 팀이 편성되어 이들이 수행한 주요 연구는 군수물자의 수송문제(로지스틱스), 잠수함에 탑재해야할 어뢰의 최적수량결정문제, 일본 가미가제 특공기에 대한 방어문제등이을 다루었다.
+제2차 세계대전 후 미국 OR팀의 책임자였던 물리학자인 P. M. Morse와 G. E. Kimball은 이와 같은 연구를 정리하여 Operations Research라는 책을 저술하였다. 1946년. 이후 이들은 대학이나 기업의 연구실에서 학문체계로 육성하는 공헌하였고, 1947년 George Dantzig에 의해 선형계호기모형의 해법인 심플렉스법이 개발된 이후 OR이 조직의 여러 분야에 활용되어 조직의 경영개선에 크게 도움을 주면서 OR이 경영과학이라고 하는 하나의 연구분야로 자리매김하게 되었다. 이어 동적계획법, 게임이론, 대기행렬이론, 몬테카를로 시뮬레이션, 재고관리문제 등이 전형적인 OR모형이 개발되어 OR이 경영과학이라고 하는 학문분야로 성장하게 되었다.</p>
+<p>경영과학은 제2차 세계대전을 거치면서 OR(작전연구, 운용연구, 경영연구)라는 명칭으로 태어났으나 전쟁이 끝난후 군대에서 사용했던 OR의 여러 기법이 오늘날 기업이나 공공기관 등의 경영문제에 응용되면서 경영과학이라고 부르게 되었다.</p>
+<p>미국 OR학회에서 경영과학은 의도적인 인간 기계 시스템의 행동을 관찰, 이해, 예측할 때 도움을 주는 실험적이고 응용적인 과학이다. 라고 정의하였다. 일반 OR학회에서 편찬한 OR용ㅇ어사전에서 OR은 현상을 추상화한 수리모형을 구축하고 이 모형의 분석에 근거하여 여러 종류의 문제 그 중에서도 특히 의사결정 문제의 해결을 지원하는 방법론이나 기술을 총칭한 것이라고 정의하였다.
+Hillier와 Lieberman은 OR은 조직체계의 운영에 관한 연구라고 정의하였으며 Taylor는 경영과학은 경영문제를 해결하는 과학적 접근법이라고 정의하였다.</p>
+<p>OR은 합리적인 의사결정이 요구되는 모든 분야를 대상으로하며, 정부나 기업고 같이 시스템의 목표가 분명한 조직의 시스템 평가, 관리, 개선 등의 분야에 적용된다. 그 핵심적인 역할은 의사결정자에게 최적의 의사결정을 할 수 있도록 정보를 제공하는데 있다.</p>
+<p>의사결정은 특정한 상황 또는 장차 일어나리라고 생각되는 상황으로부터의 요구나 요청에 따라 목표를 선택하고 그 시점에서 이용가능한 다양한 수단 가운데 특정한 수단을 선택하는 것. 이 개념은 인간의 행동이나 사회현상을 파악하기 위한 중요한 개념으로 정신분석학·심리학·경영학·정치학·사회학 등 사회과학의 여러 분야에서 사용하고 있다. 제 2 차세계대전 뒤 특히 정치학 및 경영학에서 연구가 진전되었다.</p>
+<p>Daniel Kahneman 교수가 노벨상을 받게된 것은 경제학자들 사이에서 지배적으로 인정되고 있던 생각을 정면으로 반증하고, 불확실한 상황에서 인간의 판단 과정이 전통적인 경제학적 규범과는 반대로 작용하며 지름길 방식이나 주먹구구식 (Rule of Thumb) 규칙에 의존하여 의사결정이 이루어짐을 보여주어, 행동경제학 (Behavioral Finance) 이 출발하게 했다는데 에 있다.</p>
+<p>자동차 구입 시, 10여만명의 소비자의 의견을 종합한 객관적 소비자 보고서를 두 달 동안 연구하고 인터넷을 뒤져서 자료를 모아서 차종 A를 구입하기로 결정하였는데, 그 날 저녁 한 친구가 그 차종에 엔진 소리가 좋지 않다고 한 이야기를 듣고는 차종 B를 사기로 마음을 바꾸는 예도 인간의 판단과 결정에서 10 여만의 사례 증거보다 단 하나의 눈앞의 증거를 과대평가하는 비합리성, 편향성, 오류를 보여주는 예이다 (인지편향 (Cognitive Bias)).</p>
+<p>카네만의 이러한 연구 결과는 주식시장에서의 사람들의 주식 선택 및 투자 행동을 예측하는 가장 좋은 이론틀로 사용되고 있기도 하다. 배우자의 선택, 직업의 선택, 창업의 선택 및 결정, 그리고 일상의 작은 일의 판단과 결정에서 우리는 카네만 박사 및 다른 인지과학자들이 발견해낸 그러한 오류적 편향적 판단과 결정 원리에 의하여 우리의 삶을 꾸려가고 있는 것이다. (source 이정모 2003)</p>
+<p>현대의 OR은 산업공학에서는 물론이고 경영학과, 그리고 공대와 다른 학과에서도 광범위하게 다루고 있다. 하지만 그 내용은 조금씩 다르다.
+즉, 이론과 수식위주의 내용에서 기본적인 개념을 이해하고 나면 그 다음으로는 이를 실제 적용할 수 있는 능력을 갖추는 방향으로 바뀌었으며 컴퓨터를 이요한다.</p>
+<p>OR의 가장 중요한 개념은 의사결정에 체계적이고 과학적ㄱ인 접근방법을 사용한다. 체계적이라는 말은 그 문제를 전체적인 시각에서 파악하여 절차에 따라 가장 좋은 해결책을 추구한다는 것으로 부분적인 문제해결이나 임시방편적인 문제해결과 대응되는 ㄱ념이다. 또 과학적이라는 말은 문제 해결과정에서 수리적인 모형과 계량적인 정보 등을 근거로 여러 대안을 분석평가하여 결론을 이끌어낸다는 의미이며, 이와 대응되는 개념은 뚜렷한 근거없이 이루어지는 육감적이거나 직관적인 의사결정이다.</p>
+<p>OR의 또 다른 특성으로는 학제적(interdisciplinary approach) 접근법을 지향한다. 여러 공학분야에 포함하여 수학, 컴퓨터 고학, 경제학, 심리학, 생리학 등 관련 분야의 저문가들이 하나의 팀을 이루어 문제를 해결하는 방법을 추구한다. 따라서 OR의 대상은 어느 특정 산업이나 시스템이 아니고 전 산업분야와 모든 조직시스템을 포함한다.</p>
+<p>혹은 최적화란, 제약조건을 만족하는 대안 중에서 의사결정권자의 목적함수를 최적화하는 것을 찾는 이론 일체를 말한다. 본 연구실은 이론적이고 수리적인 연구에 초점을 두고 있다. 관련 과목으로는 경영과학, 선형 및 비선형 계획, 정수계획 및 네트워크 최적화, 조합최적화, 최적화 근사해법 등이 있다. 기존 수리계획 연구실과 상호 보완적이며, 실제 모든 세미나, 논문지도, 그리고 기타 행사들을 협동으로 진행하고 있다.</p>
+</section>
+<section id="id2">
+<h1>관련과목<a class="headerlink" href="#id2" title="Permalink to this heading">#</a></h1>
+<p>최적화 분야에서의 연구를 수행하기 위해서 필요한 기존 이론 및 최신 동향들은 다음의 과목들을 통해 배울 수 있다.</p>
+<p>경영과학: 경영과학은 현실 의사결정문제를 수리모형화하고, 그 해법을 개발하며, 마지막으로 해법이 제공한 해를 의사결정에 적용하는 일체의 과정이다. 강의에서는 선형계획, 네트워크 최적화, 정수 및 조합최적화, 비선형계획, 게임이론을 다룬다.
+선형계획: 선형제약식으로 정의되는 가능해 집합이 가지는 특수한 구조와 쌍대성, 그리고 이에 기반한 해법인 simplex method에 대한 강의가 진행된다.
+비선형계획: 목적함수 및 제약식이 비선형(nonlinear) 형태인 문제들은 선형계획과는 달리 풀기가 어렵다. 강의에서는 여러 유형의 비선형 최적화 문제에서 최적해가 만족해야 될 조건들과, 이에 기반한 다양한 해법들을 다룬다.
+정수계획: 선형계획 문제에서 부가적으로 해에 대한 정수조건이 추가된 문제를 정수계획이라고 한다. 정수계획은 많은 현실문제를 표현할 수 있는 반면 최적해를 구하는 것이 어렵다. 강의에서는 정수계획 문제에서 좋은 가능해를 찾기 위한 이론 및 방법론들을 다룬다.
+볼록계획: 비선형계획 문제 중에서 제약식과 목적식의 볼록성(convexity)이 보장되는 경우에는 최적해를 찾는 효율적인 해법이 존재한다. 강의에서는 집합과 함수의 볼록성의 정의 및 성질을 다루며, 볼록성을 갖는 최적화 문제의 특징 및 이를 풀기 위한 해법을 다룬다.
+조합최적화: 선형계획을 포함한 볼록계획 문제를 제외한 대부분의 최적화 문제들은 효율적인 해법이 알려져 있는 어려운 문제들이 많다. 이론적으로 문제의 어려움을 규명하는 방법으로는 문제가 NP-complete (또는 NP-hard) 문제에 속한다는 것을 보이는 것이다. 강의에서는 이러한 계산 복잡도에 관련한 이론과 NP-complete 증명 기법 등을 다룬다.
+최적화 근사해법: NP-complete에 속하는 문제로 알려진 어려운 최적화 문제에 대표적인 접근 방법 중 하나는 해품질을 일부 포기하는 대신에 효율적으로 가능해를 구하는 것이다. 근사해법은 효율적으로 가능해를 구하면서, 가능해의 품질이 최적해에 비해 나쁘지 않음을 보장해 줄 수 있는 해법을 말한다. 강의에서는 대표적인 NP-complete 문제에 대한 근사해법과 이를 개발하기 위한 기법들을 다룬다.</p>
+</section>
+<section id="id3">
+<h1>이론분야 연구<a class="headerlink" href="#id3" title="Permalink to this heading">#</a></h1>
+<p>조합최적화 근사해법 : 많은 최적화 문제들은 이른바 NP-hard 문제로 구분되어, 정확한 최적해를 구하기 위해서는 너무 많은 비용이 드는 문제들이다. 또한 상대적으로 빠른 시간 내에 최적해를 찾는 해법이 존재하는 최적화 문제의 경우에도, 최적해를 찾는 시간이 현실 문제에 적용하기에는 만족스럽지 못한 경우가 있다. 예를 들어, 실시간 이미지 처리에 경우, 최적해를 찾아주는 기존 해법으로는 짧은 시간 내에 해결할 수 없다. 따라서 이런 경우, 계산 자원의 사용을 허용할 수 있는 범위로 제한하면서 최적해에 가까운 해를 구하는 근사해법은 중요한 대안적인 접근법이다. 본 연구실에서는 여러 가지 응용성을 가진 조합 최적화 문제들의 근사해법에 관한 연구를 수행하고 있다.
+SDP, 다항최적화문제 : 현재 최적화는 선형계획과 같은 전통적인 수리모형뿐 아니라, SDP 같은 새로운 수리모형으로 그 영역이 확대되고 있다. 본 연구실에서는 이러한 수리모형을 조합최적화 문제의 근사해법에 응용하는 연구를 추구하고 있다.</p>
+</section>
+<section id="id4">
+<h1>응용분야 연구<a class="headerlink" href="#id4" title="Permalink to this heading">#</a></h1>
+<p>경영과학 및 최적화는 현실의 문제를 풀기 위해 시작된 학문이다. 이 순간에도 각 산업 분야의 내면에서 그 산업 활동의 목적을 극대화하는 해를 제공하고 있다. 본 연구실에서는 지금까지 SCM, 수송 문제, 철도 경합, KTX 차량 할당, 포트폴리오 구성 문제와 같은 여러 응용 문제들에 대해 연구를 수행했다.
+한편, 여러 명의 의사결정자들의 이해관계가 서로 상충되는 상황에서의 문제는 게임이론을 통해 접근할 수 있다. 다수의 의사결정자들이 때로는 상충되는 이해관계 속에서, 혹은 때로는 협력관계 속에서 서로의 목적을 위해 합리적인 의사결정을 해야 하는 경우는 다양하기 때문에 그 응용분야는 매우 넓다. 국제 관계에서 나타나는 상충 관계, 시장에서의 기업 간 이해 관계 등에서 나타나는 의사결정 문제는 게임이론의 한 응용분야이고, 사용자들의 대중 교통망에서의 이동경로 선택도 게임의 균형을 통해 설명할 수 있다. 본 연구실에서는 게임이론을 통해 여러 가지 현실 문제를 접근하는 연구를 수행하고 있다.</p>
+<p>다음 대표적인 문제 세가지를 파이썬을 활용하여 다뤄보자</p>
+<p>혼합문제(product mix problem)</p>
+<p>어떤 기업은 두 종류의 원료와 한 종류의 기계를 사용하여 제품 A와 B를 생산하여 한패하고 있다. 각 제품을 1단위 생산할 때 필요한 언료의 사용량과 기계사용시간은 다음과 같다. D기업이 보유하고 있는 원료 1과 원료 2으 ㅣ월 가용량은 각 300kg, 160kg이고 기계사용시간은 월 가용시간 180시간이며 생산된 제품의 A와 제품B를 판매하면 각 단위당 3만원과 2만원의 이익이 발생한다. 해당 기업에 주어진 한정된 자원을 사용하여 D기업의 월 이익이 최대로 하는 제품 A와 제품B의 월 생산량을 구하기 위해 선형계획모형을 작성하라.</p>
+<p>해당 문제는 제품조합문제로 해당 기업이 월 이익을 나타내는 목적함수를 최대화하여야 하는 문제이기 때문에 최대화 문제라고도 불린다.
+제약조건에 따라 두 원료의 월 가용량과 기계의 월 가용시간이지만 현실문제에서는 이들 제약조건 이외에도</p>
+<p>결정변수의 정의</p>
+<p>기업은 이익을 최대로 하는 두제품의 월 생산량을 결정해야 하므로 결정번수 X1과 X2를 다음과 같이 정의하였다.
+X1=제품 A의 월 생산수량(개)
+X2 = 제품 B의</p>
+<p>목적함수의 정식화</p>
+<p>max(최대화)( Z = 3X1 + 2X2(만원)</p>
+<p>제약식의 정식화</p>
+<p>10X + 5X &lt;= 300 (원료 1의 월 가용량 제약식)</p>
+<p>4X1 + 4X2 &lt;= 160</p>
+<p>2X1 + 6X2 &lt;180 기계사용시간의 월 가용량 제약식</p>
+<p>제품A와 B는 음수를 가실주 없음으로 다음과 같으 비음제약식을 만족해야 한다.
+X1, X2&gt;0</p>
+<p>수송문제()</p>
+<p>3개의 공장에서 생산된 제품을 4개의 수요지로 수송하고 있다 공장 1, 2, 3, 의 공긍럅은 각각 120, 150, 200개이고 수요지 1,2,3,4의 수요량은 각100, 60, 130, 180개이며 각 공장과 각 수요지 사이의 제품 단위당 수송비용은 다음과 같다. 여기서 공장 에서 각 수요지로 수송되는 수송량의 합계는 공장 i의 공급량과 일치해야 하며 각 공장에서 수요지 로 수송된 수송량은 수요지 j의 수요량과 일치해야 한다 각 수요지로의 최적 수송량을 결정ㄹ하는 문제를 해결하라.</p>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./operations-research\etc"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+            </article>
+            
+
+            
+            
+            <footer class="bd-footer-article">
+                <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+</div>
+            </footer>
+            
+          </div>
+          
+          
+          
+            <div class="bd-sidebar-secondary bd-toc">
+              
+<div class="toc-item">
+  
+<div class="tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+</div>
+<nav id="bd-toc-nav" class="page-toc">
+    <ul class="visible nav section-nav flex-column">
  <li class="toc-h1 nav-item toc-entry">
   <a class="reference internal nav-link" href="#">
    경영과학
@@ -630,122 +838,60 @@ const thebe_selector_output = ".output, .cell_output"
  </li>
 </ul>
 
-                        </nav>
-                    </div>
-                </div>
+</nav>
+</div>
+
             </div>
-            
-              <div>
-                
-  <div class="section" id="id1">
-<h1>경영과학<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
-<p>경영과학(OR/MS)은 운영연구(operations research) 또는 management science로 불리며 의사결정에 하기위해 수학적 모델, 통계학, 알고리즘 등을 사용하여 복잡한 실세계 시스템을 분석하고 적용하여 효율적인 운용이나 의사결정 등에 활용한다.
-기 위해 사용되며, 성능을 향상시키고 최적화시키기 위한 목적으로 사용된다. 경영과학은 응용수학,</p>
-<p>의사결정이란 어떤 문제를 해결할 수 있는 많은 대안들(alternatives) 중에서 최선의 대안을 선택하는 과정이다. 1978년 노벨 경제학상 수장자인 사이몬(Herbert A. Simon)은 경영을 의사결정과정(decision making process)이라고 정의하였다 .따라서 경영학은 의사결정과정에 관하여 연구하는 학문이라고 할 수 있다.</p>
-<p>잠깐 언급한 operations은 군사작전을 뜻한다. 내용이 MS(management science)와 같기 때문에 우리말로 경영과학이라고 하고 보통 OR/MS로 혼용한다. OR은 2차 세계대전 중에
-2차 대전 초기부터 영국과 미국의 군사전문가, 공학자 및 과학자들이 ‘Blackett’s Cirus’라는 팀을 구성하여 레이더의 효율적 운용방법, 대잠수함작전, 상선 호위함대 배치 문제 등 군사문제를 연구한 것이 오늘날의 OR이다. 2차 세계대전 후 개발된 많은 수리적 모형과 응용방법들이 기업이나 정부와 같은 일반 조직사회에 적용되면서 OR이라는 학문분야가 정립되었다.</p>
-<p>영군군은 독일군의 전투기 공격을 방어하기 위하여 당시 사용할 수있는 모든 과학기술을 총동원하여 레이더(radar)를 개발하고 설치하였다. 이때 개발계획의 연구 책임자였던 H. Tizard는 노벨물리학상을 수상한 P. M. S. Brackett, 노벨생리학을 수상한 A. V. Hill 등 그밖에 수학자등 각 방면의 인재들로 구성된 팀을 만들어 성능이 우수한 레이더를 개발하였고 더불어 레이더의 운용방법에 관한 연구를 수행하여 독일군의 폴란드 침공이 시작된 1939년에 영국 국내에 20여 개소의 레이더 기지를 건설하였다. 당시 팀 구성원이었던  A. P. Rowe이 이와 같은 연구방법의 중요성을 인식하고 Operational research라 명명하였고, 레이더 개발뿐만아니라 고사포의 운영방법이나 잠수함의 공격방법 등 많은 군사적 연구를 수행하였다.
-이에 미국으로 전해져 1941년 미국에서 과학연구개발국 산하 조직인 AMP(applied mathematical panel) 내 OR팀이 결성되어 1942년 미국 육군에 OR분석 팀이 편성되어 이들이 수행한 주요 연구는 군수물자의 수송문제(로지스틱스), 잠수함에 탑재해야할 어뢰의 최적수량결정문제, 일본 가미가제 특공기에 대한 방어문제등이을 다루었다.
-제2차 세계대전 후 미국 OR팀의 책임자였던 물리학자인 P. M. Morse와 G. E. Kimball은 이와 같은 연구를 정리하여 Operations Research라는 책을 저술하였다. 1946년. 이후 이들은 대학이나 기업의 연구실에서 학문체계로 육성하는 공헌하였고, 1947년 George Dantzig에 의해 선형계호기모형의 해법인 심플렉스법이 개발된 이후 OR이 조직의 여러 분야에 활용되어 조직의 경영개선에 크게 도움을 주면서 OR이 경영과학이라고 하는 하나의 연구분야로 자리매김하게 되었다. 이어 동적계획법, 게임이론, 대기행렬이론, 몬테카를로 시뮬레이션, 재고관리문제 등이 전형적인 OR모형이 개발되어 OR이 경영과학이라고 하는 학문분야로 성장하게 되었다.</p>
-<p>경영과학은 제2차 세계대전을 거치면서 OR(작전연구, 운용연구, 경영연구)라는 명칭으로 태어났으나 전쟁이 끝난후 군대에서 사용했던 OR의 여러 기법이 오늘날 기업이나 공공기관 등의 경영문제에 응용되면서 경영과학이라고 부르게 되었다.</p>
-<p>미국 OR학회에서 경영과학은 의도적인 인간 기계 시스템의 행동을 관찰, 이해, 예측할 때 도움을 주는 실험적이고 응용적인 과학이다. 라고 정의하였다. 일반 OR학회에서 편찬한 OR용ㅇ어사전에서 OR은 현상을 추상화한 수리모형을 구축하고 이 모형의 분석에 근거하여 여러 종류의 문제 그 중에서도 특히 의사결정 문제의 해결을 지원하는 방법론이나 기술을 총칭한 것이라고 정의하였다.
-Hillier와 Lieberman은 OR은 조직체계의 운영에 관한 연구라고 정의하였으며 Taylor는 경영과학은 경영문제를 해결하는 과학적 접근법이라고 정의하였다.</p>
-<p>OR은 합리적인 의사결정이 요구되는 모든 분야를 대상으로하며, 정부나 기업고 같이 시스템의 목표가 분명한 조직의 시스템 평가, 관리, 개선 등의 분야에 적용된다. 그 핵심적인 역할은 의사결정자에게 최적의 의사결정을 할 수 있도록 정보를 제공하는데 있다.</p>
-<p>의사결정은 특정한 상황 또는 장차 일어나리라고 생각되는 상황으로부터의 요구나 요청에 따라 목표를 선택하고 그 시점에서 이용가능한 다양한 수단 가운데 특정한 수단을 선택하는 것. 이 개념은 인간의 행동이나 사회현상을 파악하기 위한 중요한 개념으로 정신분석학·심리학·경영학·정치학·사회학 등 사회과학의 여러 분야에서 사용하고 있다. 제 2 차세계대전 뒤 특히 정치학 및 경영학에서 연구가 진전되었다.</p>
-<p>Daniel Kahneman 교수가 노벨상을 받게된 것은 경제학자들 사이에서 지배적으로 인정되고 있던 생각을 정면으로 반증하고, 불확실한 상황에서 인간의 판단 과정이 전통적인 경제학적 규범과는 반대로 작용하며 지름길 방식이나 주먹구구식 (Rule of Thumb) 규칙에 의존하여 의사결정이 이루어짐을 보여주어, 행동경제학 (Behavioral Finance) 이 출발하게 했다는데 에 있다.</p>
-<p>자동차 구입 시, 10여만명의 소비자의 의견을 종합한 객관적 소비자 보고서를 두 달 동안 연구하고 인터넷을 뒤져서 자료를 모아서 차종 A를 구입하기로 결정하였는데, 그 날 저녁 한 친구가 그 차종에 엔진 소리가 좋지 않다고 한 이야기를 듣고는 차종 B를 사기로 마음을 바꾸는 예도 인간의 판단과 결정에서 10 여만의 사례 증거보다 단 하나의 눈앞의 증거를 과대평가하는 비합리성, 편향성, 오류를 보여주는 예이다 (인지편향 (Cognitive Bias)).</p>
-<p>카네만의 이러한 연구 결과는 주식시장에서의 사람들의 주식 선택 및 투자 행동을 예측하는 가장 좋은 이론틀로 사용되고 있기도 하다. 배우자의 선택, 직업의 선택, 창업의 선택 및 결정, 그리고 일상의 작은 일의 판단과 결정에서 우리는 카네만 박사 및 다른 인지과학자들이 발견해낸 그러한 오류적 편향적 판단과 결정 원리에 의하여 우리의 삶을 꾸려가고 있는 것이다. (source 이정모 2003)</p>
-<p>현대의 OR은 산업공학에서는 물론이고 경영학과, 그리고 공대와 다른 학과에서도 광범위하게 다루고 있다. 하지만 그 내용은 조금씩 다르다.
-즉, 이론과 수식위주의 내용에서 기본적인 개념을 이해하고 나면 그 다음으로는 이를 실제 적용할 수 있는 능력을 갖추는 방향으로 바뀌었으며 컴퓨터를 이요한다.</p>
-<p>OR의 가장 중요한 개념은 의사결정에 체계적이고 과학적ㄱ인 접근방법을 사용한다. 체계적이라는 말은 그 문제를 전체적인 시각에서 파악하여 절차에 따라 가장 좋은 해결책을 추구한다는 것으로 부분적인 문제해결이나 임시방편적인 문제해결과 대응되는 ㄱ념이다. 또 과학적이라는 말은 문제 해결과정에서 수리적인 모형과 계량적인 정보 등을 근거로 여러 대안을 분석평가하여 결론을 이끌어낸다는 의미이며, 이와 대응되는 개념은 뚜렷한 근거없이 이루어지는 육감적이거나 직관적인 의사결정이다.</p>
-<p>OR의 또 다른 특성으로는 학제적(interdisciplinary approach) 접근법을 지향한다. 여러 공학분야에 포함하여 수학, 컴퓨터 고학, 경제학, 심리학, 생리학 등 관련 분야의 저문가들이 하나의 팀을 이루어 문제를 해결하는 방법을 추구한다. 따라서 OR의 대상은 어느 특정 산업이나 시스템이 아니고 전 산업분야와 모든 조직시스템을 포함한다.</p>
-<p>혹은 최적화란, 제약조건을 만족하는 대안 중에서 의사결정권자의 목적함수를 최적화하는 것을 찾는 이론 일체를 말한다. 본 연구실은 이론적이고 수리적인 연구에 초점을 두고 있다. 관련 과목으로는 경영과학, 선형 및 비선형 계획, 정수계획 및 네트워크 최적화, 조합최적화, 최적화 근사해법 등이 있다. 기존 수리계획 연구실과 상호 보완적이며, 실제 모든 세미나, 논문지도, 그리고 기타 행사들을 협동으로 진행하고 있다.</p>
-</div>
-<div class="section" id="id2">
-<h1>관련과목<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h1>
-<p>최적화 분야에서의 연구를 수행하기 위해서 필요한 기존 이론 및 최신 동향들은 다음의 과목들을 통해 배울 수 있다.</p>
-<p>경영과학: 경영과학은 현실 의사결정문제를 수리모형화하고, 그 해법을 개발하며, 마지막으로 해법이 제공한 해를 의사결정에 적용하는 일체의 과정이다. 강의에서는 선형계획, 네트워크 최적화, 정수 및 조합최적화, 비선형계획, 게임이론을 다룬다.
-선형계획: 선형제약식으로 정의되는 가능해 집합이 가지는 특수한 구조와 쌍대성, 그리고 이에 기반한 해법인 simplex method에 대한 강의가 진행된다.
-비선형계획: 목적함수 및 제약식이 비선형(nonlinear) 형태인 문제들은 선형계획과는 달리 풀기가 어렵다. 강의에서는 여러 유형의 비선형 최적화 문제에서 최적해가 만족해야 될 조건들과, 이에 기반한 다양한 해법들을 다룬다.
-정수계획: 선형계획 문제에서 부가적으로 해에 대한 정수조건이 추가된 문제를 정수계획이라고 한다. 정수계획은 많은 현실문제를 표현할 수 있는 반면 최적해를 구하는 것이 어렵다. 강의에서는 정수계획 문제에서 좋은 가능해를 찾기 위한 이론 및 방법론들을 다룬다.
-볼록계획: 비선형계획 문제 중에서 제약식과 목적식의 볼록성(convexity)이 보장되는 경우에는 최적해를 찾는 효율적인 해법이 존재한다. 강의에서는 집합과 함수의 볼록성의 정의 및 성질을 다루며, 볼록성을 갖는 최적화 문제의 특징 및 이를 풀기 위한 해법을 다룬다.
-조합최적화: 선형계획을 포함한 볼록계획 문제를 제외한 대부분의 최적화 문제들은 효율적인 해법이 알려져 있는 어려운 문제들이 많다. 이론적으로 문제의 어려움을 규명하는 방법으로는 문제가 NP-complete (또는 NP-hard) 문제에 속한다는 것을 보이는 것이다. 강의에서는 이러한 계산 복잡도에 관련한 이론과 NP-complete 증명 기법 등을 다룬다.
-최적화 근사해법: NP-complete에 속하는 문제로 알려진 어려운 최적화 문제에 대표적인 접근 방법 중 하나는 해품질을 일부 포기하는 대신에 효율적으로 가능해를 구하는 것이다. 근사해법은 효율적으로 가능해를 구하면서, 가능해의 품질이 최적해에 비해 나쁘지 않음을 보장해 줄 수 있는 해법을 말한다. 강의에서는 대표적인 NP-complete 문제에 대한 근사해법과 이를 개발하기 위한 기법들을 다룬다.</p>
-</div>
-<div class="section" id="id3">
-<h1>이론분야 연구<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h1>
-<p>조합최적화 근사해법 : 많은 최적화 문제들은 이른바 NP-hard 문제로 구분되어, 정확한 최적해를 구하기 위해서는 너무 많은 비용이 드는 문제들이다. 또한 상대적으로 빠른 시간 내에 최적해를 찾는 해법이 존재하는 최적화 문제의 경우에도, 최적해를 찾는 시간이 현실 문제에 적용하기에는 만족스럽지 못한 경우가 있다. 예를 들어, 실시간 이미지 처리에 경우, 최적해를 찾아주는 기존 해법으로는 짧은 시간 내에 해결할 수 없다. 따라서 이런 경우, 계산 자원의 사용을 허용할 수 있는 범위로 제한하면서 최적해에 가까운 해를 구하는 근사해법은 중요한 대안적인 접근법이다. 본 연구실에서는 여러 가지 응용성을 가진 조합 최적화 문제들의 근사해법에 관한 연구를 수행하고 있다.
-SDP, 다항최적화문제 : 현재 최적화는 선형계획과 같은 전통적인 수리모형뿐 아니라, SDP 같은 새로운 수리모형으로 그 영역이 확대되고 있다. 본 연구실에서는 이러한 수리모형을 조합최적화 문제의 근사해법에 응용하는 연구를 추구하고 있다.</p>
-</div>
-<div class="section" id="id4">
-<h1>응용분야 연구<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h1>
-<p>경영과학 및 최적화는 현실의 문제를 풀기 위해 시작된 학문이다. 이 순간에도 각 산업 분야의 내면에서 그 산업 활동의 목적을 극대화하는 해를 제공하고 있다. 본 연구실에서는 지금까지 SCM, 수송 문제, 철도 경합, KTX 차량 할당, 포트폴리오 구성 문제와 같은 여러 응용 문제들에 대해 연구를 수행했다.
-한편, 여러 명의 의사결정자들의 이해관계가 서로 상충되는 상황에서의 문제는 게임이론을 통해 접근할 수 있다. 다수의 의사결정자들이 때로는 상충되는 이해관계 속에서, 혹은 때로는 협력관계 속에서 서로의 목적을 위해 합리적인 의사결정을 해야 하는 경우는 다양하기 때문에 그 응용분야는 매우 넓다. 국제 관계에서 나타나는 상충 관계, 시장에서의 기업 간 이해 관계 등에서 나타나는 의사결정 문제는 게임이론의 한 응용분야이고, 사용자들의 대중 교통망에서의 이동경로 선택도 게임의 균형을 통해 설명할 수 있다. 본 연구실에서는 게임이론을 통해 여러 가지 현실 문제를 접근하는 연구를 수행하고 있다.</p>
-<p>다음 대표적인 문제 세가지를 파이썬을 활용하여 다뤄보자</p>
-<p>혼합문제(product mix problem)</p>
-<p>어떤 기업은 두 종류의 원료와 한 종류의 기계를 사용하여 제품 A와 B를 생산하여 한패하고 있다. 각 제품을 1단위 생산할 때 필요한 언료의 사용량과 기계사용시간은 다음과 같다. D기업이 보유하고 있는 원료 1과 원료 2으 ㅣ월 가용량은 각 300kg, 160kg이고 기계사용시간은 월 가용시간 180시간이며 생산된 제품의 A와 제품B를 판매하면 각 단위당 3만원과 2만원의 이익이 발생한다. 해당 기업에 주어진 한정된 자원을 사용하여 D기업의 월 이익이 최대로 하는 제품 A와 제품B의 월 생산량을 구하기 위해 선형계획모형을 작성하라.</p>
-<p>해당 문제는 제품조합문제로 해당 기업이 월 이익을 나타내는 목적함수를 최대화하여야 하는 문제이기 때문에 최대화 문제라고도 불린다.
-제약조건에 따라 두 원료의 월 가용량과 기계의 월 가용시간이지만 현실문제에서는 이들 제약조건 이외에도</p>
-<p>결정변수의 정의</p>
-<p>기업은 이익을 최대로 하는 두제품의 월 생산량을 결정해야 하므로 결정번수 X1과 X2를 다음과 같이 정의하였다.
-X1=제품 A의 월 생산수량(개)
-X2 = 제품 B의</p>
-<p>목적함수의 정식화</p>
-<p>max(최대화)( Z = 3X1 + 2X2(만원)</p>
-<p>제약식의 정식화</p>
-<p>10X + 5X &lt;= 300 (원료 1의 월 가용량 제약식)</p>
-<p>4X1 + 4X2 &lt;= 160</p>
-<p>2X1 + 6X2 &lt;180 기계사용시간의 월 가용량 제약식</p>
-<p>제품A와 B는 음수를 가실주 없음으로 다음과 같으 비음제약식을 만족해야 한다.
-X1, X2&gt;0</p>
-<p>수송문제()</p>
-<p>3개의 공장에서 생산된 제품을 4개의 수요지로 수송하고 있다 공장 1, 2, 3, 의 공긍럅은 각각 120, 150, 200개이고 수요지 1,2,3,4의 수요량은 각100, 60, 130, 180개이며 각 공장과 각 수요지 사이의 제품 단위당 수송비용은 다음과 같다. 여기서 공장 에서 각 수요지로 수송되는 수송량의 합계는 공장 i의 공급량과 일치해야 하며 각 공장에서 수요지 로 수송된 수송량은 수요지 j의 수요량과 일치해야 한다 각 수요지로의 최적 수송량을 결정ㄹ하는 문제를 해결하라.</p>
-</div>
-
-    <script type="text/x-thebe-config">
-    {
-        requestKernel: true,
-        binderOptions: {
-            repo: "binder-examples/jupyter-stacks-datascience",
-            ref: "master",
-        },
-        codeMirrorConfig: {
-            theme: "abcdef",
-            mode: "python"
-        },
-        kernelOptions: {
-            kernelName: "python3",
-            path: "./operations-research\etc"
-        },
-        predefinedOutput: true
-    }
-    </script>
-    <script>kernelName = 'python3'</script>
-
-              </div>
-              
-            
-                <!-- Previous / next buttons -->
-<div class='prev-next-area'>
-</div>
-            
+          
+          
         </div>
-    </div>
-    <footer class="footer">
-  <p>
-    
-      By Kyung-Su Kang<br/>
-    
-        &copy; Copyright 2021.<br/>
-  </p>
-</footer>
-</main>
-
-
-      </div>
-    </div>
+        <footer class="bd-footer-content">
+          <div class="bd-footer-content__inner">
+            
+<div class="bd-footer-content__inner container">
   
-  <script src="../../_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+  <div class="footer-item">
+    
+<p class="component-author">
+By Kyung-Su Kang
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+<p class="copyright">
+
+    &copy; Copyright 2021.<br>
+
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    <p class="last-updated">
+Last updated on None.<br>
+</p>
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </div>
+        </footer>
+        
+
+      </main>
+    </div>
+  </div>
+
+  
+    
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=796348d33e8b1d947c94"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=796348d33e8b1d947c94"></script>
 
   </body>
 </html>
